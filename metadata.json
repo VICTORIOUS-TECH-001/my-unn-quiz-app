@@ -1,0 +1,6 @@
+{
+  "name": "Student Quiz Competition Portal",
+  "description": "Official Student Quiz Competition Portal for University of Nigeria (UNN) with timed examination engine, student verification, live scoring, and administrative management.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

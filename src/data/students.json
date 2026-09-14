@@ -1,0 +1,3206 @@
+[
+  {
+    "sn": 1,
+    "name": "Abafor Chinaza Happiness",
+    "regNo": "2025/298761",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 2,
+    "name": "Abonyi Ezinne Princess",
+    "regNo": "2024/283415",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 3,
+    "name": "Adah Favour Sunday",
+    "regNo": "2025/296490",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 4,
+    "name": "Adama Joy",
+    "regNo": "2025/290621",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 5,
+    "name": "Adetoye Freedom Beulah",
+    "regNo": "2025/297555",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 6,
+    "name": "Adinde Kenneth",
+    "regNo": "2025/295956",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 7,
+    "name": "Adoyi Happiness",
+    "regNo": "2025/293428",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 8,
+    "name": "Aduaka Franklin Chibueze",
+    "regNo": "2025/291520",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 9,
+    "name": "Agbai Favour Amarachi",
+    "regNo": "2025/291096",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 10,
+    "name": "Agbo Pascal Kelechukwu",
+    "regNo": "2024/279566",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 11,
+    "name": "Ahukanna Chidera Emmanuel",
+    "regNo": "2025/300729",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 12,
+    "name": "Ajibo Choice Onwe",
+    "regNo": "2025/291874",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 13,
+    "name": "Ajibo Rosemary Nkemdilim",
+    "regNo": "2024/280203",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 14,
+    "name": "Ajogu Chisom Nfa",
+    "regNo": "2025/290387",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 15,
+    "name": "Akogwu Evelyn Ikoojo",
+    "regNo": "2025/299464",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 16,
+    "name": "Akwusie Joy Ifechukwu",
+    "regNo": "2025/297504",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 17,
+    "name": "Alaneme Charity Chinemerem",
+    "regNo": "2025/300469",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 18,
+    "name": "Alozie Wisdom Ifeanyichukwu",
+    "regNo": "2025/290465",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 19,
+    "name": "Amadi Chisom Favour",
+    "regNo": "2025/291097",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 20,
+    "name": "Amadi Somachi Leslie",
+    "regNo": "2025/297001",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 21,
+    "name": "Amadife Somtochukwu Franklin",
+    "regNo": "2024/280827",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 22,
+    "name": "Amakor Peace Chisom",
+    "regNo": "2025/298727",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 23,
+    "name": "Amaraegbu Princess Chikamso",
+    "regNo": "2025/290421",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 24,
+    "name": "Amoke Chilieoma Valerie",
+    "regNo": "2025/UNEC024",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 25,
+    "name": "Anakorah Angel Ifechukwu",
+    "regNo": "2025/291085",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 26,
+    "name": "Anarah Uchenna Chidike",
+    "regNo": "2025/295922",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 27,
+    "name": "Aneke Nneoma Vivian",
+    "regNo": "2025/299945",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 28,
+    "name": "Anieke Chiemerie Emmanuella",
+    "regNo": "2025/290474",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 29,
+    "name": "Anike Paschal Nnaemeka",
+    "regNo": "2025/295577",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 30,
+    "name": "Anikwe Adaeze Chimbusomma",
+    "regNo": "2025/291210",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 31,
+    "name": "Anikwe Obarugene",
+    "regNo": "2025/UNEC031",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 32,
+    "name": "Anyakorah Angel Ifechukwu",
+    "regNo": "2025/291085",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 33,
+    "name": "Anyanwaokoro Chibuokem Michael",
+    "regNo": "2025/298084",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 34,
+    "name": "Apochi Daniella Ngozi",
+    "regNo": "2025/290337",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 35,
+    "name": "Arene Beulah",
+    "regNo": "2025/290295",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 36,
+    "name": "Arum Eugene Nnaemeka",
+    "regNo": "2025/298217",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 37,
+    "name": "Asogwa Chukwunonso Emmanuel",
+    "regNo": "2025/290192",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 38,
+    "name": "Asogwa Kamsiyochukwu Miracle",
+    "regNo": "2025/UNEC038",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 39,
+    "name": "Asogwa Mercy Ifeoma",
+    "regNo": "2025/298901",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 40,
+    "name": "Asogwa Miracle Chikwesiri",
+    "regNo": "2024/278866",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 41,
+    "name": "Asogwa Somadina Sophia",
+    "regNo": "2025/297735",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 42,
+    "name": "Asuru Chinedu Daniel",
+    "regNo": "2025/293414",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 43,
+    "name": "Augustine Peace Uzozie",
+    "regNo": "2025/UNEC043",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 44,
+    "name": "Awhungwu Philomina Afebanye",
+    "regNo": "2025/294782",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 45,
+    "name": "Awirike Abangne Unyieufuashi",
+    "regNo": "2025/299128",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 46,
+    "name": "Awugo Sonmar Rose",
+    "regNo": "2025/UNEC046",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 47,
+    "name": "Ayogu Chioma Vera",
+    "regNo": "2025/290387",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 48,
+    "name": "Ayogu Esther Chidiebube",
+    "regNo": "2025/298198",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 49,
+    "name": "Azolike Chidalu Mitchelle",
+    "regNo": "2025/298413",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 50,
+    "name": "Azubuike Kennedy Alalazu",
+    "regNo": "2025/298880",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 51,
+    "name": "Azuogu Jephtah Nzubechi",
+    "regNo": "2025/300700",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 52,
+    "name": "Benson Promise C",
+    "regNo": "2025/UNEC052",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 53,
+    "name": "Bernard Primus Chinonyerem",
+    "regNo": "2025/297568",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 54,
+    "name": "Chaba Justice Agbomhemiye",
+    "regNo": "2025/291533",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 55,
+    "name": "Chidigbo Chiamaka Rita",
+    "regNo": "2025/292521",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 56,
+    "name": "Chidubem Vera Ifeoma",
+    "regNo": "2025/290153",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 57,
+    "name": "Chijioke Chisomaga Pascaline",
+    "regNo": "2025/290654",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 58,
+    "name": "Chike Emmanuel Kosiso",
+    "regNo": "2025/291226",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 59,
+    "name": "Chikwe Christine Chiamaka",
+    "regNo": "2025/290018",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 60,
+    "name": "Chilotam Chiagozie Victor",
+    "regNo": "2025/291235",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 61,
+    "name": "Chima Simon Chinomnso",
+    "regNo": "2025/299117",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 62,
+    "name": "Chimamanda Jessica",
+    "regNo": "2025/300878",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 63,
+    "name": "Chimdiebube Jessica Nnawuba",
+    "regNo": "2024/282368",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 64,
+    "name": "Chimereze Kenneth Oluchukwu",
+    "regNo": "2025/296181",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 65,
+    "name": "Chinagor Iona",
+    "regNo": "2025/UNEC065",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 66,
+    "name": "Chinweuba Anasthesia Oluchukwu",
+    "regNo": "2024/283372",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 67,
+    "name": "Chioke Sopulu Ebenezer",
+    "regNo": "2025/UNEC067",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 68,
+    "name": "Christopher Chigozirim Praise",
+    "regNo": "2025/298090",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 69,
+    "name": "Chujor Jessica Ajuri",
+    "regNo": "2025/301068",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 70,
+    "name": "Chukwuemeka Chikamso Victor",
+    "regNo": "2025/296488",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 71,
+    "name": "Chukwuemeka Wonderful Chisom",
+    "regNo": "2025/298878",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 72,
+    "name": "Chukwuemezie Confidence Chiagoziem",
+    "regNo": "2025/291537",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 73,
+    "name": "Chukwuemezie Esther Chimamakamma",
+    "regNo": "2025/294866",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 74,
+    "name": "Chukwuka Brenda Chiamaka",
+    "regNo": "2025/290608",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 75,
+    "name": "Chukwuka Ijeoma Chiamaka",
+    "regNo": "2025/291068",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 76,
+    "name": "Cornelius Richard Ojochegbe",
+    "regNo": "2025/294783",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 77,
+    "name": "David Lucia Ikojo",
+    "regNo": "2025/298688",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 78,
+    "name": "Diarua Kenechukwu Godfrey",
+    "regNo": "2025/298240",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 79,
+    "name": "Dickson Nancy Chiamaka",
+    "regNo": "2025/290634",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 80,
+    "name": "Dike Chinedu George Chisom",
+    "regNo": "2024/277267",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 81,
+    "name": "Ebe Chidiogo Divinefavour",
+    "regNo": "2025/298218",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 82,
+    "name": "Eboigbe Jennifer",
+    "regNo": "2025/293410",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 83,
+    "name": "Ede Lucy Chinenye",
+    "regNo": "2025/298766",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 84,
+    "name": "Edeh Nmesoma Azubuike",
+    "regNo": "2025/UNEC084",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 85,
+    "name": "Edet Joshua Etim",
+    "regNo": "2025/293827",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 86,
+    "name": "Ejeh Amblessed Kamsiyochukwu",
+    "regNo": "2025/299524",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 87,
+    "name": "Ejeziem Onyinyechukwu Sylvia",
+    "regNo": "2025/300512",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 88,
+    "name": "Ejikeme Adaeze Tobiah",
+    "regNo": "2024/276346",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 89,
+    "name": "Ejimadu Akachukwu James",
+    "regNo": "2025/UNEC089",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 90,
+    "name": "Ejiyere Elizabeth Erhioghere",
+    "regNo": "2025/UNEC090",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 91,
+    "name": "Eke Chidubem David",
+    "regNo": "2024/279045",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 92,
+    "name": "Ekwedike Mary Ifeoma",
+    "regNo": "2025/292448",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 93,
+    "name": "Ekwo Clement Chukwunonso",
+    "regNo": "2025/290193",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 94,
+    "name": "Emedom Chinedu Innocent",
+    "regNo": "2014/196643",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 95,
+    "name": "Emelokwu Osinachi Benjamin",
+    "regNo": "2024/280824",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 96,
+    "name": "Emene Beulah Mfon",
+    "regNo": "2025/290295",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 97,
+    "name": "Emeribe Chukwuemeka Eric",
+    "regNo": "2025/290643",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 98,
+    "name": "Eneh Chinasa Jacinta",
+    "regNo": "2025/297002",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 99,
+    "name": "Enwereuzor Victoria Chiamaka",
+    "regNo": "2025/UNEC099",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 100,
+    "name": "Esu Wisdom Okon",
+    "regNo": "2025/295601",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 101,
+    "name": "Ettendo Brownson Virteous",
+    "regNo": "2025/290619",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 102,
+    "name": "Eugene Chinonso Ugwumba",
+    "regNo": "2025/UNEC102",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 103,
+    "name": "Ewang, Enwongo Imoh",
+    "regNo": "2025/291880",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 104,
+    "name": "Ewang, Ndifreke Imoh",
+    "regNo": "2025/292509",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 105,
+    "name": "Eze Cynthia Ugonna",
+    "regNo": "2024/278018",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 106,
+    "name": "Eze Immaculata Kosisochukwu",
+    "regNo": "2025/290325",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 107,
+    "name": "Eze Kosi Obinna",
+    "regNo": "2025/290265",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 108,
+    "name": "Eze Rejoice Amarachi",
+    "regNo": "2025/291222",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 109,
+    "name": "Eze Treasure Ifechukwu",
+    "regNo": "2024/283010",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 110,
+    "name": "Eze William Ekenedirichukwu",
+    "regNo": "2024/283709",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 111,
+    "name": "Ezeala Mmesoma Jessica",
+    "regNo": "2025/298740",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 112,
+    "name": "Ezeani Esther Ifunayachukwu",
+    "regNo": "2025/295934",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 113,
+    "name": "Ezebuilo Clinton Chikamso",
+    "regNo": "2025/298414",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 114,
+    "name": "Ezeibe Irene Chidimma",
+    "regNo": "2025/291102",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 115,
+    "name": "Ezeife Ifunanya",
+    "regNo": "2025/291102",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 116,
+    "name": "Ezeigbo Chukwuemelie Divinefavour",
+    "regNo": "2025/291112",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 117,
+    "name": "Ezeilo Divine Favor C",
+    "regNo": "2025/291112",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 118,
+    "name": "Ezejah Anthony Daberechukwu",
+    "regNo": "2024/283589",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 119,
+    "name": "Ezekwu Chinonso Freeman",
+    "regNo": "2025/290430",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 120,
+    "name": "Ezenwoye Chidinma Perpetual",
+    "regNo": "2025/291252",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 121,
+    "name": "Ezeonyia Daniel Sochimaobi",
+    "regNo": "2025/UNEC121",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 122,
+    "name": "Festus Faith Mmesoma",
+    "regNo": "2025/292459",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 123,
+    "name": "Francis Victor Cagentine",
+    "regNo": "2025/UNEC123",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 124,
+    "name": "Franklin Amos Ifechukwu Anita",
+    "regNo": "2025/290599",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 125,
+    "name": "Friday Felicity",
+    "regNo": "2025/297569",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 126,
+    "name": "George Jennifer",
+    "regNo": "2025/UNEC126",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 127,
+    "name": "Harmony Tamunoibelemamie Goodluck",
+    "regNo": "2025/290414",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 128,
+    "name": "Henry Oshokunuoduo Favour",
+    "regNo": "2025/292461",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 129,
+    "name": "Ibegbulem Chinemerem Justin",
+    "regNo": "2025/291556",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 130,
+    "name": "Ibemgbo Sharon K",
+    "regNo": "2025/290173",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 131,
+    "name": "Idike Chimamanda Jessica",
+    "regNo": "2025/UNEC131",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 132,
+    "name": "Ifeanyichukwu Daberechukwu",
+    "regNo": "2025/UNEC132",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 133,
+    "name": "Ndah Maryann",
+    "regNo": "2025/UNEC133",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 134,
+    "name": "Ifeanyichukwu Evidence Onyinyechukwu",
+    "regNo": "2025/295928",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 135,
+    "name": "Igono Joesmary Chukwumaijem",
+    "regNo": "2025/293420",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 136,
+    "name": "Igwebuike Jonathan Akalunachukwu",
+    "regNo": "2025/291532",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 137,
+    "name": "Ihevueme Emmanuel Chinemerem",
+    "regNo": "2025/292254",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 138,
+    "name": "Ikechukwu Daniel Chinemeogo",
+    "regNo": "2025/297204",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 139,
+    "name": "Ikegbulam Glorify Osinachi",
+    "regNo": "2024/276835",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 140,
+    "name": "Ikelionwu Henry Chijindu",
+    "regNo": "2024/277483",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 141,
+    "name": "Ikwu Gertrude Kelechi",
+    "regNo": "2025/298775",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 142,
+    "name": "Iloani Chinemerem Chinazaekpere",
+    "regNo": "2025/298404",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 143,
+    "name": "Ilona Daniella Kenechukwu",
+    "regNo": "2025/291898",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 144,
+    "name": "Iloputaife Prisca Chioma",
+    "regNo": "2024/278786",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 145,
+    "name": "Imohimi Oisedebame Flourish",
+    "regNo": "2025/297051",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 146,
+    "name": "Iroegbulam-O Immapaul Onuoha",
+    "regNo": "2025/297016",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 147,
+    "name": "Iyiani Karen Oluomachi",
+    "regNo": "2025/297025",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 148,
+    "name": "Iyke-Ani Chinwendum Uchechi",
+    "regNo": "2025/299304",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 149,
+    "name": "Izuchukwu Mary Obiagaeli",
+    "regNo": "2024/281916",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 150,
+    "name": "Jackson Mary",
+    "regNo": "2025/290634",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 151,
+    "name": "Jideofo Diamond .C",
+    "regNo": "2025/291896",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 152,
+    "name": "John Peace Amarachi",
+    "regNo": "2025/290290",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 153,
+    "name": "Johnson Mary-Ella Okon",
+    "regNo": "2025/291892",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 154,
+    "name": "Jonah Chioma Janette",
+    "regNo": "2025/292515",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 155,
+    "name": "Joseph Christabel Chiamaka",
+    "regNo": "2025/291202",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 156,
+    "name": "Kanayochukwu Theresa Chimuanya",
+    "regNo": "2025/291890",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 157,
+    "name": "Kanu Amarachi Gift",
+    "regNo": "2025/299578",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 158,
+    "name": "Kingsley David Chijioke",
+    "regNo": "2025/291255",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 159,
+    "name": "Korapera Aondona Daniel",
+    "regNo": "2025/UNEC159",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 160,
+    "name": "Korieh Andrea Zainab",
+    "regNo": "2025/UNEC160",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 161,
+    "name": "Linus Nedolisa Kenny",
+    "regNo": "2024/277368",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 162,
+    "name": "Liyas Praise Ifechukwu",
+    "regNo": "2025/291121",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 163,
+    "name": "Madoma Chimere B",
+    "regNo": "2025/290184",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 164,
+    "name": "Madu Chidera Ebenezer",
+    "regNo": "2025/290656",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 165,
+    "name": "Maduako Eberechukwu M.F",
+    "regNo": "2025/300703",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 166,
+    "name": "Maduakor Mitchell Chigozirim",
+    "regNo": "2025/290323",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 167,
+    "name": "Maduka Blessing Chinemerem",
+    "regNo": "2025/291165",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 168,
+    "name": "Maduka Precious Chidimma",
+    "regNo": "2025/300732",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 169,
+    "name": "Madukwe Victoria",
+    "regNo": "2025/291163",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 170,
+    "name": "Mbah Emmanuella Odinakachukwu",
+    "regNo": "2025/299910",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 171,
+    "name": "Mbajunwa Deborah Oluchukwu",
+    "regNo": "2025/290308",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 172,
+    "name": "Michael Gift Onyinyechi",
+    "regNo": "2024/278017",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 173,
+    "name": "Michael Johnbosco",
+    "regNo": "2025/29123",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 174,
+    "name": "Mmaka Hillary Chimaobi",
+    "regNo": "2025/290653",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 175,
+    "name": "Moses Joy Uyirencoshe",
+    "regNo": "2025/296212",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 176,
+    "name": "Musa Abba Mohammed",
+    "regNo": "2025/290465",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 177,
+    "name": "Ndomadu-Samuel Victory O",
+    "regNo": "2025/299264",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 178,
+    "name": "Ndu Chinemerem Rita",
+    "regNo": "2024/281300",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 179,
+    "name": "Ndu Nneoma Victoria",
+    "regNo": "2025/291114",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 180,
+    "name": "Ndubuisi Nancy Nkemjika",
+    "regNo": "2025/296202",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 181,
+    "name": "Ndubuisi Onyinyechi Gift",
+    "regNo": "2025/294853",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 182,
+    "name": "Ndukwe Chisom Praise",
+    "regNo": "2025/291192",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 183,
+    "name": "Nduoma Chiemerie Blessing",
+    "regNo": "2025/290141",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 184,
+    "name": "Njoku Chinweoke Emmanuel",
+    "regNo": "2025/291591",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 185,
+    "name": "Nnabuife Stella Chukwuemelia",
+    "regNo": "2025/294340",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 186,
+    "name": "Nnadi Marvellous Chidera",
+    "regNo": "2025/290307",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 187,
+    "name": "Nnaemeka Loveth Onyiyechi",
+    "regNo": "2025/288879",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 188,
+    "name": "Nna-Emmanuel Joshua Ebube",
+    "regNo": "2025/291901",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 189,
+    "name": "Nnaji Chimamkpam Favour",
+    "regNo": "2025/297503",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 190,
+    "name": "Nnaji Glory Chioma",
+    "regNo": "2025/290137",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 191,
+    "name": "Nnajieze Cynthia Ujunwa",
+    "regNo": "2025/290594",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 192,
+    "name": "Nnamani Chiamaka Joyce",
+    "regNo": "2025/290592",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 193,
+    "name": "Nnamani Ebubechukwu Jane",
+    "regNo": "2025/291110",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 194,
+    "name": "Nnamani Shedrack Chibuzo",
+    "regNo": "2025/297491",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 195,
+    "name": "Nnamene Esther Ifunaya",
+    "regNo": "2025/290660",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 196,
+    "name": "Nnawuba Chimdiebube Jessica",
+    "regNo": "2024/282368",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 197,
+    "name": "Nneji Gift Amarachukwu",
+    "regNo": "2025/298415",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 198,
+    "name": "Nnubia Chinemerem Vanessa",
+    "regNo": "2025/290146",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 199,
+    "name": "Noah Maryann",
+    "regNo": "2025/UNEC199",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 200,
+    "name": "Nwabueze Chiamaka",
+    "regNo": "2025/291500",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 201,
+    "name": "Nwachukwu Deborah Ebube",
+    "regNo": "2025/291876",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 202,
+    "name": "Nwachukwu Kelvin Nzubechukwu",
+    "regNo": "2025/290285",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 203,
+    "name": "Nwachukwu-Agu Perfection Chinazor",
+    "regNo": "2025/298177",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 204,
+    "name": "Nwadialor Deborah Chukwuma",
+    "regNo": "2025/UNEC204",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 205,
+    "name": "Nwaezeapu Nneoma Esther Gift",
+    "regNo": "2025/298849",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 206,
+    "name": "Nwafor Ezichi Precious",
+    "regNo": "2025/292251",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 207,
+    "name": "Nwafor Victory Akonuche",
+    "regNo": "2025/297571",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 208,
+    "name": "Nwaiwu Chiemela Chidubem",
+    "regNo": "2025/290134",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 209,
+    "name": "Nwajiaku Amarachi R",
+    "regNo": "2025/290136",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 210,
+    "name": "Nwankwo Makuochukwu Emmanuel",
+    "regNo": "2025/291258",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 211,
+    "name": "Nwankwo Maryann",
+    "regNo": "2025/UNEC211",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 212,
+    "name": "Nwankwo Sunday Emmanuel",
+    "regNo": "2025/300705",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 213,
+    "name": "Nwaonu Chiamaka",
+    "regNo": "2025/298735",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 214,
+    "name": "Nwatu Destiny Munachimso",
+    "regNo": "2024/282287",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 215,
+    "name": "Nwigwe Mmesoma Marycynthia",
+    "regNo": "2025/291258",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 216,
+    "name": "Nwobi Ejine Ifeoma",
+    "regNo": "2025/290306",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 217,
+    "name": "Nwobodo Favour Somma",
+    "regNo": "2024/283379",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 218,
+    "name": "Nwodo Kachikara Chioka",
+    "regNo": "2025/298405",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 219,
+    "name": "Nwojo Goodness Normac",
+    "regNo": "2025/297556",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 220,
+    "name": "Nwosuagwu Chinaza",
+    "regNo": "2025/298737",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 221,
+    "name": "Nzeh Ezeugo Michael Chitirugo",
+    "regNo": "2025/291899",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 222,
+    "name": "Nzeribe Chinaelolum Julia",
+    "regNo": "2025/290658",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 223,
+    "name": "Obasi-Ngwuta Ezinne Victoria",
+    "regNo": "2025/298200",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 224,
+    "name": "Obasi-Nwaogu Imeldadeolga Nneomachukwu",
+    "regNo": "2025/291199",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 225,
+    "name": "Obi Ogbo Mary Great Princess",
+    "regNo": "2025/290277",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 226,
+    "name": "Obidigbo Chiamaka Rita",
+    "regNo": "2025/292521",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 227,
+    "name": "Obikwere Kosiso Jennifer",
+    "regNo": "2025/290600",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 228,
+    "name": "Obinna David Ihechidere",
+    "regNo": "2025/297748",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 229,
+    "name": "Obiora Assumpta Chinonye",
+    "regNo": "2025/292456",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 230,
+    "name": "Obodo Miriam Jennifer",
+    "regNo": "2025/UNEC230",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 231,
+    "name": "Obulu Ifechukwu Isidore",
+    "regNo": "2025/UNEC231",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 232,
+    "name": "Odaah Kingsley Kelechi",
+    "regNo": "2025/298852",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 233,
+    "name": "Odey Joseph Beshi",
+    "regNo": "2025/290397",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 234,
+    "name": "Odo Onyinyechi Pascaline",
+    "regNo": "2025/298092",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 235,
+    "name": "Odoh Samson Jennifer",
+    "regNo": "2025/291204",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 236,
+    "name": "Odome Amarachi Testimony",
+    "regNo": "2025/298871",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 237,
+    "name": "Odor Samuel Chinazaekpere",
+    "regNo": "2025/293421",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 238,
+    "name": "Ogaba Chanell Oledo",
+    "regNo": "2025/290610",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 239,
+    "name": "Ogakwu Joy Ngozi",
+    "regNo": "2025/UNEC239",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 240,
+    "name": "Ogbodo Mmesoma Jennifer",
+    "regNo": "2025/291900",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 241,
+    "name": "Ogbonna Deborah Chidera",
+    "regNo": "2025/294784",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 242,
+    "name": "Ogbonna Godsent Chukwugozigom",
+    "regNo": "2025/298734",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 243,
+    "name": "Ogbonna Onyedikachi Gabriel",
+    "regNo": "2025/291119",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 244,
+    "name": "Oghotuama Doreen Chimamada",
+    "regNo": "2025/298851",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 245,
+    "name": "Ogwu Michael Onyedikachi",
+    "regNo": "2025/297145",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 246,
+    "name": "Ohaabueze Adachukwu Makouchukwu",
+    "regNo": "2025/297064",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 247,
+    "name": "Ohiere Glory Godstime",
+    "regNo": "2025/296547",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 248,
+    "name": "Ojie Delbert Obama",
+    "regNo": "2025/291141",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 249,
+    "name": "Ojike Kingsley Onuoha",
+    "regNo": "2025/UNEC249",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 250,
+    "name": "Okafor Chibuike Charles",
+    "regNo": "2024/279861",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 251,
+    "name": "Okafor Esther Favour",
+    "regNo": "2025/UNEC251",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 252,
+    "name": "Oke Nnabugwu Kingsley",
+    "regNo": "2025/298088",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 253,
+    "name": "Okechukwu Adaeze Rosemary",
+    "regNo": "2025/291872",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 254,
+    "name": "Okechukwu Ijeamaka Success",
+    "regNo": "2025/291139",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 255,
+    "name": "Okeke Chimdindu Praise",
+    "regNo": "2025/291866",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 256,
+    "name": "Okeke Chioma Winner",
+    "regNo": "2025/297736",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 257,
+    "name": "Okeke Chukwuemeka Ephraim",
+    "regNo": "2025/291106",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 258,
+    "name": "Okeke Ikechukwu Wisdom",
+    "regNo": "2025/299265",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 259,
+    "name": "Okekeocha Elvis Chikelue",
+    "regNo": "2025/291559",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 260,
+    "name": "Okenwa Chikamso Marycane",
+    "regNo": "2024/282814",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 261,
+    "name": "Okenwa Munachimso Rejoice",
+    "regNo": "2025/298181",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 262,
+    "name": "Okigbo Ihechiuwa Abiama",
+    "regNo": "2025/292518",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 263,
+    "name": "Okocha Simongold Chinonso",
+    "regNo": "2025/298915",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 264,
+    "name": "Okoli Chinonso Emerald",
+    "regNo": "2025/298416",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 265,
+    "name": "Okoli Ifeadikachukwu Emmanuella",
+    "regNo": "2024/275391",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 266,
+    "name": "Okolo Ifeabata Chiziterem",
+    "regNo": "2025/290150",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 267,
+    "name": "Okolo Onyinyechukwu Ruth",
+    "regNo": "2024/282635",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 268,
+    "name": "Okolo Ugonna Okedinachi",
+    "regNo": "2025/292513",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 269,
+    "name": "Okologbu-Njoku Stanley Munachimso",
+    "regNo": "2025/291478",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 270,
+    "name": "Okonkwo Adaeze Jane",
+    "regNo": "2025/298333",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 271,
+    "name": "Okonkwo Ebubechi G",
+    "regNo": "2025/291427",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 272,
+    "name": "Okonkwo Favour Chiamaka",
+    "regNo": "2025/299279",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 273,
+    "name": "Okonkwo Folake G",
+    "regNo": "2025/291427",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 274,
+    "name": "Okorie Ogochukwu Vivian",
+    "regNo": "2025/298171",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 275,
+    "name": "Okorji Adaora Emmanuella",
+    "regNo": "2025/283894",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 276,
+    "name": "Okoro Amarachi Janequeendalin",
+    "regNo": "2025/UNEC276",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 277,
+    "name": "Okoro Joy Ifeoma",
+    "regNo": "2025/291083",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 278,
+    "name": "Okoro Michael Christian",
+    "regNo": "2025/UNEC278",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 279,
+    "name": "Okoroigwe Noel Nnaemeka",
+    "regNo": "2025/201109",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 280,
+    "name": "Okoye Alex Ifeanyichuwu",
+    "regNo": "2025/300478",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 281,
+    "name": "Okumah Chikaima Zita",
+    "regNo": "2025/296497",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 282,
+    "name": "Okwuaka Chike Benedict",
+    "regNo": "2025/298328",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 283,
+    "name": "Olu Chukwuemeka Felix",
+    "regNo": "2025/299260",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 284,
+    "name": "Oluonye Maduabuchi Frank",
+    "regNo": "2025/298770",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 285,
+    "name": "Omama Greatwealth",
+    "regNo": "2025/297505",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 286,
+    "name": "Omeje Gabriel Chinwekene",
+    "regNo": "2025/298325",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 287,
+    "name": "Omeke Cynthia Chidiebere",
+    "regNo": "2025/298172",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 288,
+    "name": "Omoaka Gift Eboserem",
+    "regNo": "2025/298201",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 289,
+    "name": "Omojo James Imidowojo",
+    "regNo": "2025/299134",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 290,
+    "name": "Omotobojohwo Victory",
+    "regNo": "2025/296156",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 291,
+    "name": "Onuegbu Chibuzor Oliver",
+    "regNo": "2025/290145",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 292,
+    "name": "Onuoha Albright Promise I",
+    "regNo": "2025/290648",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 293,
+    "name": "Onwe Esther Ebubechukwu",
+    "regNo": "2025/291895",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 294,
+    "name": "Onwuajuora Jessica Onyinye",
+    "regNo": "2025/291227",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 295,
+    "name": "Onwuka Kenechukwu Ifeoma",
+    "regNo": "2025/UNEC295",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 296,
+    "name": "Onwuka Sharon-Pearl Chinonso",
+    "regNo": "2025/290603",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 297,
+    "name": "Onyeharam Chiamaka Godsgift",
+    "regNo": "2025/290171",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 298,
+    "name": "Onyeji Ketochukwu Alexander",
+    "regNo": "2025/291877",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 299,
+    "name": "Onyekachi Excel Amarachi",
+    "regNo": "2025/292511",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 300,
+    "name": "Onyeke Favour Chigozie",
+    "regNo": "2025/291530",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 301,
+    "name": "Onyema Nkemjika Nuella",
+    "regNo": "2025/298067",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 302,
+    "name": "Onyema Shammah Adaeze",
+    "regNo": "2025/298777",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 303,
+    "name": "Onyemelukwe Chimamanda Ifeoluwa",
+    "regNo": "2025/291522",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 304,
+    "name": "Onyia Chukwuebuka Jesse",
+    "regNo": "2025/292467",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 305,
+    "name": "Onyia Serah Chikaosoro",
+    "regNo": "2025/297507",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 306,
+    "name": "Onyilimba Mmesoma Claire",
+    "regNo": "2025/291561",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 307,
+    "name": "Opara Ozioma",
+    "regNo": "2025/296245",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 308,
+    "name": "Oraekie Joseph Chigozie",
+    "regNo": "2025/296514",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 309,
+    "name": "Osekwu Marygift Nkechinyerem",
+    "regNo": "2025/290637",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 310,
+    "name": "Osuji Chinenyenwa Frances",
+    "regNo": "2025/297031",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 311,
+    "name": "Osy-Nnamani Martina Nkemdilim",
+    "regNo": "2025/249414",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 312,
+    "name": "Otigba Somtochukwu Divine",
+    "regNo": "2024/274663",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 313,
+    "name": "Ozoanigbo Christabel Chiemerie",
+    "regNo": "2025/290392",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 314,
+    "name": "Philemon Amos",
+    "regNo": "2025/293408",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 315,
+    "name": "Reuben Chinagorom Racheal",
+    "regNo": "2025/298778",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 316,
+    "name": "Reuben Chisimdi Favour",
+    "regNo": "2025/297054",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 317,
+    "name": "Sabastine Chukwunonyerem Emmanuel",
+    "regNo": "2025/290644",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 318,
+    "name": "Salami Ojonogwa Priscilla",
+    "regNo": "2025/290215",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 319,
+    "name": "Shaibu Mona Peter",
+    "regNo": "2025/291071",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 320,
+    "name": "Shege Victor Ehimen",
+    "regNo": "2025/296515",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 321,
+    "name": "Simeon Precious Chidalu",
+    "regNo": "2025/292446",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 322,
+    "name": "Tamunoibelemamie Goodluck Harmony",
+    "regNo": "2025/290414",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 323,
+    "name": "Ubesie Bubechiuzo Hadassah",
+    "regNo": "2025/290605",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 324,
+    "name": "Udeanyinya Francis Nzube",
+    "regNo": "2025/299261",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 325,
+    "name": "Udeh Evidence Chimbusomma",
+    "regNo": "2025/297515",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 326,
+    "name": "Uguru Nmesoma Euphemia",
+    "regNo": "2025/298220",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 327,
+    "name": "Ugwu Bimbola Favour",
+    "regNo": "2025/290511",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 328,
+    "name": "Ugwu Chiamaka Faith",
+    "regNo": "2025/UNEC328",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 329,
+    "name": "Ugwu Chidera A",
+    "regNo": "2025/290468",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 330,
+    "name": "Ugwu Chiemerie Divine Favour",
+    "regNo": "2025/291888",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 331,
+    "name": "Ugwu Emmanuel Chukwuemeka",
+    "regNo": "2024/274642",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 332,
+    "name": "Ugwu Emmanuella Chidera",
+    "regNo": "2025/299903",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 333,
+    "name": "Ugwu Favour Nneoma",
+    "regNo": "2024/281461",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 334,
+    "name": "Ugwu Kamsiyochukwu Gerald",
+    "regNo": "2025/298743",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 335,
+    "name": "Ugwuanyi Chizaram Blessing",
+    "regNo": "2025/292464",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 336,
+    "name": "Ugwuanyi Emmanuel Emeka",
+    "regNo": "2024/282780",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 337,
+    "name": "Ugwueze Amara Chi Rosemary",
+    "regNo": "2025/UNEC337",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 338,
+    "name": "Ugwueze Anselm U",
+    "regNo": "2025/292523",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 339,
+    "name": "Ugwumba Eugene Chinonso",
+    "regNo": "2025/UNEC339",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 340,
+    "name": "Ugwuoke Amarachi Rosemary",
+    "regNo": "2025/292453",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 341,
+    "name": "Ugwuzor Angela Chiamaka",
+    "regNo": "2025/297067",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 342,
+    "name": "Uka Esther Chinenye",
+    "regNo": "2025/290181",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 343,
+    "name": "Ukachi Echezia",
+    "regNo": "2025/291181",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 344,
+    "name": "Ukadike Chibuikem Bright",
+    "regNo": "2025/290324",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 345,
+    "name": "Ukanna Ikenna Michael Midas",
+    "regNo": "2025/291479",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 346,
+    "name": "Ukpabia Ann Odinaka",
+    "regNo": "2025/294224",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 347,
+    "name": "Ukpong Emediong Quincy",
+    "regNo": "2025/296215",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 348,
+    "name": "Umeh Gloria Oluchukwu",
+    "regNo": "2025/298069",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 349,
+    "name": "Uranta Ibimina Faith",
+    "regNo": "2025/300457",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 350,
+    "name": "Usulor Nmachukwu Maryann",
+    "regNo": "2025/293416",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 351,
+    "name": "Uwaoma David Chigbogu",
+    "regNo": "2025/291597",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 352,
+    "name": "Uzoma Divine Ebuka",
+    "regNo": "2025/UNEC352",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 353,
+    "name": "Uzoma Treasure Ifeoma",
+    "regNo": "2025/245616",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 354,
+    "name": "Uzuegbu Mmesoma Chukwukamso",
+    "regNo": "2020/242288",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 355,
+    "name": "Vera Chidubem",
+    "regNo": "2025/UNEC355",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  },
+  {
+    "sn": 356,
+    "name": "Vitus Ifechukwu Benevolent",
+    "regNo": "2025/291570",
+    "level": "400 Level",
+    "faculty": "Faculty of Law",
+    "campus": "UNEC (Enugu Campus)",
+    "class": "030 Law Class"
+  }
+]

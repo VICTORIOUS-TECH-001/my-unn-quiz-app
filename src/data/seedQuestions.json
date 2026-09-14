@@ -1,0 +1,842 @@
+[
+  {
+    "id": "q1",
+    "questionText": "What is the supreme law of the Federal Republic of Nigeria?",
+    "options": {
+      "A": "Criminal Code Act",
+      "B": "Constitution of the Federal Republic of Nigeria",
+      "C": "Evidence Act",
+      "D": "Electoral Act"
+    },
+    "correctAnswer": "B",
+    "explanation": "Section 1(1) of the 1999 Constitution provides that the Constitution is supreme and its provisions shall have binding force on all authorities and persons throughout Nigeria."
+  },
+  {
+    "id": "q2",
+    "questionText": "Under Section 1(3) of the 1999 Constitution, if any other law is inconsistent with the provisions of the Constitution, what happens?",
+    "options": {
+      "A": "Both laws shall apply concurrently",
+      "B": "The Constitution shall yield to customary law",
+      "C": "The other law shall to the extent of the inconsistency be void",
+      "D": "The President will decide which law applies"
+    },
+    "correctAnswer": "C",
+    "explanation": "Section 1(3) states that if any other law is inconsistent with the provisions of this Constitution, this Constitution shall prevail, and that other law shall to the extent of the inconsistency be void."
+  },
+  {
+    "id": "q3",
+    "questionText": "The doctrine of separation of powers in the Nigerian Constitution divides governmental powers among which three organs?",
+    "options": {
+      "A": "Executive, Military, and Judiciary",
+      "B": "Legislature, Executive, and Judiciary",
+      "C": "Senate, House of Representatives, and Presidency",
+      "D": "Federal, State, and Local Government"
+    },
+    "correctAnswer": "B",
+    "explanation": "Sections 4, 5, and 6 of the 1999 CFRN vest legislative, executive, and judicial powers in the Legislature, Executive, and Judiciary respectively."
+  },
+  {
+    "id": "q4",
+    "questionText": "Which section of the 1999 Constitution vests the judicial powers of the Federation in the courts established for the Federation?",
+    "options": {
+      "A": "Section 4",
+      "B": "Section 5",
+      "C": "Section 6",
+      "D": "Section 8"
+    },
+    "correctAnswer": "C",
+    "explanation": "Section 6 vests judicial powers in the courts established for the Federation."
+  },
+  {
+    "id": "q5",
+    "questionText": "Fundamental Human Rights are primarily entrenched in which Chapter of the 1999 Constitution of Nigeria?",
+    "options": {
+      "A": "Chapter I",
+      "B": "Chapter II",
+      "C": "Chapter III",
+      "D": "Chapter IV"
+    },
+    "correctAnswer": "D",
+    "explanation": "Chapter IV (Sections 33 to 46) contains the Fundamental Rights of citizens."
+  },
+  {
+    "id": "q6",
+    "questionText": "Fundamental Objectives and Directive Principles of State Policy are enshrined in which Chapter of the Constitution?",
+    "options": {
+      "A": "Chapter I",
+      "B": "Chapter II",
+      "C": "Chapter IV",
+      "D": "Chapter VII"
+    },
+    "correctAnswer": "B",
+    "explanation": "Chapter II outlines the Fundamental Objectives and Directive Principles of State Policy."
+  },
+  {
+    "id": "q7",
+    "questionText": "In Archbishop Anthony Olubunmi Okogie v. Attorney-General of Lagos State (1981), what did the Court of Appeal hold regarding Chapter II of the Constitution?",
+    "options": {
+      "A": "Chapter II rights are fully justiciable and enforceable in court",
+      "B": "Chapter II provisions are non-justiciable unless made justiciable by another law",
+      "C": "Chapter II supersedes Chapter IV",
+      "D": "Chapter II applies only to military administrations"
+    },
+    "correctAnswer": "B",
+    "explanation": "Provisions of Chapter II are generally non-justiciable pursuant to section 6(6)(c) of the Constitution."
+  },
+  {
+    "id": "q8",
+    "questionText": "Which section of the 1999 Constitution guarantees the Right to Life?",
+    "options": {
+      "A": "Section 33",
+      "B": "Section 34",
+      "C": "Section 35",
+      "D": "Section 36"
+    },
+    "correctAnswer": "A",
+    "explanation": "Section 33 guarantees that every person has a right to life, subject to constitutional exceptions."
+  },
+  {
+    "id": "q9",
+    "questionText": "Right to Dignity of Human Person is protected under which Section of the 1999 Constitution?",
+    "options": {
+      "A": "Section 33",
+      "B": "Section 34",
+      "C": "Section 35",
+      "D": "Section 36"
+    },
+    "correctAnswer": "B",
+    "explanation": "Section 34 protects the right to dignity of human person and prohibits torture, inhuman or degrading treatment."
+  },
+  {
+    "id": "q10",
+    "questionText": "The fundamental right to Fair Hearing is provided under which section of the Constitution?",
+    "options": {
+      "A": "Section 35",
+      "B": "Section 36",
+      "C": "Section 37",
+      "D": "Section 38"
+    },
+    "correctAnswer": "B",
+    "explanation": "Section 36 guarantees the right to fair hearing within a reasonable time by an independent and impartial court or tribunal."
+  },
+  {
+    "id": "q11",
+    "questionText": "The Latin maxim 'Audi alteram partem' signifies:",
+    "options": {
+      "A": "No one should be a judge in his own cause",
+      "B": "Hear the other party / give both sides a fair hearing",
+      "C": "Let the buyer beware",
+      "D": "Where there is a right, there is a remedy"
+    },
+    "correctAnswer": "B",
+    "explanation": "Audi alteram partem means 'listen to the other side' - a pillar of natural justice."
+  },
+  {
+    "id": "q12",
+    "questionText": "The rule against bias in natural justice is expressed in the Latin maxim:",
+    "options": {
+      "A": "Nemo dat quod non habet",
+      "B": "Nemo judex in causa sua",
+      "C": "Ignorantia juris non excusat",
+      "D": "Res ipsa loquitur"
+    },
+    "correctAnswer": "B",
+    "explanation": "Nemo judex in causa sua means no person shall be a judge in their own cause."
+  },
+  {
+    "id": "q13",
+    "questionText": "What is the highest appellate court in Nigeria?",
+    "options": {
+      "A": "Federal High Court",
+      "B": "Court of Appeal",
+      "C": "Supreme Court of Nigeria",
+      "D": "Constitutional Tribunal"
+    },
+    "correctAnswer": "C",
+    "explanation": "The Supreme Court of Nigeria is the apex court of the land under Section 230 of the 1999 Constitution."
+  },
+  {
+    "id": "q14",
+    "questionText": "Who appoints the Chief Justice of Nigeria on the recommendation of the National Judicial Council (NJC)?",
+    "options": {
+      "A": "The Nigerian Bar Association",
+      "B": "The President, subject to confirmation by the Senate",
+      "C": "The Speaker of the House of Representatives",
+      "D": "The Council of State"
+    },
+    "correctAnswer": "B",
+    "explanation": "Under Section 231(1), the President appoints the CJN on NJC recommendation subject to Senate confirmation."
+  },
+  {
+    "id": "q15",
+    "questionText": "Under Section 4 of the 1999 Constitution, the legislative powers of the Federal Republic of Nigeria are vested in:",
+    "options": {
+      "A": "The National Assembly consisting of the Senate and House of Representatives",
+      "B": "The Federal Executive Council",
+      "C": "The Supreme Court",
+      "D": "The Governors' Forum"
+    },
+    "correctAnswer": "A",
+    "explanation": "Section 4(1) vests Federal legislative powers in the National Assembly consisting of a Senate and a House of Representatives."
+  },
+  {
+    "id": "q16",
+    "questionText": "How many senatorial districts are there in each State of the Federation of Nigeria?",
+    "options": {
+      "A": "Two",
+      "B": "Three",
+      "C": "Four",
+      "D": "Five"
+    },
+    "correctAnswer": "B",
+    "explanation": "Section 48 provides that the Senate consists of three Senators from each State and one from the Federal Capital Territory."
+  },
+  {
+    "id": "q17",
+    "questionText": "What is the total membership of the House of Representatives in the National Assembly?",
+    "options": {
+      "A": "109",
+      "B": "360",
+      "C": "365",
+      "D": "400"
+    },
+    "correctAnswer": "B",
+    "explanation": "Section 49 provides that the House of Representatives shall consist of 360 members representing constituencies."
+  },
+  {
+    "id": "q18",
+    "questionText": "The Exclusive Legislative List contained in the Second Schedule of the Constitution is within the sole purview of which tier of government?",
+    "options": {
+      "A": "State Houses of Assembly",
+      "B": "Federal National Assembly",
+      "C": "Local Government Councils",
+      "D": "Both Federal and State concurrently"
+    },
+    "correctAnswer": "B",
+    "explanation": "Matters in the Exclusive Legislative List are exclusively legislated on by the National Assembly."
+  },
+  {
+    "id": "q19",
+    "questionText": "The Concurrent Legislative List allows legislation by:",
+    "options": {
+      "A": "The National Assembly and State Houses of Assembly",
+      "B": "State Governments and Traditional Rulers",
+      "C": "Local Governments only",
+      "D": "Judiciary and Executive"
+    },
+    "correctAnswer": "A",
+    "explanation": "Both the National Assembly and State Houses of Assembly can make laws on items in the Concurrent Legislative List."
+  },
+  {
+    "id": "q20",
+    "questionText": "According to the Doctrine of Covering the Field, what occurs when a valid Federal enactment covers the whole subject matter of a State law?",
+    "options": {
+      "A": "The Federal law is voided",
+      "B": "The State law is put in abeyance / deemed inoperative",
+      "C": "Both laws merge into one statute",
+      "D": "The matter goes to the Court of Arbitration"
+    },
+    "correctAnswer": "B",
+    "explanation": "See A.G. Abia State v. A.G. Federation (2002). The State law becomes inoperative or dormant to the extent of coverage."
+  },
+  {
+    "id": "q21",
+    "questionText": "Which Section of the 1999 Constitution provides for Citizenship by Birth, Registration, and Naturalization?",
+    "options": {
+      "A": "Sections 25, 26, and 27",
+      "B": "Sections 10, 11, and 12",
+      "C": "Sections 40, 41, and 42",
+      "D": "Sections 60, 61, and 62"
+    },
+    "correctAnswer": "A",
+    "explanation": "Chapter III (Sections 25-27) covers Citizenship by Birth, Registration, and Naturalization."
+  },
+  {
+    "id": "q22",
+    "questionText": "Can a Nigerian citizen by birth be deprived of their citizenship under the 1999 Constitution?",
+    "options": {
+      "A": "Yes, by an executive order of the President",
+      "B": "No, constitutional deprivation under section 28/29 applies strictly to naturalized/registered citizens",
+      "C": "Yes, upon conviction for treasonable felony",
+      "D": "Yes, if they hold dual citizenship with Commonwealth countries"
+    },
+    "correctAnswer": "B",
+    "explanation": "Citizenship by birth cannot be involuntarily forfeited or revoked by executive fiat under Nigerian constitutional law."
+  },
+  {
+    "id": "q23",
+    "questionText": "Which constitutional case established that the Federal Government cannot unilaterally withhold statutory allocations due to local government councils?",
+    "options": {
+      "A": "A.G. Lagos State v. A.G. Federation (2004)",
+      "B": "Lakanmi v. A.G. Western State (1970)",
+      "C": "Fawehinmi v. Abacha (2000)",
+      "D": "Doherty v. Balewa (1961)"
+    },
+    "correctAnswer": "A",
+    "explanation": "The Supreme Court held that the President has no power to withhold statutory revenue allocation to Lagos State Local Governments."
+  },
+  {
+    "id": "q24",
+    "questionText": "In Nigerian constitutional jurisprudence, the rule of law principle was famously articulated in Military Governor of Lagos State v. Ojukwu (1986) as requiring:",
+    "options": {
+      "A": "Executive orders prevail over judicial orders in military regimes",
+      "B": "The state must subject itself to the rule of law and court orders without resort to self-help",
+      "C": "Court injunctions are advisory only",
+      "D": "Private citizens cannot sue military governors"
+    },
+    "correctAnswer": "B",
+    "explanation": "Justice Kayode Eso JSC held that the executive must not resort to self-help and must obey lawful court orders."
+  },
+  {
+    "id": "q25",
+    "questionText": "What constitutional role does the National Judicial Council (NJC) perform in Nigeria?",
+    "options": {
+      "A": "Drafting bills for the Senate",
+      "B": "Advising the President and Governors on judicial appointments and exercising disciplinary control over judicial officers",
+      "C": "Prosecuting criminal offences",
+      "D": "Conducting general elections"
+    },
+    "correctAnswer": "B",
+    "explanation": "Third Schedule, Part I, Paragraph 21 of the 1999 CFRN outlines the powers of the NJC."
+  },
+  {
+    "id": "q26",
+    "questionText": "Section 10 of the 1999 Constitution provides that the Government of the Federation or of a State shall not:",
+    "options": {
+      "A": "Borrow foreign loans",
+      "B": "Adopt any religion as State Religion",
+      "C": "Appoint traditional rulers",
+      "D": "Form police forces"
+    },
+    "correctAnswer": "B",
+    "explanation": "Section 10 states: 'The Government of the Federation or of a State shall not adopt any religion as State Religion.'"
+  },
+  {
+    "id": "q27",
+    "questionText": "A proclamation of a state of emergency by the President under Section 305 requires approval by what fraction of the National Assembly?",
+    "options": {
+      "A": "Simple majority of members present",
+      "B": "Two-thirds majority of all members of each House",
+      "C": "Three-quarters of the Senate only",
+      "D": "Consensus of the National Defence Council"
+    },
+    "correctAnswer": "B",
+    "explanation": "Section 305(2) and (6) requires a two-thirds majority resolution of all members of each House of the National Assembly."
+  },
+  {
+    "id": "q28",
+    "questionText": "Which court possesses original jurisdiction in disputes between the Federation and a State or between States in Nigeria?",
+    "options": {
+      "A": "Federal High Court",
+      "B": "Court of Appeal",
+      "C": "Supreme Court of Nigeria",
+      "D": "National Industrial Court"
+    },
+    "correctAnswer": "C",
+    "explanation": "Section 232(1) confers original jurisdiction on the Supreme Court in any dispute between the Federation and a State, or between States."
+  },
+  {
+    "id": "q29",
+    "questionText": "The writ of Habeas Corpus is a constitutional remedy primarily designed to:",
+    "options": {
+      "A": "Order an administrative officer to perform a public duty",
+      "B": "Bring a detained person before the court to test the legality of their detention",
+      "C": "Quash the proceedings of an inferior tribunal",
+      "D": "Restrain a public official from usurpation of office"
+    },
+    "correctAnswer": "B",
+    "explanation": "Habeas corpus ad subjiciendum secures release from unlawful detention."
+  },
+  {
+    "id": "q30",
+    "questionText": "The order of Mandamus is issued by a court to:",
+    "options": {
+      "A": "Compel the performance of a public duty",
+      "B": "Prohibit an inferior tribunal from exceeding its jurisdiction",
+      "C": "Review legislation passed by parliament",
+      "D": "Order the arrest of an accused person"
+    },
+    "correctAnswer": "A",
+    "explanation": "Mandamus commands a public authority to perform a specified statutory or public duty."
+  },
+  {
+    "id": "q31",
+    "questionText": "Under Section 35 of the 1999 Constitution, any person arrested or detained shall have the right to remain silent until:",
+    "options": {
+      "A": "after consultation with a legal practitioner or any other person of his own choice",
+      "B": "his confession is recorded on video",
+      "C": "arraignment before a grand jury",
+      "D": "bail is paid in cash"
+    },
+    "correctAnswer": "A",
+    "explanation": "Section 35(2) provides the right to remain silent or avoid answering any question until after consultation with a legal practitioner."
+  },
+  {
+    "id": "q32",
+    "questionText": "The presumption of innocence in Nigerian criminal jurisprudence is codified in:",
+    "options": {
+      "A": "Section 36(5)",
+      "B": "Section 33(1)",
+      "C": "Section 40",
+      "D": "Section 44(2)"
+    },
+    "correctAnswer": "A",
+    "explanation": "Section 36(5) provides that every person charged with a criminal offence shall be presumed to be innocent until proven guilty according to law."
+  },
+  {
+    "id": "q33",
+    "questionText": "Can a person be convicted of a criminal offence in Nigeria unless that offence is defined and the penalty is prescribed in a written law?",
+    "options": {
+      "A": "Yes, under native law and custom",
+      "B": "No, under Section 36(12) of the 1999 Constitution",
+      "C": "Yes, at the discretion of the trial judge",
+      "D": "Yes, under military decrees"
+    },
+    "correctAnswer": "B",
+    "explanation": "Nullum crimen sine lege, nulla poena sine lege - entrenched in Section 36(12)."
+  },
+  {
+    "id": "q34",
+    "questionText": "Freedom of thought, conscience and religion is guaranteed by which section of the Constitution?",
+    "options": {
+      "A": "Section 37",
+      "B": "Section 38",
+      "C": "Section 39",
+      "D": "Section 40"
+    },
+    "correctAnswer": "B",
+    "explanation": "Section 38 guarantees freedom of thought, conscience and religion."
+  },
+  {
+    "id": "q35",
+    "questionText": "Section 39 of the 1999 Constitution guarantees the right to:",
+    "options": {
+      "A": "Freedom of expression and the press",
+      "B": "Freedom of peaceful assembly",
+      "C": "Right to personal liberty",
+      "D": "Right to private property"
+    },
+    "correctAnswer": "A",
+    "explanation": "Section 39 protects freedom of expression, including freedom to hold opinions and to receive and impart ideas."
+  },
+  {
+    "id": "q36",
+    "questionText": "The right of peaceful assembly and association to belong to any political party or trade union is protected under:",
+    "options": {
+      "A": "Section 36",
+      "B": "Section 38",
+      "C": "Section 40",
+      "D": "Section 42"
+    },
+    "correctAnswer": "C",
+    "explanation": "Section 40 guarantees the right to assemble freely and associate with others, including political parties and trade unions."
+  },
+  {
+    "id": "q37",
+    "questionText": "Right to freedom of movement throughout Nigeria and to reside in any part thereof is contained in:",
+    "options": {
+      "A": "Section 39",
+      "B": "Section 41",
+      "C": "Section 43",
+      "D": "Section 45"
+    },
+    "correctAnswer": "B",
+    "explanation": "Section 41 guarantees the right to move freely throughout Nigeria and to reside in any part."
+  },
+  {
+    "id": "q38",
+    "questionText": "Freedom from discrimination on grounds of sex, race, ethnic group, place of origin, or religion is anchored on:",
+    "options": {
+      "A": "Section 34",
+      "B": "Section 42",
+      "C": "Section 44",
+      "D": "Section 46"
+    },
+    "correctAnswer": "B",
+    "explanation": "Section 42 guarantees right to freedom from discrimination."
+  },
+  {
+    "id": "q39",
+    "questionText": "Section 44 of the 1999 Constitution prohibits the compulsory acquisition of property without:",
+    "options": {
+      "A": "Prompt payment of compensation",
+      "B": "A presidential warrant",
+      "C": "A resolution of the State Assembly",
+      "D": "The consent of the local council chairman"
+    },
+    "correctAnswer": "A",
+    "explanation": "Section 44 requires prompt payment of compensation for compulsorily acquired property."
+  },
+  {
+    "id": "q40",
+    "questionText": "Which court has special constitutional jurisdiction to enforce Fundamental Rights under Section 46 of the 1999 Constitution?",
+    "options": {
+      "A": "Customary Court of Appeal",
+      "B": "High Court of a State or Federal High Court",
+      "C": "Magistrate Court Grade I",
+      "D": "Area Court"
+    },
+    "correctAnswer": "B",
+    "explanation": "Section 46(1) provides that any person alleging contravention of Chapter IV rights may apply to a High Court in that State."
+  },
+  {
+    "id": "q41",
+    "questionText": "The Fundamental Rights (Enforcement Procedure) Rules 2009 were made by which Chief Justice of Nigeria pursuant to Section 46(3)?",
+    "options": {
+      "A": "Hon. Justice Idris Legbo Kutigi",
+      "B": "Hon. Justice Muhammadu Lawal Uwais",
+      "C": "Hon. Justice Dahiru Musdapher",
+      "D": "Hon. Justice Aloysius Katsina-Alu"
+    },
+    "correctAnswer": "A",
+    "explanation": "FREP Rules 2009 were made by CJN Idris Legbo Kutigi to expand access to justice and eliminate restrictive locus standi."
+  },
+  {
+    "id": "q42",
+    "questionText": "In jurisprudence, who is widely regarded as the father of Classical Natural Law Theory?",
+    "options": {
+      "A": "John Austin",
+      "B": "Thomas Aquinas",
+      "C": "Karl Marx",
+      "D": "Hans Kelsen"
+    },
+    "correctAnswer": "B",
+    "explanation": "Thomas Aquinas synthesized Christian theology with Aristotelian philosophy in Summa Theologiae."
+  },
+  {
+    "id": "q43",
+    "questionText": "According to John Austin's command theory of law, law is defined as:",
+    "options": {
+      "A": "The command of a sovereign backed by the threat of sanction",
+      "B": "The general will of the proletariat",
+      "C": "The historical consciousness of the Volk",
+      "D": "The prediction of what courts will do in fact"
+    },
+    "correctAnswer": "A",
+    "explanation": "Austin defined law as the command of an uncommanded sovereign backed by threats and habit of obedience."
+  },
+  {
+    "id": "q44",
+    "questionText": "Hans Kelsen formulated the Pure Theory of Law, positing that legal validity derives from a hierarchy of norms descending from a:",
+    "options": {
+      "A": "Divine Command",
+      "B": "Grundnorm (Basic Norm)",
+      "C": "Moral consensus",
+      "D": "Social contract"
+    },
+    "correctAnswer": "B",
+    "explanation": "Kelsen's Pure Theory of Law grounds the legal pyramid on the foundational Grundnorm."
+  },
+  {
+    "id": "q45",
+    "questionText": "H.L.A. Hart in 'The Concept of Law' distinguished between which two types of legal rules?",
+    "options": {
+      "A": "Civil rules and Criminal rules",
+      "B": "Primary rules of obligation and Secondary rules of change, adjudication, and recognition",
+      "C": "Federal rules and State rules",
+      "D": "Public rules and Private rules"
+    },
+    "correctAnswer": "B",
+    "explanation": "Hart analysed the union of primary rules of obligation and secondary rules of recognition, change, and adjudication."
+  },
+  {
+    "id": "q46",
+    "questionText": "Lon L. Fuller advanced an inner morality of law based on how many desiderata of legal craftsmanship?",
+    "options": {
+      "A": "Three",
+      "B": "Five",
+      "C": "Eight",
+      "D": "Twelve"
+    },
+    "correctAnswer": "C",
+    "explanation": "Fuller identified eight ways to fail to make law (e.g. generality, promulgation, clarity, retroactivity, congruence)."
+  },
+  {
+    "id": "q47",
+    "questionText": "Which school of jurisprudence argues that law is discovered, not made, reflecting the 'Volksgeist' (spirit of the people)?",
+    "options": {
+      "A": "Analytical Positivism",
+      "B": "Historical School (von Savigny)",
+      "C": "Marxist Theory",
+      "D": "American Legal Realism"
+    },
+    "correctAnswer": "B",
+    "explanation": "Friedrich Carl von Savigny founded the Historical School of Jurisprudence."
+  },
+  {
+    "id": "q48",
+    "questionText": "Oliver Wendell Holmes Jr.'s famous maxim 'The life of the law has not been logic: it has been experience' represents:",
+    "options": {
+      "A": "Natural Law School",
+      "B": "American Legal Realism",
+      "C": "Socialist Jurisprudence",
+      "D": "Formalism"
+    },
+    "correctAnswer": "B",
+    "explanation": "Holmes's Bad Man perspective is foundational to American Legal Realism."
+  },
+  {
+    "id": "q49",
+    "questionText": "Which doctrine prevents double jeopardy under Section 36(9) of the 1999 Constitution?",
+    "options": {
+      "A": "Autrefois acquit and Autrefois convict",
+      "B": "Stare decisis",
+      "C": "Laches and acquiescence",
+      "D": "Ultra vires"
+    },
+    "correctAnswer": "A",
+    "explanation": "Autrefois acquit and autrefois convict protect a citizen from being tried twice for the same offence."
+  },
+  {
+    "id": "q50",
+    "questionText": "The doctrine of precedent in common law jurisdictions is formally known as:",
+    "options": {
+      "A": "Ratio decidendi",
+      "B": "Stare decisis et non quieta movere",
+      "C": "Obiter dictum",
+      "D": "Per incuriam"
+    },
+    "correctAnswer": "B",
+    "explanation": "Stare decisis requires courts to stand by things decided and adhere to binding precedents."
+  },
+  {
+    "id": "q51",
+    "questionText": "The legal justification or rationale for a judicial decision that forms the binding element of a precedent is the:",
+    "options": {
+      "A": "Obiter dictum",
+      "B": "Ratio decidendi",
+      "C": "Incuriam",
+      "D": "Certiorari"
+    },
+    "correctAnswer": "B",
+    "explanation": "Ratio decidendi is the legal reason/principle necessary to the decision."
+  },
+  {
+    "id": "q52",
+    "questionText": "Statements made by a judge in the course of a judgment which are not essential to the determination of the dispute are:",
+    "options": {
+      "A": "Ratio decidendi",
+      "B": "Obiter dicta",
+      "C": "Res judicata",
+      "D": "Contempt in facie curiae"
+    },
+    "correctAnswer": "B",
+    "explanation": "Obiter dicta ('things said by the way') are persuasive rather than binding."
+  },
+  {
+    "id": "q53",
+    "questionText": "Under Section 180 of the 1999 Constitution, the tenure of office of a State Governor is generally:",
+    "options": {
+      "A": "3 years",
+      "B": "4 years from the date of taking the oath of office",
+      "C": "5 years",
+      "D": "6 years single term"
+    },
+    "correctAnswer": "B",
+    "explanation": "Section 180 provides for a 4-year tenure from the date the oath of office was administered."
+  },
+  {
+    "id": "q54",
+    "questionText": "To be qualified for election as President of Nigeria under Section 131, an aspirant must be a citizen by birth and have attained the age of:",
+    "options": {
+      "A": "30 years",
+      "B": "35 years (as amended by Not Too Young to Run Act)",
+      "C": "40 years",
+      "D": "45 years"
+    },
+    "correctAnswer": "B",
+    "explanation": "The age qualification was reduced to 35 years pursuant to the Not-Too-Young-To-Run constitutional amendment."
+  },
+  {
+    "id": "q55",
+    "questionText": "Under the Land Use Act 1978, all land comprised in the territory of each State in the Federation is vested in:",
+    "options": {
+      "A": "The Local Government Chairman",
+      "B": "The Governor of that State to be held in trust for all Nigerians",
+      "C": "The Minister of Housing and Urban Development",
+      "D": "Traditional Chieftaincy Councils"
+    },
+    "correctAnswer": "B",
+    "explanation": "Section 1 of the Land Use Act vests land in each State in the Governor in trust."
+  },
+  {
+    "id": "q56",
+    "questionText": "Which court has exclusive original jurisdiction in civil causes and matters relating to revenue of the Government of the Federation, taxation of companies, customs and excise?",
+    "options": {
+      "A": "State High Court",
+      "B": "Federal High Court",
+      "C": "National Industrial Court",
+      "D": "Customary Court of Appeal"
+    },
+    "correctAnswer": "B",
+    "explanation": "Section 251(1) of the 1999 CFRN confers exclusive jurisdiction on the Federal High Court."
+  },
+  {
+    "id": "q57",
+    "questionText": "Exclusive jurisdiction over labour matters, trade unions, workers' compensation, and industrial disputes is vested in:",
+    "options": {
+      "A": "Federal High Court",
+      "B": "National Industrial Court of Nigeria (NICN)",
+      "C": "Court of Appeal",
+      "D": "State High Court"
+    },
+    "correctAnswer": "B",
+    "explanation": "Section 254C of the 1999 CFRN (Third Alteration Act) vests exclusive jurisdiction in the National Industrial Court."
+  },
+  {
+    "id": "q58",
+    "questionText": "The quorum of the Senate or of the House of Representatives is:",
+    "options": {
+      "A": "One-quarter of all the members of the House",
+      "B": "One-third of all the members of the legislative house concerned",
+      "C": "One-half of members present",
+      "D": "Two-thirds of all elected senators"
+    },
+    "correctAnswer": "B",
+    "explanation": "Section 54(1) provides that the quorum of a legislative house is one-third of all the members."
+  },
+  {
+    "id": "q59",
+    "questionText": "Under Section 143 of the 1999 Constitution, the procedure for removal of the President or Vice-President is termed:",
+    "options": {
+      "A": "Recall",
+      "B": "Impeachment",
+      "C": "Vote of No Confidence",
+      "D": "Quo Warranto"
+    },
+    "correctAnswer": "B",
+    "explanation": "Section 143 outlines the detailed constitutional process for impeachment/removal from office for gross misconduct."
+  },
+  {
+    "id": "q60",
+    "questionText": "The constitutional process by which registered voters in a constituency may terminate the mandate of a member of the National Assembly is called:",
+    "options": {
+      "A": "Referendum",
+      "B": "Recall",
+      "C": "Dissolution",
+      "D": "Prorogation"
+    },
+    "correctAnswer": "B",
+    "explanation": "Section 69 provides for the recall of a member of the Senate or House of Representatives."
+  },
+  {
+    "id": "q61",
+    "questionText": "An executive bill originating from the President to the National Assembly must undergo how many readings before passage?",
+    "options": {
+      "A": "One reading",
+      "B": "Two readings",
+      "C": "Three readings and committee scrutiny",
+      "D": "Four readings"
+    },
+    "correctAnswer": "C",
+    "explanation": "Standard legislative enactment requires First Reading, Second Reading, Committee stage, and Third Reading."
+  },
+  {
+    "id": "q62",
+    "questionText": "If the President withholds assent to a bill passed by the National Assembly, the National Assembly can override the presidential veto by:",
+    "options": {
+      "A": "Simple majority vote",
+      "B": "Two-thirds majority vote in each House",
+      "C": "Three-fourths vote of joint sitting",
+      "D": "Referring the bill to the Supreme Court"
+    },
+    "correctAnswer": "B",
+    "explanation": "Section 58(5) allows the National Assembly to override presidential veto by a two-thirds majority in each House."
+  },
+  {
+    "id": "q63",
+    "questionText": "Section 308 of the 1999 Constitution confers immunity from civil and criminal proceedings on which public officials during their period of office?",
+    "options": {
+      "A": "The President, Vice-President, Governors, and Deputy Governors",
+      "B": "Ministers and Commissioners",
+      "C": "Senators and House of Representatives members",
+      "D": "Judges of Superior Courts of Record"
+    },
+    "correctAnswer": "A",
+    "explanation": "Section 308 provides constitutional immunity from arrest and prosecution to the President, VP, Governor, and Deputy Governor."
+  },
+  {
+    "id": "q64",
+    "questionText": "Does constitutional immunity under Section 308 protect a Governor from being investigated by law enforcement agencies like the EFCC or Police?",
+    "options": {
+      "A": "Yes, no investigation can take place during their tenure",
+      "B": "No, investigation is permissible; only arrest and criminal prosecution in court are barred (Fawehinmi v. IGP)",
+      "C": "Yes, unless the State Assembly passes an enabling resolution",
+      "D": "Yes, investigation is completely void"
+    },
+    "correctAnswer": "B",
+    "explanation": "In Fawehinmi v. IGP (2002), the Supreme Court ruled that section 308 does not prevent investigation of an incumbent governor."
+  },
+  {
+    "id": "q65",
+    "questionText": "The Code of Conduct Bureau (CCB) and Code of Conduct Tribunal (CCT) derive their constitutional mandate from:",
+    "options": {
+      "A": "The First Schedule",
+      "B": "The Fifth Schedule, Part I to the 1999 Constitution",
+      "C": "The Fourth Schedule",
+      "D": "The Police Act"
+    },
+    "correctAnswer": "B",
+    "explanation": "The Fifth Schedule Part I outlines the Code of Conduct for Public Officers and establishes the CCB and CCT."
+  },
+  {
+    "id": "q66",
+    "questionText": "Under the 1999 Constitution, the Attorney-General of the Federation has powers to institute, take over, or discontinue criminal proceedings (nolle prosequi) under:",
+    "options": {
+      "A": "Section 150",
+      "B": "Section 174",
+      "C": "Section 211",
+      "D": "Section 214"
+    },
+    "correctAnswer": "B",
+    "explanation": "Section 174 grants powers to the Attorney-General of the Federation regarding criminal prosecutions and nolle prosequi."
+  },
+  {
+    "id": "q67",
+    "questionText": "Similarly, the Attorney-General of a State exercises powers of criminal prosecution and nolle prosequi under:",
+    "options": {
+      "A": "Section 174",
+      "B": "Section 195",
+      "C": "Section 211",
+      "D": "Section 215"
+    },
+    "correctAnswer": "C",
+    "explanation": "Section 211 confers the corresponding state prosecutorial and nolle prosequi powers on State Attorneys-General."
+  },
+  {
+    "id": "q68",
+    "questionText": "The tenure of a Justice of the Supreme Court of Nigeria ends on attaining the mandatory retirement age of:",
+    "options": {
+      "A": "60 years",
+      "B": "65 years",
+      "C": "70 years",
+      "D": "75 years"
+    },
+    "correctAnswer": "C",
+    "explanation": "Section 291(1) of the Constitution sets 70 years as mandatory retirement age for Justices of the Supreme Court and Court of Appeal."
+  },
+  {
+    "id": "q69",
+    "questionText": "The Latin maxim 'Ubi jus ibi remedium' translates to:",
+    "options": {
+      "A": "Justice delayed is justice denied",
+      "B": "Where there is a right, there is a remedy",
+      "C": "Ignorance of the law is no excuse",
+      "D": "The law does not concern itself with trifles"
+    },
+    "correctAnswer": "B",
+    "explanation": "Bello v. A.G. Oyo State (1986) reaffirmed that where there is a legal right, there is a legal remedy."
+  },
+  {
+    "id": "q70",
+    "questionText": "In statutory interpretation, the rule which requires words to be given their ordinary grammatical and natural meaning unless ambiguity arises is the:",
+    "options": {
+      "A": "Golden Rule",
+      "B": "Literal Rule",
+      "C": "Mischief Rule (Heydon's Case)",
+      "D": "Purposive Approach"
+    },
+    "correctAnswer": "B",
+    "explanation": "The Literal Rule interprets statutes according to the plain, literal, and grammatical meaning of the words."
+  }
+]
