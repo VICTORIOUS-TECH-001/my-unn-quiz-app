@@ -154,7 +154,7 @@ export const StudentLogin: React.FC<StudentLoginProps> = ({
         {/* Main 2-Column Responsive Layout */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-5 items-start">
           {/* Column 1: Upcoming Quiz Showcase & Live Countdown Timer */}
-          <div className="md:col-span-7 bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden flex flex-col">
+          <div className="md:col-span-7 bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden flex flex-col anim-rise card-lift" style={{ '--d': '0.1s' } as React.CSSProperties}>
             {/* Header with Official UNN Crest */}
             <div className="bg-[#0b6537] px-4 py-3 sm:px-5 sm:py-3.5 text-white border-b-2 border-[#22c55e]">
               <div className="flex items-center justify-between gap-3">
@@ -273,7 +273,7 @@ export const StudentLogin: React.FC<StudentLoginProps> = ({
                       </p>
                     </div>
                   ) : (
-                    <div className="grid grid-cols-4 gap-2 text-center">
+                    <div className="grid grid-cols-4 gap-2 text-center stagger-rise">
                       <div className="bg-[#0b6537] p-2 rounded-lg border border-emerald-700/60 shadow-xs">
                         <div className="text-xl sm:text-2xl font-black font-mono tracking-tight text-white">
                           {String(countdown.days).padStart(2, '0')}
@@ -353,7 +353,7 @@ export const StudentLogin: React.FC<StudentLoginProps> = ({
           <div className="md:col-span-5 bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden flex flex-col">
             {/* Login Card Header */}
             <div className="p-4 text-center border-b-2 border-[#0b6537] bg-white">
-              <div className="flex justify-center mb-2">
+              <div className="flex justify-center mb-2 anim-bounce-soft">
                 <UNNLogo
                   size="md"
                   showText={false}

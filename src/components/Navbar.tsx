@@ -181,7 +181,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             ) : (
               <button
                 onClick={() => onNavigate('admin')}
-                className="flex items-center gap-1.5 text-xs bg-[#074625] hover:bg-[#063b20] text-emerald-200 border border-emerald-700 px-3 py-1 rounded-lg transition-colors font-semibold"
+                className="flex items-center gap-1.5 text-xs bg-[#074625] hover:bg-[#063b20] text-emerald-200 border border-emerald-700 px-3 py-1 rounded-lg transition-colors font-semibold anim-bounce-soft"
               >
                 <ShieldCheck className="w-3.5 h-3.5 text-[#22c55e]" />
                 Staff Login

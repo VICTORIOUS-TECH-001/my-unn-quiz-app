@@ -105,7 +105,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
       <div className="bg-[#0b6537] rounded-2xl p-5 sm:p-6 text-white shadow-xl border-l-8 border-[#22c55e]">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-center gap-4">
-            <div className="w-14 h-14 rounded-2xl bg-white/10 border border-white/20 flex items-center justify-center text-emerald-200 text-xl font-bold font-serif shadow-inner shrink-0">
+            <div className="w-14 h-14 rounded-2xl bg-white/10 border border-white/20 flex items-center justify-center text-emerald-200 text-xl font-bold font-serif shadow-inner shrink-0 anim-pop anim-float">
               {student.name
                 .split(' ')
                 .map((n) => n[0])
@@ -330,7 +330,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                   <button
                     id="startCbtQuizBtn"
                     onClick={() => onStartQuiz(activeQuiz)}
-                    className="w-full py-4 bg-[#0b6537] hover:bg-[#074625] active:bg-[#063b20] text-white font-bold text-base rounded-xl shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2 text-center cursor-pointer"
+                    className="w-full py-4 bg-[#0b6537] hover:bg-[#074625] active:bg-[#063b20] text-white font-bold text-base rounded-xl shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2 text-center cursor-pointer anim-shine"
                   >
                     <Play className="w-5 h-5 fill-current" />
                     <span>Enter & Start Examination ({activeQuiz.questions.length} Questions)</span>
@@ -621,10 +621,11 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {upcomingQuizzes.map((q) => (
+            {upcomingQuizzes.map((q, i) => (
               <div
                 key={q.id}
-                className="p-5 bg-slate-50 rounded-2xl border border-slate-200 space-y-3 relative overflow-hidden hover:border-emerald-500 transition-colors"
+                style={{ '--d': `${i * 0.08}s` } as React.CSSProperties}
+                className="p-5 bg-slate-50 rounded-2xl border border-slate-200 space-y-3 relative overflow-hidden hover:border-emerald-500 transition-colors card-lift anim-rise"
               >
                 <div className="flex justify-between items-start">
                   <div>

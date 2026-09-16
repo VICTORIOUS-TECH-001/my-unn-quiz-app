@@ -530,6 +530,275 @@ body {
   border: 2px solid #22c55e;
 }
 
+/* ============ HYPER ANIMATION PACK 🎬 ============ */
+@keyframes riseIn {
+  from { opacity: 0; transform: translateY(28px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes popInSoft {
+  0% { opacity: 0; transform: scale(0.85); }
+  70% { opacity: 1; transform: scale(1.04); }
+  100% { opacity: 1; transform: scale(1); }
+}
+@keyframes wiggle {
+  0%, 100% { transform: rotate(-2.5deg) scale(1); }
+  50% { transform: rotate(2.5deg) scale(1.04); }
+}
+@keyframes shineSweep {
+  0% { left: -80%; }
+  55%, 100% { left: 135%; }
+}
+@keyframes spinSlow {
+  to { transform: rotate(360deg); }
+}
+@keyframes bounceSoft {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-7px); }
+}
+@keyframes blinkSoft {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.55; }
+}
+@keyframes tickerMove {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@keyframes waveHand {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(18deg); }
+  50% { transform: rotate(-8deg); }
+  75% { transform: rotate(14deg); }
+}
+@keyframes ringPulse {
+  0% { transform: scale(1); opacity: 0.7; }
+  100% { transform: scale(1.9); opacity: 0; }
+}
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 14px rgba(34, 197, 94, 0.35), 0 8px 28px rgba(0, 0, 0, 0.25); }
+  50% { box-shadow: 0 0 34px rgba(74, 222, 128, 0.65), 0 8px 34px rgba(0, 0, 0, 0.3); }
+}
+@keyframes floatX {
+  0%, 100% { transform: translateX(0) translateY(0); }
+  50% { transform: translateX(14px) translateY(-10px); }
+}
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  25% { transform: scale(1.08); }
+  45% { transform: scale(0.98); }
+  60% { transform: scale(1.05); }
+}
+@keyframes gradientPan {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* Staggered rise entrance — set style={{'--d': '0.1s'}} for stagger */
+.anim-rise {
+  animation: riseIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--d, 0s);
+}
+.anim-pop {
+  animation: popInSoft 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--d, 0s);
+}
+.anim-float {
+  animation: floaty 4s ease-in-out infinite;
+  animation-delay: var(--d, 0s);
+}
+.anim-float-x {
+  animation: floatX 6s ease-in-out infinite;
+  animation-delay: var(--d, 0s);
+}
+.anim-wiggle { animation: wiggle 2.6s ease-in-out infinite; }
+.anim-bounce-soft { animation: bounceSoft 2.4s ease-in-out infinite; }
+.anim-blink-soft { animation: blinkSoft 1.8s ease-in-out infinite; }
+.anim-spin-slow { animation: spinSlow 14s linear infinite; }
+.anim-heartbeat { animation: heartbeat 1.8s ease-in-out infinite; }
+.anim-wave { display: inline-block; animation: waveHand 2.2s ease-in-out infinite; transform-origin: 70% 70%; }
+.anim-glow-pulse { animation: glowPulse 2.8s ease-in-out infinite; }
+
+/* Shine sweep for CTA buttons */
+.anim-shine {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.anim-shine::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -80%;
+  width: 55%;
+  height: 100%;
+  background: linear-gradient(105deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+  transform: skewX(-20deg);
+  animation: shineSweep 3.4s ease-in-out infinite;
+  pointer-events: none;
+}
+/* Shine on the arena CTA too */
+.btn-arena {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.btn-arena::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -80%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(105deg, transparent, rgba(255, 255, 255, 0.55), transparent);
+  transform: skewX(-20deg);
+  animation: shineSweep 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* Expanding pulse ring (for live dots / avatars) */
+.anim-pulse-ring {
+  position: relative;
+}
+.anim-pulse-ring::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: currentColor;
+  opacity: 0.5;
+  animation: ringPulse 1.8s ease-out infinite;
+  pointer-events: none;
+}
+
+/* Animated gradient border card */
+.anim-gradient-border {
+  border: 2px solid transparent !important;
+  background:
+    linear-gradient(#ffffff, #ffffff) padding-box,
+    linear-gradient(135deg, #22c55e, #a3e635, #facc15, #2dd4bf, #22c55e) border-box !important;
+  background-size: auto, 300% 300% !important;
+  animation: gradientPan 6s ease infinite;
+}
+.anim-gradient-border-dark {
+  border: 2px solid transparent !important;
+  background:
+    linear-gradient(#0a2a18, #0a2a18) padding-box,
+    linear-gradient(135deg, #22c55e, #a3e635, #facc15, #2dd4bf, #22c55e) border-box !important;
+  background-size: auto, 300% 300% !important;
+  animation: gradientPan 6s ease infinite;
+}
+
+/* Marquee ticker */
+.anim-ticker-track {
+  display: flex;
+  width: max-content;
+  animation: tickerMove 26s linear infinite;
+}
+.anim-ticker-track:hover {
+  animation-play-state: paused;
+}
+
+/* Card lift on hover */
+.card-lift {
+  transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease, border-color 0.2s ease;
+}
+.card-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.28);
+}
+
+/* Spinning conic avatar ring */
+.avatar-ring {
+  position: relative;
+  border-radius: 1rem;
+}
+.avatar-ring::before {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 1.1rem;
+  background: conic-gradient(from 0deg, #4ade80, #facc15, #2dd4bf, #4ade80);
+  animation: spinSlow 5s linear infinite;
+  z-index: 0;
+}
+.avatar-ring > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Floating decorative shapes */
+.float-shape {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(2px);
+  pointer-events: none;
+  animation: floaty 5s ease-in-out infinite;
+  animation-delay: var(--d, 0s);
+}
+
+/* Tab buttons: playful hover */
+.tabs-playful button {
+  transition: transform 0.18s ease, color 0.18s ease, background 0.18s ease;
+}
+.tabs-playful button:hover {
+  transform: translateY(-2px);
+}
+.tabs-playful button:active {
+  transform: scale(0.96);
+}
+
+/* Animated gradient headline text */
+.anim-headline {
+  background: linear-gradient(90deg, #ffffff, #bef264, #fde68a, #ffffff);
+  background-size: 250% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer 5s linear infinite;
+}
+
+/* Countdown digit pop */
+.anim-digit {
+  animation: popInSoft 0.4s ease both;
+}
+
+/* Option rows in exam: springy select */
+.exam-option {
+  transition: transform 0.16s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.16s ease, background 0.16s ease, box-shadow 0.2s ease;
+}
+.exam-option:hover {
+  transform: translateX(5px);
+}
+.exam-option:active {
+  transform: scale(0.985);
+}
+
+/* Music button float */
+.music-float {
+  animation: floaty 3.2s ease-in-out infinite;
+}
+
+/* Auto-stagger children rise (just add class to parent grid/list) */
+.stagger-rise > * {
+  animation: riseIn 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.stagger-rise > *:nth-child(1) { animation-delay: 0.02s; }
+.stagger-rise > *:nth-child(2) { animation-delay: 0.1s; }
+.stagger-rise > *:nth-child(3) { animation-delay: 0.18s; }
+.stagger-rise > *:nth-child(4) { animation-delay: 0.26s; }
+.stagger-rise > *:nth-child(5) { animation-delay: 0.34s; }
+.stagger-rise > *:nth-child(6) { animation-delay: 0.42s; }
+.stagger-rise > *:nth-child(7) { animation-delay: 0.5s; }
+.stagger-rise > *:nth-child(8) { animation-delay: 0.58s; }
+
+/* Ticker bar */
+.ticker-bar {
+  background: linear-gradient(90deg, #052e16, #0b6537, #052e16);
+  background-size: 200% 100%;
+  animation: gradientPan 8s ease infinite;
+  border: 1px solid rgba(110, 231, 183, 0.25);
+  overflow: hidden;
+}
+
 /* ============ LEGACY UNN UTILITIES (kept) ============ */
 .bg-unn-green { background-color: #0b6537 !important; }
 .bg-unn-dark { background-color: #074625 !important; }

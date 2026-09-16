@@ -233,7 +233,7 @@ export const QuestionBankManager: React.FC<QuestionBankManagerProps> = ({
                 setWarnings([]);
                 setStatus(null);
               }}
-              className={`text-left p-4 rounded-2xl border-2 transition-all cursor-pointer group ${
+              className={`text-left p-4 rounded-2xl border-2 transition-all cursor-pointer group card-lift ${
                 active
                   ? 'border-emerald-600 bg-gradient-to-br from-emerald-600 to-green-700 text-white shadow-lg shadow-emerald-900/20 scale-[1.01]'
                   : 'border-slate-200 bg-white hover:border-emerald-400 hover:shadow-md'
@@ -638,3 +638,4 @@ Answer: D`}
     </div>
   );
 };
+

@@ -146,7 +146,7 @@ export const ResultView: React.FC<ResultViewProps> = ({
           <button
             id="printResultsBtn"
             onClick={handlePrint}
-            className="flex items-center gap-1.5 px-4 py-2 bg-[#0b6537] hover:bg-[#074625] text-white rounded-xl text-xs font-bold shadow transition-all"
+            className="flex items-center gap-1.5 px-4 py-2 bg-[#0b6537] hover:bg-[#074625] text-white rounded-xl text-xs font-bold shadow transition-all anim-shine"
             title="Print Official UNN Examination Result"
           >
             <Printer className="w-4 h-4" />

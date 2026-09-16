@@ -290,7 +290,7 @@ export const PracticeEngine: React.FC<PracticeEngineProps> = ({
             <p className="text-sm text-white/70 mt-1">
               {course.code} • {total} questions in {formatElapsed(elapsed)}
             </p>
-            <div className="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <div className="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-3 stagger-rise">
               <div className="arena-stat">
                 <div className="text-2xl font-black text-white">{score}/{total}</div>
                 <div className="text-[10px] uppercase tracking-wider text-white/60">Score</div>

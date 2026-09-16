@@ -350,7 +350,7 @@ export const CBTExamEngine: React.FC<CBTExamEngineProps> = ({
               id="submitCbtExamBtn"
               onClick={() => setShowConfirmModal(true)}
               disabled={isSubmitting}
-              className="px-4 py-2 bg-[#22c55e] hover:bg-[#16a34a] text-white font-bold text-xs rounded-xl shadow-md transition-all flex items-center gap-1.5 shrink-0 cursor-pointer"
+              className="px-4 py-2 bg-[#22c55e] hover:bg-[#16a34a] text-white font-bold text-xs rounded-xl shadow-md transition-all flex items-center gap-1.5 shrink-0 cursor-pointer anim-shine"
             >
               <Send className="w-3.5 h-3.5" />
               <span>Submit Exam</span>
@@ -408,7 +408,7 @@ export const CBTExamEngine: React.FC<CBTExamEngineProps> = ({
                       <div
                         key={optKey}
                         onClick={() => handleSelectOption(optKey)}
-                        className={`p-4 rounded-xl border-2 cursor-pointer transition-all flex items-start gap-3.5 ${
+                        className={`exam-option p-4 rounded-xl border-2 cursor-pointer transition-all flex items-start gap-3.5 ${
                           isSelected
                             ? 'bg-[#0b6537]/10 border-[#0b6537] shadow-sm'
                             : 'bg-white hover:bg-slate-50 border-slate-200'

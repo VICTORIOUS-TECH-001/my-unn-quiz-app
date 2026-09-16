@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   BookOpen,
   Calendar,
@@ -23,11 +23,6 @@ import {
   ShieldCheck,
   FileSpreadsheet,
   X,
-  Lock,
-  Unlock,
-  KeyRound,
-  Eye,
-  EyeOff,
   Upload,
 } from 'lucide-react';
 import {
@@ -43,8 +38,6 @@ import {
 } from '../types';
 import { cbtStorage } from '../services/storage';
 import { UNNLogo } from './UNNLogo';
-import { authenticateAdmin, firebaseAuth, logoutAdmin } from '../services/firebase';
-import { onAuthStateChanged } from 'firebase/auth';
 import { extractQuestionsFromFile, extractQuestionsFromText } from '../services/questionImport';
 import { QuestionBankManager } from './QuestionBankManager';
 
@@ -92,67 +85,8 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
   const [studentSearch, setStudentSearch] = useState('');
   const [resultSearch, setResultSearch] = useState('');
 
-  const [isUnlocked, setIsUnlocked] = useState<boolean>(() => {
-    try {
-      return Boolean(firebaseAuth.currentUser);
-    } catch {
-      return false;
-    }
-  });
-  const [passwordInput, setPasswordInput] = useState('');
-  const [adminEmail, setAdminEmail] = useState('hillarymmaka@gmail.com');
-  const [passwordError, setPasswordError] = useState<string | null>(null);
-  const [showPassword, setShowPassword] = useState(false);
-
-  useEffect(() => {
-    return onAuthStateChanged(firebaseAuth, (user) => {
-      setIsUnlocked(Boolean(user));
-    });
-  }, []);
-
-  const handleUnlock = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setPasswordError(null);
-    try {
-      if (!adminEmail.trim() || !passwordInput) {
-        setPasswordError('Enter both the Firebase email and password.');
-        return;
-      }
-      await authenticateAdmin(adminEmail, passwordInput);
-      setIsUnlocked(true);
-      setPasswordInput('');
-    } catch (error) {
-      console.error('Firebase administrator authentication failed:', error);
-      const code = error instanceof Error && 'code' in error ? String(error.code) : '';
-      if (
-        code.includes('auth/invalid-credential') ||
-        code.includes('auth/invalid-login-credentials') ||
-        code.includes('auth/wrong-password')
-      ) {
-        setPasswordError('Firebase rejected the email or password. Check the account in Firebase Authentication.');
-      } else if (code.includes('auth/user-not-found')) {
-        setPasswordError('This email is not registered in Firebase Authentication.');
-      } else if (code.includes('auth/too-many-requests')) {
-        setPasswordError('Too many failed attempts. Wait and try again.');
-      } else if (code.includes('auth/operation-not-allowed')) {
-        setPasswordError('Email/password sign-in is disabled in Firebase Authentication.');
-      } else if (code.includes('auth/network-request-failed')) {
-        setPasswordError('Firebase could not be reached. Check the internet connection and Firebase project configuration.');
-      } else {
-        setPasswordError(`Firebase sign-in failed (${code || 'unknown error'}). Check Firebase Authentication.`);
-      }
-    }
-  };
-
-  const handleLockAdmin = async () => {
-    setIsUnlocked(false);
-    await logoutAdmin();
-    setPasswordInput('');
-    setPasswordError(null);
-  };
-
-  const handleExitAdmin = async () => {
-    await handleLockAdmin();
+  // Admin portal is open access — no password gate. It opens straight into controls.
+  const handleExitAdmin = () => {
     onBackToStudentPortal();
   };
 
@@ -585,120 +519,6 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
       s.regNo.toLowerCase().includes(studentSearch.toLowerCase())
   );
 
-  // Security Gate: Firebase Authentication
-  if (!isUnlocked) {
-    return (
-      <div className="min-h-[calc(100vh-140px)] flex flex-col items-center justify-center p-4 sm:p-6 bg-transparent arena-enter">
-        <div className="w-full max-w-md bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden">
-          {/* Official University Header */}
-          <div className="bg-white p-6 sm:p-8 text-center border-b-[5px] border-[#0b6537]">
-            <div className="flex justify-center mb-3">
-              <UNNLogo size="lg" showText={true} subText="to restore the dignity of man" textColor="text-[#0b6537]" />
-            </div>
-            <div className="mt-2">
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-50 border border-emerald-300 text-emerald-900 rounded-full text-xs font-mono font-bold uppercase tracking-wider mb-2">
-                <Lock className="w-3.5 h-3.5 text-emerald-700" />
-                <span>Admin Access Restricted</span>
-              </div>
-              <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[#0b6537]">
-                Staff Administrator Login
-              </h1>
-              <p className="text-xs text-slate-500 mt-1">
-                Enter the administrator security password to access quiz controls, question bank, and results.
-              </p>
-            </div>
-          </div>
-
-          {/* Form */}
-          <div className="p-6 sm:p-8 space-y-6">
-            {passwordError && (
-              <div className="flex items-start gap-3 p-4 bg-red-50 border border-red-200 rounded-xl text-xs text-red-800">
-                <AlertCircle className="w-5 h-5 text-red-600 shrink-0 mt-0.5" />
-                <div>
-                  <p className="font-bold">Authentication Failed</p>
-                  <p className="mt-0.5">{passwordError}</p>
-                </div>
-              </div>
-            )}
-
-            <form onSubmit={handleUnlock} className="space-y-5">
-              <div>
-                <label
-                  htmlFor="adminEmailInput"
-                  className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2"
-                >
-                  Admin Email
-                </label>
-                <input
-                  id="adminEmailInput"
-                  type="email"
-                  value={adminEmail}
-                  onChange={(e) => setAdminEmail(e.target.value)}
-                  autoComplete="username"
-                  className="w-full px-3.5 py-3 bg-slate-50 border-2 border-slate-300 rounded-xl text-sm text-slate-900 focus:bg-white focus:border-[#0b6537] focus:ring-2 focus:ring-[#0b6537]/20 outline-none transition-all"
-                />
-              </div>
-              <div>
-                <label
-                  htmlFor="adminPasswordInput"
-                  className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2"
-                >
-                  Admin Password
-                </label>
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-                    <KeyRound className="w-4 h-4 text-[#0b6537]" />
-                  </div>
-                  <input
-                    id="adminPasswordInput"
-                    type={showPassword ? 'text' : 'password'}
-                    value={passwordInput}
-                    onChange={(e) => {
-                      setPasswordInput(e.target.value);
-                      if (passwordError) setPasswordError(null);
-                    }}
-                    placeholder="Enter Firebase Auth password"
-                    autoFocus
-                    autoComplete="current-password"
-                    className="w-full pl-10 pr-11 py-3.5 bg-slate-50 border-2 border-slate-300 rounded-xl text-base font-mono font-medium text-slate-900 placeholder:text-slate-400 focus:bg-white focus:border-[#0b6537] focus:ring-2 focus:ring-[#0b6537]/20 outline-none transition-all"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600 cursor-pointer"
-                    tabIndex={-1}
-                  >
-                    {showPassword ? (
-                      <EyeOff className="w-4 h-4" />
-                    ) : (
-                      <Eye className="w-4 h-4" />
-                    )}
-                  </button>
-                </div>
-              </div>
-
-              <button
-                type="submit"
-                className="w-full py-4 px-6 bg-[#0b6537] hover:bg-[#074625] active:scale-[0.99] text-white font-bold text-base rounded-xl transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2 cursor-pointer"
-              >
-                <Unlock className="w-5 h-5" />
-                <span>Unlock Admin Portal</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={handleExitAdmin}
-                className="w-full py-2.5 px-4 text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors cursor-pointer"
-              >
-                &larr; Return to Candidate Portal
-              </button>
-            </form>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 space-y-6">
       {/* Admin Title Header */}
@@ -721,14 +541,13 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
         </div>
 
         <div className="flex items-center gap-2">
-          <button
-            onClick={handleLockAdmin}
-            className="flex items-center gap-1.5 px-3 py-2 bg-red-800 hover:bg-red-700 text-white font-semibold text-xs rounded-xl border border-red-700 transition-colors shadow-xs cursor-pointer"
-            title="Lock Admin Portal"
+          <span
+            className="flex items-center gap-1.5 px-3 py-2 bg-lime-300 text-emerald-950 font-bold text-xs rounded-xl border border-lime-200 shadow-xs anim-blink-soft"
+            title="Admin portal is open — no password required"
           >
-            <Lock className="w-3.5 h-3.5" />
-            <span>Lock Portal</span>
-          </button>
+            <span className="w-2 h-2 rounded-full bg-emerald-700 animate-pulse" />
+            <span>🔓 Open Access</span>
+          </span>
           <button
             onClick={handleExitAdmin}
             className="px-4 py-2 bg-[#074625] hover:bg-[#063b20] text-emerald-200 font-semibold text-xs rounded-xl border border-emerald-600 transition-colors cursor-pointer"
@@ -739,7 +558,7 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
       </div>
 
       {/* Admin Tab Bar */}
-      <div className="flex border-b border-slate-200 overflow-x-auto no-scrollbar gap-2 sm:gap-3">
+      <div className="flex border-b border-slate-200 overflow-x-auto no-scrollbar gap-2 sm:gap-3 tabs-playful anim-rise" style={{ '--d': '0.1s' } as React.CSSProperties}>
         <button
           onClick={() => setActiveTab('dashboard')}
           className={`pb-3 px-3 text-xs sm:text-sm font-semibold whitespace-nowrap border-b-2 transition-colors ${
@@ -1037,7 +856,7 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
             {courses.map((course) => (
               <div
                 key={course.id}
-                className="p-5 bg-slate-50 rounded-2xl border border-slate-200 space-y-3 flex flex-col justify-between"
+                className="p-5 bg-slate-50 rounded-2xl border border-slate-200 space-y-3 flex flex-col justify-between card-lift anim-rise"
               >
                 <div>
                   <div className="flex justify-between items-start">
@@ -2376,3 +2195,4 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
     </div>
   );
 };
+

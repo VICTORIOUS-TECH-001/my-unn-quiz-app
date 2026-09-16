@@ -76,7 +76,7 @@ export const MusicToggle: React.FC = () => {
         <button
           onClick={handleToggle}
           title={playing ? 'Turn focus music off' : 'Turn focus music on'}
-          className={`relative w-12 h-12 rounded-full shadow-2xl flex items-center justify-center transition-all hover:scale-110 active:scale-95 ${
+          className={`relative w-12 h-12 rounded-full shadow-2xl flex items-center justify-center transition-all music-float ${
             playing
               ? 'bg-gradient-to-br from-emerald-400 via-green-500 to-teal-600 glow-green'
               : 'glass-strong text-white/80'

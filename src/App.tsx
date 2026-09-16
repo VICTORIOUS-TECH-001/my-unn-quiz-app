@@ -42,7 +42,7 @@ export default function App() {
   if (!isDataReady) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-100 via-white to-emerald-50 px-6">
-        <div className="w-full max-w-sm rounded-3xl border border-emerald-100 bg-white/90 p-8 text-center shadow-xl shadow-emerald-900/10 backdrop-blur-sm">
+        <div className="w-full max-w-sm rounded-3xl border border-emerald-100 bg-white/90 p-8 text-center shadow-xl shadow-emerald-900/10 backdrop-blur-sm anim-pop">
           <div className="relative mx-auto mb-6 flex h-24 w-24 items-center justify-center">
             <div className="absolute inset-0 animate-ping rounded-full bg-emerald-100/70" />
             <div className="absolute inset-2 animate-spin rounded-full border-4 border-emerald-100 border-t-[#0b6537]" />
