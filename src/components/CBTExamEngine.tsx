@@ -310,7 +310,7 @@ export const CBTExamEngine: React.FC<CBTExamEngineProps> = ({
   const isCritical = timeRemaining <= 60; // <= 1 min
 
   return (
-    <div className="min-h-screen bg-slate-100 flex flex-col">
+    <div className="min-h-screen bg-transparent flex flex-col arena-enter">
       {/* Official CBT Top Bar */}
       <div className="bg-[#0b6537] text-white px-4 py-3 shadow-md border-b-4 border-[#22c55e] sticky top-0 z-30">
         <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">

@@ -3,7 +3,9 @@ import {
   Course,
   GradeBoundary,
   NotificationItem,
+  PracticeHistoryEntry,
   Question,
+  QuestionBank,
   Quiz,
   QuizStatus,
   Result,
@@ -15,6 +17,7 @@ import {
   INITIAL_CONFIG,
   INITIAL_COURSES,
   INITIAL_NOTIFICATIONS,
+  INITIAL_QUESTION_BANKS,
   INITIAL_QUIZZES,
   INITIAL_RESULTS,
   INITIAL_STUDENTS,
@@ -38,7 +41,21 @@ const STORAGE_KEYS = {
   NOTIFICATIONS: 'unn_cbt_notifications_v1',
   CONFIG: 'unn_cbt_config_v1',
   ACTIVE_SESSION: 'unn_cbt_session_v1',
+  QUESTION_BANKS: 'unn_cbt_questionbanks_v1',
+  PRACTICE_HISTORY: 'unn_cbt_practice_history_v1',
 };
+
+/** Default number of questions drawn from a bank for each practice/quiz run. */
+export const DEFAULT_PRACTICE_DRAW = 70;
+
+export function shuffleArray<T>(items: T[]): T[] {
+  const copy = [...items];
+  for (let i = copy.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+  return copy;
+}
 
 // Event Dispatcher for reactive multi-tab and UI sync
 const CBT_CHANGE_EVENT = 'cbt_data_change';
@@ -118,6 +135,7 @@ export class CBTStorageService {
       ['QUIZZES', 'quizzes', INITIAL_QUIZZES],
       ['RESULTS', 'results', INITIAL_RESULTS],
       ['NOTIFICATIONS', 'notifications', INITIAL_NOTIFICATIONS],
+      ['QUESTION_BANKS', 'questionBanks', INITIAL_QUESTION_BANKS],
     ] as const;
 
     try {
@@ -163,6 +181,7 @@ export class CBTStorageService {
         ['quizzes', STORAGE_KEYS.QUIZZES],
         ['results', STORAGE_KEYS.RESULTS],
         ['notifications', STORAGE_KEYS.NOTIFICATIONS],
+        ['questionBanks', STORAGE_KEYS.QUESTION_BANKS],
       ] as const;
 
         resources.forEach(([collectionName, key]) => {
@@ -204,6 +223,12 @@ export class CBTStorageService {
     }
     if (forceReset || !localStorage.getItem(STORAGE_KEYS.ATTEMPTS)) {
       setLocalItem(STORAGE_KEYS.ATTEMPTS, {});
+    }
+    if (forceReset || !localStorage.getItem(STORAGE_KEYS.QUESTION_BANKS)) {
+      setLocalItem(STORAGE_KEYS.QUESTION_BANKS, INITIAL_QUESTION_BANKS);
+    }
+    if (forceReset || !localStorage.getItem(STORAGE_KEYS.PRACTICE_HISTORY)) {
+      setLocalItem(STORAGE_KEYS.PRACTICE_HISTORY, []);
     }
 
     if (forceReset) {
@@ -405,6 +430,163 @@ export class CBTStorageService {
       quiz.totalQuestions = quiz.questions.length;
       this.updateQuiz(quiz);
     }
+  }
+
+  // ==================== QUESTION BANKS (per course, saved in Firebase) ====================
+  public getQuestionBanks(): QuestionBank[] {
+    return getLocalItem<QuestionBank[]>(STORAGE_KEYS.QUESTION_BANKS, []);
+  }
+
+  public getQuestionBankByCourse(courseId: string): QuestionBank | null {
+    return this.getQuestionBanks().find((b) => b.courseId === courseId) || null;
+  }
+
+  public getBankQuestionCount(courseId: string): number {
+    return this.getQuestionBankByCourse(courseId)?.questions.length || 0;
+  }
+
+  private saveQuestionBanks(banks: QuestionBank[]): void {
+    setLocalItem(STORAGE_KEYS.QUESTION_BANKS, banks);
+    notifyChange('questionBanks');
+  }
+
+  public ensureQuestionBank(courseId: string): QuestionBank {
+    const existing = this.getQuestionBankByCourse(courseId);
+    if (existing) return existing;
+    const course = this.getCourseById(courseId);
+    const bank: QuestionBank = {
+      id: `bank_${courseId}`,
+      courseId,
+      courseCode: course?.code || 'GEN',
+      courseTitle: course?.title || 'General',
+      questions: [],
+      updatedAt: new Date().toISOString(),
+      questionsPerAttempt: DEFAULT_PRACTICE_DRAW,
+    };
+    const banks = this.getQuestionBanks();
+    banks.push(bank);
+    this.saveQuestionBanks(banks);
+    return bank;
+  }
+
+  /** Append imported questions to a course bank (dedupes identical question text). */
+  public addQuestionsToBank(courseId: string, questions: Question[]): { added: number; duplicates: number } {
+    const bank = this.ensureQuestionBank(courseId);
+    const seen = new Set(
+      bank.questions.map((q) => q.questionText.trim().toLowerCase())
+    );
+    let added = 0;
+    let duplicates = 0;
+    for (const q of questions) {
+      const key = q.questionText.trim().toLowerCase();
+      if (seen.has(key)) {
+        duplicates += 1;
+        continue;
+      }
+      seen.add(key);
+      bank.questions.push({ ...q, id: q.id || `q_bank_${Date.now()}_${added}` });
+      added += 1;
+    }
+    bank.updatedAt = new Date().toISOString();
+    const banks = this.getQuestionBanks().map((b) =>
+      b.courseId === courseId ? bank : b
+    );
+    this.saveQuestionBanks(banks);
+    return { added, duplicates };
+  }
+
+  public updateBankQuestion(courseId: string, question: Question): void {
+    const bank = this.getQuestionBankByCourse(courseId);
+    if (!bank) return;
+    const idx = bank.questions.findIndex((q) => q.id === question.id);
+    if (idx === -1) return;
+    bank.questions[idx] = question;
+    bank.updatedAt = new Date().toISOString();
+    this.saveQuestionBanks(
+      this.getQuestionBanks().map((b) => (b.courseId === courseId ? bank : b))
+    );
+  }
+
+  public deleteBankQuestion(courseId: string, questionId: string): void {
+    const bank = this.getQuestionBankByCourse(courseId);
+    if (!bank) return;
+    bank.questions = bank.questions.filter((q) => q.id !== questionId);
+    bank.updatedAt = new Date().toISOString();
+    this.saveQuestionBanks(
+      this.getQuestionBanks().map((b) => (b.courseId === courseId ? bank : b))
+    );
+  }
+
+  public clearQuestionBank(courseId: string): void {
+    const bank = this.getQuestionBankByCourse(courseId);
+    if (!bank) return;
+    bank.questions = [];
+    bank.updatedAt = new Date().toISOString();
+    this.saveQuestionBanks(
+      this.getQuestionBanks().map((b) => (b.courseId === courseId ? bank : b))
+    );
+  }
+
+  public setQuestionsPerAttempt(courseId: string, count: number): void {
+    const bank = this.ensureQuestionBank(courseId);
+    bank.questionsPerAttempt = Math.max(5, Math.min(200, Math.round(count) || DEFAULT_PRACTICE_DRAW));
+    bank.updatedAt = new Date().toISOString();
+    this.saveQuestionBanks(
+      this.getQuestionBanks().map((b) => (b.courseId === courseId ? bank : b))
+    );
+  }
+
+  /**
+   * Draw N random questions from a course bank for one practice/quiz run.
+   * Every run shuffles both the question order and option order so each
+   * practice feels fresh.
+   */
+  public drawRandomQuestions(courseId: string, count?: number): Question[] {
+    const bank = this.getQuestionBankByCourse(courseId);
+    if (!bank || bank.questions.length === 0) return [];
+    const take = Math.min(count || bank.questionsPerAttempt || DEFAULT_PRACTICE_DRAW, bank.questions.length);
+    return shuffleArray(bank.questions).slice(0, take).map((q) => {
+      const entries = shuffleArray(Object.entries(q.options) as [keyof Question['options'], string][]);
+      const remapped = { A: '', B: '', C: '', D: '' } as Question['options'];
+      const keys: (keyof Question['options'])[] = ['A', 'B', 'C', 'D'];
+      let newCorrect: keyof Question['options'] = 'A';
+      entries.forEach(([oldKey, text], i) => {
+        remapped[keys[i]] = text;
+        if (oldKey === q.correctAnswer) newCorrect = keys[i];
+      });
+      return { ...q, options: remapped, correctAnswer: newCorrect };
+    });
+  }
+
+  /** Fill/refresh a quiz's questions with a fresh random pull from its course bank. */
+  public fillQuizFromBank(quizId: string, count?: number): number {
+    const quiz = this.getQuizById(quizId);
+    if (!quiz) return 0;
+    const pulled = this.drawRandomQuestions(quiz.courseId, count || DEFAULT_PRACTICE_DRAW);
+    if (pulled.length === 0) return 0;
+    quiz.questions = pulled;
+    quiz.totalQuestions = pulled.length;
+    this.updateQuiz(quiz);
+    return pulled.length;
+  }
+
+  // ==================== PRACTICE HISTORY ====================
+  public getPracticeHistory(studentRegNo?: string): PracticeHistoryEntry[] {
+    const all = getLocalItem<PracticeHistoryEntry[]>(STORAGE_KEYS.PRACTICE_HISTORY, []);
+    if (!studentRegNo) return all;
+    const clean = studentRegNo.trim().toUpperCase().replace(/\s+/g, '');
+    return all.filter((h) => h.studentRegNo.toUpperCase().replace(/\s+/g, '') === clean);
+  }
+
+  public savePracticeHistory(entry: PracticeHistoryEntry): void {
+    const all = getLocalItem<PracticeHistoryEntry[]>(STORAGE_KEYS.PRACTICE_HISTORY, []);
+    all.unshift(entry);
+    setLocalItem(STORAGE_KEYS.PRACTICE_HISTORY, all.slice(0, 200));
+    notifyChange('practiceHistory');
+  }
+
+  public getStudentXp(studentRegNo: string): number {
+    return this.getPracticeHistory(studentRegNo).reduce((sum, h) => sum + (h.xpEarned || 0), 0);
   }
 
   // ==================== ATTEMPTS & REFRESH RECOVERY ====================

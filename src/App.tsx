@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { LoaderCircle, ShieldCheck } from 'lucide-react';
 import { cbtStorage } from './services/storage';
-import { Quiz, Result, Student } from './types';
+import { Course, Quiz, Result, Student } from './types';
 import { Navbar } from './components/Navbar';
 import { StudentLogin } from './components/StudentLogin';
 import { StudentDashboard } from './components/StudentDashboard';
@@ -9,8 +9,10 @@ import { CBTExamEngine } from './components/CBTExamEngine';
 import { ResultView } from './components/ResultView';
 import { PastResults } from './components/PastResults';
 import { AdminPortal } from './components/AdminPortal';
+import { PracticeEngine } from './components/PracticeEngine';
+import { MusicToggle } from './components/MusicToggle';
 
-type AppView = 'login' | 'dashboard' | 'exam' | 'results' | 'past-results' | 'admin';
+type AppView = 'login' | 'dashboard' | 'exam' | 'practice' | 'results' | 'past-results' | 'admin';
 
 const ACTIVE_STUDENT_KEY = 'unn_cbt_active_student_session';
 
@@ -26,6 +28,7 @@ export default function App() {
   });
   const [activeQuiz, setActiveQuiz] = useState<Quiz | null>(null);
   const [activeResult, setActiveResult] = useState<Result | null>(null);
+  const [practiceCourse, setPracticeCourse] = useState<Course | null>(null);
   const [isDataReady, setIsDataReady] = useState(false);
 
   // If student was already logged in on initial load, navigate to dashboard
@@ -92,6 +95,11 @@ export default function App() {
     setCurrentView('exam');
   };
 
+  const handleStartPractice = (course: Course) => {
+    setPracticeCourse(course);
+    setCurrentView('practice');
+  };
+
   const handleExamFinish = (result: Result) => {
     setActiveResult(result);
     // Locate quiz
@@ -121,9 +129,16 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-100 flex flex-col font-sans text-slate-800 antialiased selection:bg-emerald-800 selection:text-white">
+    <div className="app-shell min-h-screen flex flex-col font-sans text-slate-800 antialiased selection:bg-emerald-800 selection:text-white">
+      {/* Animated ambient background */}
+      <div className="ambient-bg" aria-hidden="true">
+        <span className="ambient-blob blob-1" />
+        <span className="ambient-blob blob-2" />
+        <span className="ambient-blob blob-3" />
+        <span className="ambient-grid" />
+      </div>
       {/* Do not show standard Navbar during active exam session to prevent distraction */}
-      {currentView !== 'exam' && (
+      {(currentView !== 'exam' && currentView !== 'practice') && (
         <Navbar
           currentStudent={currentStudent}
           currentView={currentView}
@@ -139,7 +154,7 @@ export default function App() {
       )}
 
       {/* Main Content Router */}
-      <main className="flex-1">
+      <main className="flex-1 relative z-10">
         {currentView === 'login' && (
           <StudentLogin
             onLoginSuccess={handleLoginSuccess}
@@ -151,6 +166,7 @@ export default function App() {
           <StudentDashboard
             student={currentStudent}
             onStartQuiz={handleStartQuiz}
+            onStartPractice={handleStartPractice}
             onViewResults={handleViewResults}
             onViewPastResults={() => setCurrentView('past-results')}
             onLogout={handleLogout}
@@ -163,6 +179,14 @@ export default function App() {
             student={currentStudent}
             onFinish={handleExamFinish}
             onCancel={() => setCurrentView('dashboard')}
+          />
+        )}
+
+        {currentView === 'practice' && practiceCourse && currentStudent && (
+          <PracticeEngine
+            course={practiceCourse}
+            student={currentStudent}
+            onExit={() => setCurrentView('dashboard')}
           />
         )}
 
@@ -214,16 +238,21 @@ export default function App() {
         )}
       </main>
 
-      {/* Copyright Footer (Hidden during printing or active exam) */}
-      {currentView !== 'exam' && (
-        <footer className="print:hidden bg-white text-slate-500 text-xs py-4 border-t border-slate-200 text-center">
+      {/* Copyright Footer (Hidden during printing or active exam/practice) */}
+      {(currentView !== 'exam' && currentView !== 'practice') && (
+        <footer className="print:hidden relative z-10 glass-footer text-slate-200 text-xs py-4 border-t border-white/10 text-center">
           <div className="max-w-7xl mx-auto px-4">
             <p className="font-medium tracking-wide">
               Copyright &copy; {new Date().getFullYear()} victorious tech institute .com
+              <span className="mx-2 opacity-40">•</span>
+              <span className="text-lime-200/80">🎮 Practice Arena • 🎧 Focus Music</span>
             </p>
           </div>
         </footer>
       )}
+
+      {/* Global focus-music controller */}
+      <MusicToggle />
     </div>
   );
 }

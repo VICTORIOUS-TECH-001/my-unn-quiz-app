@@ -46,6 +46,7 @@ import { UNNLogo } from './UNNLogo';
 import { authenticateAdmin, firebaseAuth, logoutAdmin } from '../services/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import { extractQuestionsFromFile, extractQuestionsFromText } from '../services/questionImport';
+import { QuestionBankManager } from './QuestionBankManager';
 
 interface AdminPortalProps {
   onBackToStudentPortal: () => void;
@@ -59,6 +60,7 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
   const [activeTab, setActiveTab] = useState<
     | 'dashboard'
     | 'courses'
+    | 'bank'
     | 'quizzes'
     | 'questions'
     | 'schedule'
@@ -586,7 +588,7 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
   // Security Gate: Firebase Authentication
   if (!isUnlocked) {
     return (
-      <div className="min-h-[calc(100vh-140px)] flex flex-col items-center justify-center p-4 sm:p-6 bg-slate-50">
+      <div className="min-h-[calc(100vh-140px)] flex flex-col items-center justify-center p-4 sm:p-6 bg-transparent arena-enter">
         <div className="w-full max-w-md bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden">
           {/* Official University Header */}
           <div className="bg-white p-6 sm:p-8 text-center border-b-[5px] border-[#0b6537]">
@@ -761,6 +763,17 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
         </button>
 
         <button
+          onClick={() => setActiveTab('bank')}
+          className={`pb-3 px-3 text-xs sm:text-sm font-semibold whitespace-nowrap border-b-2 transition-colors ${
+            activeTab === 'bank'
+              ? 'border-emerald-800 text-emerald-900'
+              : 'border-transparent text-slate-500 hover:text-slate-700'
+          }`}
+        >
+          📚 Question Bank
+        </button>
+
+        <button
           onClick={() => setActiveTab('quizzes')}
           className={`pb-3 px-3 text-xs sm:text-sm font-semibold whitespace-nowrap border-b-2 transition-colors ${
             activeTab === 'quizzes'
@@ -922,6 +935,14 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
                 </button>
 
                 <button
+                  onClick={() => setActiveTab('bank')}
+                  className="p-3 bg-gradient-to-br from-emerald-50 to-lime-50 hover:from-emerald-100 hover:to-lime-100 rounded-xl border border-emerald-300 text-left text-xs font-semibold text-emerald-900 transition-colors flex items-center justify-between"
+                >
+                  <span>📚 Upload to Question Bank</span>
+                  <ChevronRight className="w-3.5 h-3.5 text-emerald-500" />
+                </button>
+
+                <button
                   onClick={() => setActiveTab('questions')}
                   className="p-3 bg-slate-50 hover:bg-emerald-50 rounded-xl border border-slate-200 text-left text-xs font-semibold text-slate-800 transition-colors flex items-center justify-between"
                 >
@@ -1062,6 +1083,11 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
         </div>
       )}
 
+      {/* QUESTION BANK (per-course, Firebase-backed) */}
+      {activeTab === 'bank' && (
+        <QuestionBankManager courses={courses} onChanged={refreshData} />
+      )}
+
       {/* 3. QUIZZES MANAGEMENT */}
       {activeTab === 'quizzes' && (
         <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 space-y-4">
@@ -1156,6 +1182,38 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
                     className="px-3 py-1.5 bg-white border border-slate-300 hover:bg-slate-100 text-slate-700 rounded-xl text-xs font-semibold"
                   >
                     Questions ({q.questions.length})
+                  </button>
+
+                  <button
+                    onClick={() => {
+                      const bankCount = cbtStorage.getBankQuestionCount(q.courseId);
+                      if (bankCount === 0) {
+                        alert(`No questions in the ${q.courseCode} bank yet. Upload some in the Question Bank tab first.`);
+                        return;
+                      }
+                      const pull = Number(
+                        prompt(
+                          `Pull how many random questions from the ${q.courseCode} bank (${bankCount} available)?`,
+                          '70'
+                        )
+                      );
+                      if (!pull || pull <= 0) return;
+                      if (
+                        q.questions.length > 0 &&
+                        !confirm(
+                          `Replace the current ${q.questions.length} quiz questions with ${pull} fresh random ones from the bank?`
+                        )
+                      ) {
+                        return;
+                      }
+                      const filled = cbtStorage.fillQuizFromBank(q.id, pull);
+                      alert(`✅ Pulled ${filled} random questions from the ${q.courseCode} bank into "${q.title}".`);
+                      refreshData();
+                    }}
+                    className="px-3 py-1.5 bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-700 hover:to-green-700 text-white rounded-xl text-xs font-bold shadow-xs"
+                    title="Pull random questions from this course's question bank"
+                  >
+                    🎲 Fill from Bank
                   </button>
 
                   <button

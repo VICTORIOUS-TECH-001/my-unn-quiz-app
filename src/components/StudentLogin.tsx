@@ -149,7 +149,7 @@ export const StudentLogin: React.FC<StudentLoginProps> = ({
   };
 
   return (
-    <div className="min-h-[calc(100vh-140px)] py-6 px-4 sm:px-6 flex flex-col justify-center bg-slate-50">
+    <div className="min-h-[calc(100vh-140px)] py-6 px-4 sm:px-6 flex flex-col justify-center bg-transparent arena-enter">
       <div className="max-w-4xl mx-auto w-full">
         {/* Main 2-Column Responsive Layout */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-5 items-start">

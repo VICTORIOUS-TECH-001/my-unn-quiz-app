@@ -16,13 +16,19 @@ import {
   User,
   GraduationCap,
   RotateCcw,
+  Zap,
+  Flame,
+  Star,
+  Gamepad2,
+  Trophy,
 } from 'lucide-react';
-import { Attempt, NotificationItem, Quiz, Result, Student } from '../types';
-import { cbtStorage } from '../services/storage';
+import { Attempt, Course, NotificationItem, Quiz, Result, Student } from '../types';
+import { DEFAULT_PRACTICE_DRAW, cbtStorage } from '../services/storage';
 
 interface StudentDashboardProps {
   student: Student;
   onStartQuiz: (quiz: Quiz) => void;
+  onStartPractice: (course: Course) => void;
   onViewResults: (quizId?: string) => void;
   onViewPastResults: () => void;
   onLogout: () => void;
@@ -31,6 +37,7 @@ interface StudentDashboardProps {
 export const StudentDashboard: React.FC<StudentDashboardProps> = ({
   student,
   onStartQuiz,
+  onStartPractice,
   onViewResults,
   onViewPastResults,
   onLogout,
@@ -40,13 +47,15 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
   const [studentResults, setStudentResults] = useState<Result[]>([]);
   const [ongoingAttempt, setOngoingAttempt] = useState<Attempt | null>(null);
   const [ongoingQuiz, setOngoingQuiz] = useState<Quiz | null>(null);
-  const [activeTab, setActiveTab] = useState<'quiz' | 'upcoming' | 'results' | 'notifications'>(
+  const [activeTab, setActiveTab] = useState<'quiz' | 'practice' | 'upcoming' | 'results' | 'notifications'>(
     'quiz'
   );
+  const [courses, setCourses] = useState<Course[]>([]);
 
   const loadData = () => {
     const allQuizzes = cbtStorage.getQuizzes();
     setQuizzes(allQuizzes);
+    setCourses(cbtStorage.getCourses());
 
     const allNotifs = cbtStorage.getNotifications();
     setNotifications(allNotifs);
@@ -175,6 +184,18 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
           {activeQuiz && (
             <span className="w-2 h-2 rounded-full bg-[#0b6537] animate-ping"></span>
           )}
+        </button>
+
+        <button
+          onClick={() => setActiveTab('practice')}
+          className={`pb-3 px-3 text-sm font-semibold flex items-center gap-2 border-b-2 whitespace-nowrap transition-colors ${
+            activeTab === 'practice'
+              ? 'border-[#0b6537] text-[#0b6537]'
+              : 'border-transparent text-slate-500 hover:text-slate-700'
+          }`}
+        >
+          <Gamepad2 className="w-4 h-4" />
+          <span>Practice Arena 🎮</span>
         </button>
 
         <button
@@ -457,6 +478,133 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
               </div>
             </div>
           </div>
+        </div>
+      )}
+
+      {/* PRACTICE ARENA TAB */}
+      {activeTab === 'practice' && (
+        <div className="space-y-5 arena-enter">
+          <div className="arena-card rounded-3xl p-5 sm:p-6 relative overflow-hidden">
+            <div className="arena-orb arena-orb-a" />
+            <div className="arena-orb arena-orb-b" />
+            <div className="relative flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div>
+                <h2 className="text-lg sm:text-xl font-black text-white flex items-center gap-2">
+                  <Gamepad2 className="w-6 h-6 text-lime-300" />
+                  Practice Arena
+                </h2>
+                <p className="text-xs text-white/70 mt-1">
+                  Pick a course — each run draws a fresh random set from the question bank.
+                  Earn XP, build streaks, and master every topic! 🚀
+                </p>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="arena-chip">
+                  <Star className="w-3.5 h-3.5 text-amber-300" />
+                  {cbtStorage.getStudentXp(student.regNo)} XP
+                </span>
+                <span className="arena-chip">
+                  <Flame className="w-3.5 h-3.5 text-orange-400" />
+                  {cbtStorage.getPracticeHistory(student.regNo).length} runs
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {courses.map((course, i) => {
+              const bankCount = cbtStorage.getBankQuestionCount(course.id);
+              const draw = Math.min(
+                cbtStorage.getQuestionBankByCourse(course.id)?.questionsPerAttempt ||
+                  DEFAULT_PRACTICE_DRAW,
+                bankCount
+              );
+              const myRuns = cbtStorage
+                .getPracticeHistory(student.regNo)
+                .filter((h) => h.courseId === course.id);
+              const best = myRuns.reduce((m, h) => Math.max(m, h.percentage), 0);
+              return (
+                <div
+                  key={course.id}
+                  className="practice-course-card rounded-3xl p-5 relative overflow-hidden"
+                  style={{ animationDelay: `${i * 0.08}s` }}
+                >
+                  <div className="flex items-start justify-between gap-2">
+                    <span className="text-xs font-mono font-bold bg-emerald-900/80 text-lime-200 px-2.5 py-1 rounded-lg">
+                      {course.code}
+                    </span>
+                    <span className="text-[11px] font-bold text-white/80 bg-white/10 px-2.5 py-1 rounded-full">
+                      📚 {bankCount} in bank
+                    </span>
+                  </div>
+                  <h3 className="mt-2 text-base font-black text-white">{course.title}</h3>
+                  <p className="text-[11px] text-white/60 mt-0.5">
+                    {course.lecturer || 'Faculty Board'} • {course.creditUnits} units
+                  </p>
+                  <div className="mt-3 flex items-center gap-2 text-[11px] font-semibold text-white/70">
+                    <span className="flex items-center gap-1">
+                      <Zap className="w-3.5 h-3.5 text-amber-300" /> {draw} random/run
+                    </span>
+                    {myRuns.length > 0 && (
+                      <span className="flex items-center gap-1">
+                        <Trophy className="w-3.5 h-3.5 text-lime-300" /> Best: {best.toFixed(0)}%
+                      </span>
+                    )}
+                  </div>
+                  <button
+                    onClick={() => onStartPractice(course)}
+                    disabled={bankCount === 0}
+                    className="mt-4 w-full btn-arena text-sm px-4 py-3 disabled:opacity-40 disabled:cursor-not-allowed"
+                  >
+                    <Play className="w-4 h-4 fill-current" />
+                    {bankCount === 0 ? 'No Questions Yet' : `Play ${draw} Random Questions`}
+                  </button>
+                </div>
+              );
+            })}
+            {courses.length === 0 && (
+              <div className="col-span-2 text-center py-12 text-slate-400 text-xs">
+                No courses available yet.
+              </div>
+            )}
+          </div>
+
+          {/* Recent practice history */}
+          {cbtStorage.getPracticeHistory(student.regNo).length > 0 && (
+            <div className="bg-white rounded-3xl p-5 sm:p-6 shadow-sm border border-slate-200">
+              <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
+                <Award className="w-4 h-4 text-emerald-700" /> My Practice History
+              </h3>
+              <div className="mt-3 overflow-x-auto">
+                <table className="w-full text-left text-xs">
+                  <thead>
+                    <tr className="bg-slate-100 text-slate-600 font-semibold">
+                      <th className="p-2.5 rounded-l-lg">Course</th>
+                      <th className="p-2.5 text-center">Score</th>
+                      <th className="p-2.5 text-center">Grade</th>
+                      <th className="p-2.5 text-center">XP</th>
+                      <th className="p-2.5 text-right rounded-r-lg">Date</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-100">
+                    {cbtStorage.getPracticeHistory(student.regNo).slice(0, 8).map((h) => (
+                      <tr key={h.id} className="hover:bg-slate-50">
+                        <td className="p-2.5 font-mono font-bold text-emerald-800">{h.courseCode}</td>
+                        <td className="p-2.5 text-center font-bold">
+                          {h.correctAnswers}/{h.totalQuestions} ({h.percentage.toFixed(1)}%)
+                        </td>
+                        <td className="p-2.5 text-center font-black text-emerald-700">{h.grade}</td>
+                        <td className="p-2.5 text-center font-mono text-amber-600">+{h.xpEarned}</td>
+                        <td className="p-2.5 text-right text-slate-400">
+                          {new Date(h.completedAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
         </div>
       )}
 

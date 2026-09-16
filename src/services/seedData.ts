@@ -1,6 +1,6 @@
 import studentsRaw from '../data/students.json';
 import questions70Raw from '../data/seedQuestions.json';
-import { Course, GradeBoundary, NotificationItem, Question, Quiz, Result, Student, SystemConfig } from '../types';
+import { Course, GradeBoundary, NotificationItem, Question, QuestionBank, Quiz, Result, Student, SystemConfig } from '../types';
 
 export const INITIAL_STUDENTS: Student[] = (studentsRaw as Student[]).map((student) => ({
   ...student,
@@ -35,6 +35,33 @@ export const INITIAL_COURSES: Course[] = [
     creditUnits: 3,
     semester: 'First Semester',
     lecturer: 'Department of Philosophy',
+  },
+  {
+    id: 'course-law-411',
+    code: 'LAW 411',
+    title: 'Nigerian Constitutional Law',
+    description: 'Supremacy of the constitution, separation of powers, fundamental rights and federalism.',
+    creditUnits: 4,
+    semester: 'First Semester',
+    lecturer: 'Faculty of Law Board',
+  },
+  {
+    id: 'course-law-421',
+    code: 'LAW 421',
+    title: 'Jurisprudence & Legal Theory',
+    description: 'Schools of jurisprudence, theories of law and justice.',
+    creditUnits: 3,
+    semester: 'First Semester',
+    lecturer: 'Faculty of Law Board',
+  },
+  {
+    id: 'course-law-431',
+    code: 'LAW 431',
+    title: 'Commercial Law & Sale of Goods',
+    description: 'Contracts, sale of goods and commercial transactions.',
+    creditUnits: 3,
+    semester: 'First Semester',
+    lecturer: 'Faculty of Law Board',
   },
 ];
 
@@ -152,6 +179,38 @@ export const INITIAL_QUIZZES: Quiz[] = [
     questions: SEED_QUESTIONS_JURISPRUDENCE,
     instructions: 'Past completed test for revision and result archiving.',
     createdAt: new Date(Date.now() - 86400000 * 4).toISOString(),
+  },
+];
+
+// Initial per-course question banks (synced to Firebase like every other collection).
+// LAW 411 ships with the full 70-question bank so Practice Arena works instantly.
+export const INITIAL_QUESTION_BANKS: QuestionBank[] = [
+  {
+    id: 'bank_course-law-411',
+    courseId: 'course-law-411',
+    courseCode: 'LAW 411',
+    courseTitle: 'Nigerian Constitutional Law',
+    questions: questions70Raw as Question[],
+    updatedAt: new Date().toISOString(),
+    questionsPerAttempt: 70,
+  },
+  {
+    id: 'bank_course-law-421',
+    courseId: 'course-law-421',
+    courseCode: 'LAW 421',
+    courseTitle: 'Jurisprudence & Legal Theory',
+    questions: [],
+    updatedAt: new Date().toISOString(),
+    questionsPerAttempt: 70,
+  },
+  {
+    id: 'bank_course-phil-101',
+    courseId: 'course-phil-101',
+    courseCode: 'PHIL 101',
+    courseTitle: 'Introduction to Philosophy',
+    questions: [],
+    updatedAt: new Date().toISOString(),
+    questionsPerAttempt: 70,
   },
 ];
 
