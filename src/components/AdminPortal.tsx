@@ -43,8 +43,7 @@ import {
 } from '../types';
 import { cbtStorage } from '../services/storage';
 import { UNNLogo } from './UNNLogo';
-import { authenticateAdmin, firebaseAuth, logoutAdmin } from '../services/firebase';
-import { onAuthStateChanged } from 'firebase/auth';
+import { authenticateAdmin, isLocalAdminAuthenticated, logoutAdmin, LOCAL_ADMIN_EMAIL } from '../services/localAuth';
 import { extractQuestionsFromFile, extractQuestionsFromText } from '../services/questionImport';
 
 interface AdminPortalProps {
@@ -92,52 +91,44 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
 
   const [isUnlocked, setIsUnlocked] = useState<boolean>(() => {
     try {
-      return Boolean(firebaseAuth.currentUser);
+      return isLocalAdminAuthenticated();
     } catch {
       return false;
     }
   });
   const [passwordInput, setPasswordInput] = useState('');
-  const [adminEmail, setAdminEmail] = useState('hillarymmaka@gmail.com');
+  const [adminEmail, setAdminEmail] = useState(LOCAL_ADMIN_EMAIL);
   const [passwordError, setPasswordError] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
-
-  useEffect(() => {
-    return onAuthStateChanged(firebaseAuth, (user) => {
-      setIsUnlocked(Boolean(user));
-    });
-  }, []);
 
   const handleUnlock = async (e: React.FormEvent) => {
     e.preventDefault();
     setPasswordError(null);
     try {
       if (!adminEmail.trim() || !passwordInput) {
-        setPasswordError('Enter both the Firebase email and password.');
+        setPasswordError('Enter the local administrator email and password.');
         return;
       }
       await authenticateAdmin(adminEmail, passwordInput);
       setIsUnlocked(true);
       setPasswordInput('');
     } catch (error) {
-      console.error('Firebase administrator authentication failed:', error);
+      console.error('Local administrator authentication failed:', error);
       const code = error instanceof Error && 'code' in error ? String(error.code) : '';
       if (
         code.includes('auth/invalid-credential') ||
         code.includes('auth/invalid-login-credentials') ||
         code.includes('auth/wrong-password')
       ) {
-        setPasswordError('Firebase rejected the email or password. Check the account in Firebase Authentication.');
+        setPasswordError('Local administrator rejected the email or password.');
       } else if (code.includes('auth/user-not-found')) {
-        setPasswordError('This email is not registered in Firebase Authentication.');
+        setPasswordError('This email is not registered for local administration.');
       } else if (code.includes('auth/too-many-requests')) {
         setPasswordError('Too many failed attempts. Wait and try again.');
-      } else if (code.includes('auth/operation-not-allowed')) {
-        setPasswordError('Email/password sign-in is disabled in Firebase Authentication.');
       } else if (code.includes('auth/network-request-failed')) {
-        setPasswordError('Firebase could not be reached. Check the internet connection and Firebase project configuration.');
+        setPasswordError('The local administrator service could not be reached.');
       } else {
-        setPasswordError(`Firebase sign-in failed (${code || 'unknown error'}). Check Firebase Authentication.`);
+        setPasswordError(`Local sign-in failed (${code || 'unknown error'}).`);
       }
     }
   };
@@ -222,6 +213,12 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
     setConfig(cbtStorage.getConfig());
   };
 
+  useEffect(() => {
+    const handleDataChange = () => refreshData();
+    window.addEventListener('cbt_data_change', handleDataChange);
+    return () => window.removeEventListener('cbt_data_change', handleDataChange);
+  }, []);
+
   // ================= COURSE ACTIONS =================
   const handleSaveCourse = (e: React.FormEvent) => {
     e.preventDefault();
@@ -289,27 +286,38 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
       return [hours, minutes];
     };
     const scheduleDateTime = (() => {
-      const date = new Date(quizForm.date);
-      if (!Number.isNaN(date.getTime())) {
+      const [year, month, day] = quizForm.date.split('-').map(Number);
+      if (year && month && day) {
         const [hours, minutes] = parseClockTime(quizForm.startTime);
-        if (Number.isNaN(hours) || Number.isNaN(minutes)) return new Date().toISOString();
-        date.setHours(hours || 0, minutes || 0, 0, 0);
+        if (Number.isNaN(hours) || Number.isNaN(minutes)) {
+          return new Date().toISOString();
+        }
+        const date = new Date(year, month - 1, day, hours, minutes, 0, 0);
         return date.toISOString();
       }
       return new Date().toISOString();
     })();
     const endDateTime = (() => {
-      const date = new Date(quizForm.date);
-      if (!Number.isNaN(date.getTime())) {
+      const [year, month, day] = quizForm.date.split('-').map(Number);
+      if (year && month && day) {
         const [hours, minutes] = parseClockTime(quizForm.endTime);
         if (Number.isNaN(hours) || Number.isNaN(minutes)) {
           return new Date(new Date(scheduleDateTime).getTime() + (Number(quizForm.durationMinutes) || 25) * 60000).toISOString();
         }
-        date.setHours(hours || 0, minutes || 0, 0, 0);
+        const date = new Date(year, month - 1, day, hours, minutes, 0, 0);
         return date.toISOString();
       }
       return new Date(new Date(scheduleDateTime).getTime() + (Number(quizForm.durationMinutes) || 25) * 60000).toISOString();
     })();
+    const durationMinutes = Number(quizForm.durationMinutes);
+    if (!Number.isFinite(durationMinutes) || durationMinutes <= 0) {
+      alert('Duration must be greater than zero minutes.');
+      return;
+    }
+    if (new Date(endDateTime).getTime() <= new Date(scheduleDateTime).getTime()) {
+      alert('End time must be after the start time.');
+      return;
+    }
 
     if (editingQuiz) {
       cbtStorage.updateQuiz({
@@ -318,7 +326,7 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
         courseCode: course.code,
         courseTitle: course.title,
         title: quizForm.title,
-        durationMinutes: Number(quizForm.durationMinutes) || 25,
+        durationMinutes,
         date: quizForm.date,
         startTime: quizForm.startTime,
         scheduledDateTime: scheduleDateTime,
@@ -333,7 +341,7 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
         courseTitle: course.title,
         title: quizForm.title,
         totalQuestions: 0,
-        durationMinutes: Number(quizForm.durationMinutes) || 25,
+        durationMinutes,
         date: quizForm.date,
         startTime: quizForm.startTime,
         scheduledDateTime: scheduleDateTime,
@@ -583,7 +591,7 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
       s.regNo.toLowerCase().includes(studentSearch.toLowerCase())
   );
 
-  // Security Gate: Firebase Authentication
+  // Security gate for the local administrator session.
   if (!isUnlocked) {
     return (
       <div className="min-h-[calc(100vh-140px)] flex flex-col items-center justify-center p-4 sm:p-6 bg-slate-50">
@@ -655,7 +663,7 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
                       setPasswordInput(e.target.value);
                       if (passwordError) setPasswordError(null);
                     }}
-                    placeholder="Enter Firebase Auth password"
+                    placeholder="Enter local admin password"
                     autoFocus
                     autoComplete="current-password"
                     className="w-full pl-10 pr-11 py-3.5 bg-slate-50 border-2 border-slate-300 rounded-xl text-base font-mono font-medium text-slate-900 placeholder:text-slate-400 focus:bg-white focus:border-[#0b6537] focus:ring-2 focus:ring-[#0b6537]/20 outline-none transition-all"
@@ -939,25 +947,23 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
               </div>
             </div>
 
-            {/* Architecture note for future Firebase Firestore migration */}
+            {/* Architecture note for the local JSON backend */}
             <div className="bg-emerald-50/80 rounded-2xl p-6 border border-emerald-200 shadow-xs space-y-2 text-xs text-emerald-950">
               <div className="flex items-center gap-2 font-bold text-emerald-900">
                 <Database className="w-4 h-4 text-emerald-700" />
-                Future Firebase Firestore Architecture Readiness
+                Local JSON Backend
               </div>
               <p className="leading-relaxed text-emerald-900/80">
-                This prototype stores data in structured namespaces in localStorage. The repository
-                methods (`cbtStorage.saveResult`, `getStudents`, `scheduleQuiz`) are 1:1 mapped to
-                Firestore collections:
+                This local prototype stores data in structured JSON files. The repository methods
+                (`cbtStorage.saveResult`, `getStudents`, `scheduleQuiz`) map to local backend resources:
               </p>
               <ul className="list-disc pl-5 space-y-1 font-mono text-[11px] text-emerald-800">
                 <li><code>students/</code> - 356 Verified UNEC candidates</li>
                 <li><code>courses/</code> &amp; <code>quizzes/</code> - Dynamic exam configs</li>
-                <li><code>attempts/</code> &amp; <code>results/</code> - Real-time synchronized scores</li>
+                <li><code>attempts/</code> &amp; <code>results/</code> - Persistent local scores</li>
               </ul>
               <p className="text-[11px] text-slate-500 italic pt-1">
-                When Firebase is connected, actions taken here will synchronize immediately to all
-                candidates' Android devices without code changes.
+                Changes are written to <code>server/data/</code> and are available to the local portal.
               </p>
             </div>
           </div>
@@ -983,7 +989,7 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
                     refreshData();
                   } catch (error) {
                     console.error('Course cleanup failed:', error);
-                    alert('Course cleanup failed. Confirm Firebase admin access and rules.');
+                    alert('Course cleanup failed. Confirm local administrator access.');
                   }
                 }}
                 className="px-4 py-2 bg-red-700 hover:bg-red-800 text-white rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-sm"
@@ -1595,11 +1601,11 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
               <button
                 onClick={async () => {
                   try {
-                    await cbtStorage.uploadClassListToFirebase();
-                    setClassListStatus('Class list uploaded to Firebase.');
+                    await cbtStorage.uploadClassListToLocalBackend();
+                    setClassListStatus('Class list saved to local JSON storage.');
                   } catch (error) {
                     console.error('Class list upload failed:', error);
-                    setClassListStatus('Upload failed. Confirm Firebase admin access and rules.');
+                    setClassListStatus('Save failed. Confirm the local backend is running.');
                   }
                 }}
                 className="px-4 py-2 bg-slate-800 hover:bg-slate-900 text-white rounded-xl text-xs font-bold flex items-center gap-1.5 shadow"

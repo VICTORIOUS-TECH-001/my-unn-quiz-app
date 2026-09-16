@@ -30,7 +30,7 @@ export default function App() {
 
   // If student was already logged in on initial load, navigate to dashboard
   useEffect(() => {
-    void cbtStorage.hydrateFromFirebase().finally(() => setIsDataReady(true));
+    void cbtStorage.hydrateFromLocalBackend().finally(() => setIsDataReady(true));
     if (currentStudent && currentView === 'login') {
       setCurrentView('dashboard');
     }
@@ -51,11 +51,11 @@ export default function App() {
             Preparing your CBT portal
           </h1>
           <p className="mt-2 text-sm leading-relaxed text-slate-500">
-            Securely loading exams, questions, schedules, and results from Firebase.
+            Loading exams, questions, schedules, and results from the local backend.
           </p>
           <div className="mt-6 flex items-center justify-center gap-2 text-xs font-semibold text-emerald-800">
             <LoaderCircle className="h-4 w-4 animate-spin" />
-            <span>Connecting to Firebase</span>
+            <span>Connecting to local storage</span>
           </div>
           <div className="mt-5 h-1.5 overflow-hidden rounded-full bg-emerald-100">
             <div className="h-full w-1/2 animate-[loading_1.4s_ease-in-out_infinite] rounded-full bg-[#0b6537]" />

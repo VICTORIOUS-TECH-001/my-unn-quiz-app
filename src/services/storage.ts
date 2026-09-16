@@ -19,14 +19,6 @@ import {
   INITIAL_RESULTS,
   INITIAL_STUDENTS,
 } from './seedData';
-import {
-  deleteFirebaseDocument,
-  initializeFirebaseClock,
-  logAdminAction,
-  readStorageCollection,
-  subscribeToFirebaseCollection,
-  syncStorageCollection,
-} from './firebase';
 
 // Structured Storage Keys with unified namespace
 const STORAGE_KEYS = {
@@ -70,9 +62,7 @@ function setLocalItem<T>(key: string, value: T): void {
   } catch (err) {
     console.error(`Error saving ${key} to localStorage:`, err);
   }
-  if (firebaseReady) {
-    void syncStorageCollection(key, value);
-  }
+  void persistToLocalBackend(key, value);
 }
 
 function setLocalItemWithoutSync<T>(key: string, value: T): void {
@@ -84,20 +74,83 @@ function setLocalItemWithoutSync<T>(key: string, value: T): void {
   }
 }
 
-let firebaseReady = false;
+const BACKEND_RESOURCE_BY_KEY: Record<string, string> = {
+  [STORAGE_KEYS.STUDENTS]: 'students',
+  [STORAGE_KEYS.COURSES]: 'courses',
+  [STORAGE_KEYS.QUIZZES]: 'quizzes',
+  [STORAGE_KEYS.ATTEMPTS]: 'attempts',
+  [STORAGE_KEYS.RESULTS]: 'results',
+  [STORAGE_KEYS.NOTIFICATIONS]: 'notifications',
+  [STORAGE_KEYS.CONFIG]: 'config',
+};
+const STORAGE_KEY_BY_BACKEND_RESOURCE = Object.fromEntries(
+  Object.entries(BACKEND_RESOURCE_BY_KEY).map(([key, resource]) => [resource, key])
+) as Record<string, string>;
+let localSocket: WebSocket | null = null;
+let reconnectTimer: number | null = null;
+const clientId =
+  typeof crypto !== 'undefined' && 'randomUUID' in crypto
+    ? crypto.randomUUID()
+    : `${Date.now()}-${Math.random()}`;
+const pendingWrites = new Map<string, Promise<void>>();
 
-function withTimeout<T>(promise: Promise<T>, timeoutMs: number): Promise<T> {
-  return Promise.race([
-    promise,
-    new Promise<T>((_, reject) => {
-      window.setTimeout(() => reject(new Error(`Firebase request timed out after ${timeoutMs}ms`)), timeoutMs);
-    }),
-  ]);
+async function persistToLocalBackend(key: string, value: unknown): Promise<void> {
+  const resource = BACKEND_RESOURCE_BY_KEY[key];
+  if (!resource || typeof window === 'undefined') return;
+
+  try {
+    const previousWrite = pendingWrites.get(resource) || Promise.resolve();
+    const nextWrite = previousWrite.then(async () => {
+      const response = await fetch(`/api/storage/${resource}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', 'x-client-id': clientId },
+        body: JSON.stringify(value),
+      });
+      if (!response.ok) {
+        throw new Error(`Local backend returned HTTP ${response.status}`);
+      }
+    });
+    pendingWrites.set(resource, nextWrite);
+    await nextWrite;
+    if (pendingWrites.get(resource) === nextWrite) pendingWrites.delete(resource);
+  } catch (error) {
+    console.error(`Local JSON persistence failed for ${resource}:`, error);
+  }
+}
+
+function connectToLocalBackend(): void {
+  if (typeof window === 'undefined' || localSocket) return;
+  const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+  localSocket = new WebSocket(`${protocol}//${window.location.host}/ws`);
+
+  localSocket.onmessage = (event) => {
+    const message = JSON.parse(String(event.data)) as {
+      type?: string;
+      resource?: string;
+      value?: unknown;
+      source?: string | null;
+    };
+    if (message.type !== 'storage-updated' || !message.resource || message.source === clientId) return;
+    const key = STORAGE_KEY_BY_BACKEND_RESOURCE[message.resource];
+    if (!key) return;
+    setLocalItemWithoutSync(key, message.value);
+    notifyChange(message.resource);
+  };
+  localSocket.onclose = () => {
+    localSocket = null;
+    if (reconnectTimer === null) {
+      reconnectTimer = window.setTimeout(() => {
+        reconnectTimer = null;
+        connectToLocalBackend();
+      }, 1000);
+    }
+  };
+  localSocket.onerror = () => localSocket?.close();
 }
 
 /**
  * Repository Service Layer
- * Designed to mirror future Firebase Firestore collections:
+ * Repository service backed by the local JSON API:
  * - collection('students')
  * - collection('courses')
  * - collection('quizzes')
@@ -111,74 +164,34 @@ export class CBTStorageService {
     this.initializeDefaults();
   }
 
-  public async hydrateFromFirebase(): Promise<void> {
+  public async hydrateFromLocalBackend(): Promise<void> {
     const resources = [
       ['STUDENTS', 'students', INITIAL_STUDENTS],
       ['COURSES', 'courses', INITIAL_COURSES],
       ['QUIZZES', 'quizzes', INITIAL_QUIZZES],
+      ['ATTEMPTS', 'attempts', {}],
       ['RESULTS', 'results', INITIAL_RESULTS],
       ['NOTIFICATIONS', 'notifications', INITIAL_NOTIFICATIONS],
+      ['CONFIG', 'config', INITIAL_CONFIG],
     ] as const;
-
     try {
-      const remoteResources = await withTimeout(Promise.all(
-        resources.map(async ([keyName, collectionName, fallback]) => ({
-          keyName,
-          fallback,
-          items: await readStorageCollection<unknown>(collectionName),
-        }))
-      ), 8000);
-      const hasRemoteData = remoteResources.some(({ items }) => items.length > 0);
-
-      if (hasRemoteData) {
-        for (const resource of remoteResources) {
-          if (resource.items.length > 0) {
-            setLocalItem(STORAGE_KEYS[resource.keyName], resource.items);
-          }
-        }
-        const remoteConfig = await withTimeout(readStorageCollection<SystemConfig>('config'), 5000);
-        if (remoteConfig[0]) setLocalItem(STORAGE_KEYS.CONFIG, remoteConfig[0]);
-      } else {
-        await withTimeout(Promise.all(
-          resources.map(([keyName]) =>
-            syncStorageCollection(STORAGE_KEYS[keyName], getLocalItem(STORAGE_KEYS[keyName], []))
-          )
-        ), 8000);
-        await withTimeout(syncStorageCollection(STORAGE_KEYS.CONFIG, this.getConfig()), 5000);
-      }
-      firebaseReady = true;
-      await withTimeout(initializeFirebaseClock(), 5000);
-      this.subscribeToFirebase();
-      notifyChange('all');
-    } catch (error) {
-      console.error('Firebase hydration failed; continuing with local data:', error);
-      firebaseReady = true;
-    }
-  }
-
-  private subscribeToFirebase(): void {
-      const resources = [
-        ['students', STORAGE_KEYS.STUDENTS],
-        ['courses', STORAGE_KEYS.COURSES],
-        ['quizzes', STORAGE_KEYS.QUIZZES],
-        ['results', STORAGE_KEYS.RESULTS],
-        ['notifications', STORAGE_KEYS.NOTIFICATIONS],
-      ] as const;
-
-        resources.forEach(([collectionName, key]) => {
-        subscribeToFirebaseCollection(collectionName, (items) => {
-            if (items.length > 0) {
-              setLocalItemWithoutSync(key, items);
-              notifyChange(collectionName);
-            }
-          });
-        });
-      subscribeToFirebaseCollection('config', (items) => {
-        if (items[0]) {
-          setLocalItemWithoutSync(STORAGE_KEYS.CONFIG, items[0]);
-          notifyChange('config');
-        }
+      const loaded = await Promise.all(
+        resources.map(async ([keyName, resource, fallback]) => {
+          const response = await fetch(`/api/storage/${resource}`);
+          if (!response.ok) throw new Error(`Local backend returned HTTP ${response.status}`);
+          const value = await response.json();
+          return [keyName, value.items, fallback] as const;
+        })
+      );
+      loaded.forEach(([keyName, value, fallback]) => {
+        const hasData = Array.isArray(value) ? value.length > 0 : Object.keys(value || {}).length > 0;
+        setLocalItemWithoutSync(STORAGE_KEYS[keyName], hasData ? value : fallback);
       });
+      notifyChange('all');
+      connectToLocalBackend();
+    } catch (error) {
+      console.error('Local JSON hydration failed; continuing with cached data:', error);
+    }
   }
 
   public initializeDefaults(forceReset = false): void {
@@ -252,7 +265,6 @@ export class CBTStorageService {
   public deleteStudent(regNo: string): void {
     const students = this.getStudents().filter((s) => s.regNo !== regNo);
     setLocalItem(STORAGE_KEYS.STUDENTS, students);
-    void deleteFirebaseDocument('students', regNo.replace(/[^a-zA-Z0-9]/g, '_'));
     notifyChange('students');
   }
 
@@ -285,10 +297,6 @@ export class CBTStorageService {
   public deleteCourse(id: string): void {
     const courses = this.getCourses().filter((c) => c.id !== id);
     setLocalItem(STORAGE_KEYS.COURSES, courses);
-    void deleteFirebaseDocument('courses', id);
-    void logAdminAction('delete', 'course', id).catch((error) =>
-      console.error('Firebase course audit logging failed:', error)
-    );
     notifyChange('courses');
   }
 
@@ -297,13 +305,6 @@ export class CBTStorageService {
       this.getCourses().find((course) => course.code.toUpperCase() === 'PHIL 101') ||
       INITIAL_COURSES[0];
     setLocalItem(STORAGE_KEYS.COURSES, [phil101]);
-    const remoteCourses = await readStorageCollection<Course>('courses');
-    await Promise.all(
-      remoteCourses
-        .filter((course) => course.id !== phil101.id)
-        .map((course) => deleteFirebaseDocument('courses', course.id))
-    );
-    await syncStorageCollection(STORAGE_KEYS.COURSES, [phil101]);
     notifyChange('courses');
   }
 
@@ -337,16 +338,11 @@ export class CBTStorageService {
     const quizzes = this.getQuizzes().filter((q) => q.id !== id);
     setLocalItem(STORAGE_KEYS.QUIZZES, quizzes);
     this.deleteResultsByQuiz(id);
-    void deleteFirebaseDocument('quizzes', id);
-    void logAdminAction('delete', 'quiz', id).catch((error) =>
-      console.error('Firebase quiz audit logging failed:', error)
-    );
     notifyChange('quizzes');
   }
 
-  public async uploadClassListToFirebase(): Promise<void> {
-    await syncStorageCollection(STORAGE_KEYS.STUDENTS, this.getStudents());
-    await logAdminAction('upload', 'students', undefined, { count: this.getStudents().length });
+  public async uploadClassListToLocalBackend(): Promise<void> {
+    await persistToLocalBackend(STORAGE_KEYS.STUDENTS, this.getStudents());
   }
 
   public scheduleQuiz(
@@ -489,14 +485,6 @@ export class CBTStorageService {
   public deleteResult(id: string): void {
     const results = this.getResults().filter((r) => r.id !== id);
     setLocalItem(STORAGE_KEYS.RESULTS, results);
-    if (firebaseReady) {
-      void deleteFirebaseDocument('results', id).catch((error) => {
-        console.error('Firebase result deletion failed:', error);
-      });
-      void logAdminAction('delete', 'result', id).catch((error) =>
-        console.error('Firebase result audit logging failed:', error)
-      );
-    }
     notifyChange('results');
   }
 

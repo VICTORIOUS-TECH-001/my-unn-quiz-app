@@ -1,0 +1,33 @@
+[
+  {
+    "id": "notif-1",
+    "title": "Constitutional Law CBT Examination Active",
+    "message": "LAW 411: Nigerian Constitutional Law Examination (70 Questions, 25 Minutes) is now active and accessible to all 400-level UNEC Law students.",
+    "date": "Just now",
+    "type": "exam_alert",
+    "targetCourse": "LAW 411"
+  },
+  {
+    "id": "notif-2",
+    "title": "Jurisprudence CBT Quiz Scheduled",
+    "message": "LAW 421: Jurisprudence & Legal Theory Diagnostic Test has been scheduled for Thursday at 10:00 AM. Please ensure you have stable internet connection.",
+    "date": "Today, 08:30 AM",
+    "type": "quiz_schedule",
+    "targetCourse": "LAW 421"
+  },
+  {
+    "id": "notif-3",
+    "title": "Commercial Law Quiz Results Released",
+    "message": "Results for LAW 431: Commercial Law & Sale of Goods Continuous Assessment have been computed and published on the Past Results portal.",
+    "date": "Yesterday, 04:15 PM",
+    "type": "result",
+    "targetCourse": "LAW 431"
+  },
+  {
+    "id": "notif-4",
+    "title": "Official 030 Class Roster Verified",
+    "message": "All 356 registered candidates of the 030 Law Class, UNEC have been verified in the CBT examination database. Use your exact registration number to log in.",
+    "date": "2 days ago",
+    "type": "general"
+  }
+]

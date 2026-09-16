@@ -8,7 +8,6 @@ import {
   Award,
 } from 'lucide-react';
 import { Student } from '../types';
-import { firebaseNow } from '../services/firebase';
 
 interface NavbarProps {
   currentStudent: Student | null;
@@ -27,7 +26,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   useEffect(() => {
     const updateTime = () => {
-      const now = new Date(firebaseNow());
+      const now = new Date();
       const timeStr = now.toLocaleTimeString('en-GB', {
         hour: '2-digit',
         minute: '2-digit',

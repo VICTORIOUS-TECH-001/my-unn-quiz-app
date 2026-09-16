@@ -16,7 +16,6 @@ import {
 import { Attempt, OptionKey, Question, Quiz, Result, Student } from '../types';
 import { cbtStorage } from '../services/storage';
 import { UNNLogo } from './UNNLogo';
-import { firebaseNow } from '../services/firebase';
 
 interface CBTExamEngineProps {
   quiz: Quiz;
@@ -68,7 +67,7 @@ export const CBTExamEngine: React.FC<CBTExamEngineProps> = ({
       setFlagged(savedAttempt.flaggedQuestions || []);
 
       // Calculate elapsed real time since started
-      const elapsedSeconds = Math.floor((firebaseNow() - savedAttempt.startedAt) / 1000);
+      const elapsedSeconds = Math.floor((Date.now() - savedAttempt.startedAt) / 1000);
       const remaining = Math.max(0, totalDurationSeconds - elapsedSeconds);
       setTimeRemaining(remaining);
 
@@ -80,11 +79,11 @@ export const CBTExamEngine: React.FC<CBTExamEngineProps> = ({
     } else {
       // Fresh new attempt
       const newAttempt: Attempt = {
-        id: `att_${quiz.id}_${firebaseNow()}`,
+        id: `att_${quiz.id}_${Date.now()}`,
         quizId: quiz.id,
         studentRegNo: student.regNo,
         studentName: student.name,
-        startedAt: firebaseNow(),
+        startedAt: Date.now(),
         durationSeconds: totalDurationSeconds,
         timeRemainingSeconds: totalDurationSeconds,
         answers: {},
@@ -245,7 +244,7 @@ export const CBTExamEngine: React.FC<CBTExamEngineProps> = ({
     const attempt = cbtStorage.getAttempt(quiz.id, student.regNo);
     if (attempt) {
       attempt.isSubmitted = true;
-      attempt.submittedAt = firebaseNow();
+      attempt.submittedAt = Date.now();
       attempt.timeRemainingSeconds = 0;
       cbtStorage.saveAttempt(attempt);
     }

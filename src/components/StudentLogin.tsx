@@ -8,7 +8,6 @@ import {
 } from 'lucide-react';
 import { Student, Quiz } from '../types';
 import { cbtStorage } from '../services/storage';
-import { firebaseNow } from '../services/firebase';
 
 interface StudentLoginProps {
   onLoginSuccess: (student: Student) => void;
@@ -26,7 +25,7 @@ interface CountdownState {
 
 function calculateCountdown(targetDateStr: string): CountdownState {
   const target = new Date(targetDateStr).getTime();
-  const now = firebaseNow();
+  const now = Date.now();
   const diff = target - now;
 
   if (isNaN(target) || diff <= 0) {
@@ -100,7 +99,7 @@ export const StudentLogin: React.FC<StudentLoginProps> = ({
     : currentQuiz
       ? new Date(currentQuiz.scheduledDateTime).getTime() + currentQuiz.durationMinutes * 60000
       : 0;
-  const isQuizOver = Boolean(currentQuiz && quizEndTime <= firebaseNow());
+  const isQuizOver = Boolean(currentQuiz && quizEndTime <= Date.now());
 
   // Live countdown timer ticking every second
   useEffect(() => {

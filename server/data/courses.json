@@ -1,0 +1,11 @@
+[
+  {
+    "id": "course-phil-101",
+    "code": "PHIL 101",
+    "title": "Introduction to Philosophy",
+    "description": "Foundations of philosophical reasoning, logic, ethics, and critical thinking.",
+    "creditUnits": 3,
+    "semester": "First Semester",
+    "lecturer": "Department of Philosophy"
+  }
+]
