@@ -41,10 +41,22 @@ export const PracticeEngine: React.FC<PracticeEngineProps> = ({
   student,
   onExit,
 }) => {
-  const bankSize = cbtStorage.getBankQuestionCount(course.id);
+  const [bankSize, setBankSize] = useState(() =>
+    cbtStorage.getBankQuestionCount(course.id)
+  );
   const perAttempt =
     cbtStorage.getQuestionBankByCourse(course.id)?.questionsPerAttempt ||
     DEFAULT_PRACTICE_DRAW;
+
+  // Pull the newest bank from Firebase so concurrent students practise
+  // with the latest uploaded questions, not a stale local copy.
+  useEffect(() => {
+    setBankSize(cbtStorage.getBankQuestionCount(course.id));
+    cbtStorage
+      .refreshQuestionBanksFromFirebase()
+      .then(() => setBankSize(cbtStorage.getBankQuestionCount(course.id)))
+      .catch(() => undefined);
+  }, [course.id]);
 
   const [phase, setPhase] = useState<Phase>('setup');
   const [questions, setQuestions] = useState<Question[]>([]);

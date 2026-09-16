@@ -281,6 +281,48 @@ export class CBTStorageService {
     notifyChange('students');
   }
 
+  /**
+   * Bulk import from an official class list. Matches by registration number:
+   * new reg numbers are added, existing ones get their names/details refreshed.
+   * Every imported student can immediately log in and gets a dashboard.
+   */
+  public importStudents(list: Student[]): { added: number; updated: number } {
+    const students = getLocalItem<Student[]>(STORAGE_KEYS.STUDENTS, INITIAL_STUDENTS);
+    const indexByReg = new Map(
+      students.map((s, i) => [s.regNo.toUpperCase().replace(/\s+/g, ''), i])
+    );
+    let added = 0;
+    let updated = 0;
+    for (const incoming of list) {
+      const key = incoming.regNo.toUpperCase().replace(/\s+/g, '');
+      const existingIdx = indexByReg.get(key);
+      if (existingIdx === undefined) {
+        students.push({ ...incoming, sn: students.length + 1 });
+        indexByReg.set(key, students.length - 1);
+        added += 1;
+      } else {
+        const existing = students[existingIdx];
+        students[existingIdx] = {
+          ...existing,
+          name: incoming.name || existing.name,
+          level: incoming.level || existing.level,
+          faculty: incoming.faculty || existing.faculty,
+          campus: incoming.campus || existing.campus,
+          class: incoming.class || existing.class,
+        };
+        updated += 1;
+      }
+    }
+    setLocalItem(STORAGE_KEYS.STUDENTS, students);
+    notifyChange('students');
+    return { added, updated };
+  }
+
+  /** Explicitly push the whole student roster to Firebase. */
+  public async pushStudentsToFirebase(): Promise<void> {
+    await syncStorageCollection(STORAGE_KEYS.STUDENTS, this.getStudents());
+  }
+
   // ==================== COURSES ====================
   public getCourses(): Course[] {
     return getLocalItem<Course[]>(STORAGE_KEYS.COURSES, INITIAL_COURSES);
@@ -568,6 +610,29 @@ export class CBTStorageService {
     quiz.totalQuestions = pulled.length;
     this.updateQuiz(quiz);
     return pulled.length;
+  }
+
+  /**
+   * Explicitly push ALL question banks to the Firebase database.
+   * Called after admin uploads so many concurrent students always
+   * read the latest questions from the database (not just this browser).
+   */
+  public async pushQuestionBanksToFirebase(): Promise<void> {
+    await syncStorageCollection(STORAGE_KEYS.QUESTION_BANKS, this.getQuestionBanks());
+  }
+
+  /**
+   * Explicitly pull the latest question banks FROM Firebase into this device.
+   * Called on student screens so concurrent writers always practise
+   * with the newest uploaded questions.
+   */
+  public async refreshQuestionBanksFromFirebase(): Promise<number> {
+    const remote = await readStorageCollection<QuestionBank>('questionBanks');
+    if (remote.length > 0) {
+      setLocalItemWithoutSync(STORAGE_KEYS.QUESTION_BANKS, remote);
+      notifyChange('questionBanks');
+    }
+    return remote.length;
   }
 
   // ==================== PRACTICE HISTORY ====================

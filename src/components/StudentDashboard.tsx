@@ -83,6 +83,11 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
 
   useEffect(() => {
     loadData();
+    // Refresh banks from Firebase so counts are always database-fresh.
+    cbtStorage
+      .refreshQuestionBanksFromFirebase()
+      .then(() => loadData())
+      .catch(() => undefined);
     const unsubscribe = cbtStorage.subscribe(() => {
       loadData();
     });

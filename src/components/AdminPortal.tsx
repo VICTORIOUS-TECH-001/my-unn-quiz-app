@@ -40,6 +40,7 @@ import { cbtStorage } from '../services/storage';
 import { UNNLogo } from './UNNLogo';
 import { extractQuestionsFromFile, extractQuestionsFromText } from '../services/questionImport';
 import { QuestionBankManager } from './QuestionBankManager';
+import { ClassListImporter } from './ClassListImporter';
 
 interface AdminPortalProps {
   onBackToStudentPortal: () => void;
@@ -131,6 +132,7 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
   const [classListStatus, setClassListStatus] = useState<string | null>(null);
 
   const [showStudentModal, setShowStudentModal] = useState(false);
+  const [showClassListImporter, setShowClassListImporter] = useState(false);
   const [studentForm, setStudentForm] = useState({
     name: '',
     regNo: '',
@@ -1470,6 +1472,14 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
 
             <div className="flex flex-wrap gap-2">
               <button
+                onClick={() => setShowClassListImporter(true)}
+                className="px-4 py-2 bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-700 hover:to-green-700 text-white rounded-xl text-xs font-bold flex items-center gap-1.5 shadow anim-shine"
+                title="Upload the official class list PDF — every student gets a dashboard"
+              >
+                <FileSpreadsheet className="w-4 h-4" />
+                <span>📄 Import Class List (PDF)</span>
+              </button>
+              <button
                 onClick={async () => {
                   try {
                     await cbtStorage.uploadClassListToFirebase();
@@ -2191,6 +2201,14 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
             </form>
           </div>
         </div>
+      )}
+
+      {/* MODAL: IMPORT OFFICIAL CLASS LIST */}
+      {showClassListImporter && (
+        <ClassListImporter
+          onClose={() => setShowClassListImporter(false)}
+          onImported={refreshData}
+        />
       )}
     </div>
   );

@@ -503,6 +503,13 @@ body {
 .eq-bars span:nth-child(2) { animation-delay: 0.22s; }
 .eq-bars span:nth-child(3) { animation-delay: 0.44s; }
 .eq-bars span:nth-child(4) { animation-delay: 0.11s; }
+.eq-bars-sm {
+  height: 14px;
+}
+.eq-bars-sm span {
+  width: 3px;
+  background: #a3e635;
+}
 .music-pop {
   animation: slideUp 0.25s ease both;
 }

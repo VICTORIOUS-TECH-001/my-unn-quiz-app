@@ -1,45 +1,168 @@
 /**
- * FocusMusic — a tiny generative "smooth gaming" ambient engine built on Web Audio.
- * No audio files needed: warm detuned pads + soft pentatonic plucks + airy shimmer,
- * designed to loop forever while students study. Students can toggle it on/off and
- * adjust volume; the preference persists in localStorage.
+ * FocusMusic — generative "smooth gaming" ambient engine built on Web Audio.
+ * No audio files needed: warm pads + soft plucks + airy shimmer, looping
+ * forever while students study. Students pick from multiple stations,
+ * toggle on/off and adjust volume; preferences persist in localStorage.
  */
 
-type Listener = (playing: boolean) => void;
+export interface MusicPreset {
+  id: string;
+  name: string;
+  emoji: string;
+  blurb: string;
+  chords: number[][];
+  pluckScale: number[];
+  chordMs: number;
+  padCutoff: number;
+  padLevel: number;
+  pluckLevel: number;
+  pluckDensity: number; // 0..1 probability a pluck plays each tick
+  pluckGapMin: number; // ms
+  pluckGapMax: number; // ms
+  noiseLevel: number; // 0 = none (rain uses soft noise)
+}
+
+export const MUSIC_TRACKS: MusicPreset[] = [
+  {
+    id: 'ocean',
+    name: 'Ocean Focus',
+    emoji: '🌊',
+    blurb: 'Calm waves of lo-fi pads',
+    chords: [
+      [130.81, 164.81, 196.0, 246.94, 293.66], // Cmaj9
+      [110.0, 130.81, 164.81, 196.0, 246.94], // Am9
+      [87.31, 130.81, 174.61, 220.0, 261.63], // Fmaj9
+      [98.0, 146.83, 196.0, 246.94, 293.66], // Gadd9
+    ],
+    pluckScale: [523.25, 587.33, 659.25, 783.99, 880.0, 1046.5],
+    chordMs: 9000,
+    padCutoff: 900,
+    padLevel: 0.5,
+    pluckLevel: 0.35,
+    pluckDensity: 0.85,
+    pluckGapMin: 1400,
+    pluckGapMax: 4600,
+    noiseLevel: 0,
+  },
+  {
+    id: 'rain',
+    name: 'Rainy Lo-fi',
+    emoji: '🌧️',
+    blurb: 'Soft rain + sleepy piano-ish drops',
+    chords: [
+      [110.0, 130.81, 164.81, 261.63], // Am(add9-ish)
+      [87.31, 130.81, 174.61, 220.0], // F
+      [130.81, 164.81, 196.0, 293.66], // C
+      [98.0, 146.83, 196.0, 293.66], // G
+    ],
+    pluckScale: [440.0, 523.25, 587.33, 659.25, 783.99],
+    chordMs: 11000,
+    padCutoff: 650,
+    padLevel: 0.42,
+    pluckLevel: 0.3,
+    pluckDensity: 0.6,
+    pluckGapMin: 2200,
+    pluckGapMax: 6000,
+    noiseLevel: 0.045,
+  },
+  {
+    id: 'space',
+    name: 'Deep Space',
+    emoji: '🌌',
+    blurb: 'Low drones for deep concentration',
+    chords: [
+      [55.0, 110.0, 164.81, 220.0, 329.63], // A drone
+      [49.0, 98.0, 146.83, 196.0, 293.66], // G drone
+      [43.65, 87.31, 130.81, 174.61, 261.63], // F drone
+      [65.41, 130.81, 196.0, 261.63, 392.0], // C drone
+    ],
+    pluckScale: [659.25, 783.99, 880.0, 1046.5, 1318.5],
+    chordMs: 14000,
+    padCutoff: 520,
+    padLevel: 0.55,
+    pluckLevel: 0.22,
+    pluckDensity: 0.45,
+    pluckGapMin: 3000,
+    pluckGapMax: 8000,
+    noiseLevel: 0,
+  },
+  {
+    id: 'energy',
+    name: 'Energy Boost',
+    emoji: '⚡',
+    blurb: 'Bright & bouncy study energy',
+    chords: [
+      [130.81, 164.81, 196.0, 261.63], // C
+      [98.0, 123.47, 146.83, 196.0], // G-ish
+      [110.0, 130.81, 164.81, 220.0], // Am
+      [87.31, 110.0, 130.81, 174.61], // F-ish
+    ],
+    pluckScale: [523.25, 587.33, 659.25, 783.99, 880.0, 1046.5, 1174.66],
+    chordMs: 5200,
+    padCutoff: 1400,
+    padLevel: 0.4,
+    pluckLevel: 0.5,
+    pluckDensity: 0.95,
+    pluckGapMin: 700,
+    pluckGapMax: 2200,
+    noiseLevel: 0,
+  },
+];
+
+type PlayListener = (playing: boolean) => void;
+type TrackListener = (trackId: string) => void;
 
 const STORE_ENABLED = 'unn_cbt_music_enabled';
 const STORE_VOLUME = 'unn_cbt_music_volume';
-
-// Dreamy lo-fi progression (Hz): Cmaj9 → Am9 → Fmaj9 → Gadd9
-const CHORDS: number[][] = [
-  [130.81, 164.81, 196.0, 246.94, 293.66], // C3 E3 G3 B3 D4
-  [110.0, 130.81, 164.81, 196.0, 246.94], // A2 C3 E3 G3 B3
-  [87.31, 130.81, 174.61, 220.0, 261.63], // F2 C3 F3 A3 C4
-  [98.0, 146.83, 196.0, 246.94, 293.66], // G2 D3 G3 B3 D4
-];
-const PENTA = [523.25, 587.33, 659.25, 783.99, 880.0, 1046.5]; // C5..C6 pentatonic-ish
-const CHORD_MS = 9000;
+const STORE_TRACK = 'unn_cbt_music_track';
 
 class FocusMusicEngine {
   private ctx: AudioContext | null = null;
   private master: GainNode | null = null;
   private padBus: GainNode | null = null;
   private pluckBus: GainNode | null = null;
+  private padFilter: BiquadFilterNode | null = null;
+  private noiseNodes: { src: AudioBufferSourceNode; gain: GainNode } | null =
+    null;
   private playing = false;
   private chordIndex = 0;
   private chordTimer: number | null = null;
   private pluckTimer: number | null = null;
-  private listeners = new Set<Listener>();
+  private playListeners = new Set<PlayListener>();
+  private trackListeners = new Set<TrackListener>();
   private volume = 0.5;
+  private trackId = MUSIC_TRACKS[0].id;
   private unlocked = false;
 
   constructor() {
     try {
       const v = localStorage.getItem(STORE_VOLUME);
       if (v) this.volume = Math.min(1, Math.max(0, Number(v)));
+      const t = localStorage.getItem(STORE_TRACK);
+      if (t && MUSIC_TRACKS.some((m) => m.id === t)) this.trackId = t;
     } catch {
       /* ignore */
     }
+  }
+
+  get preset(): MusicPreset {
+    return MUSIC_TRACKS.find((m) => m.id === this.trackId) || MUSIC_TRACKS[0];
+  }
+
+  getTrackId(): string {
+    return this.trackId;
+  }
+
+  setTrack(id: string): void {
+    if (!MUSIC_TRACKS.some((m) => m.id === id)) return;
+    this.trackId = id;
+    try {
+      localStorage.setItem(STORE_TRACK, id);
+    } catch {
+      /* ignore */
+    }
+    this.trackListeners.forEach((fn) => fn(id));
+    if (this.playing) this.applyPresetLive();
   }
 
   isEnabledPreference(): boolean {
@@ -59,15 +182,22 @@ class FocusMusicEngine {
     return this.volume;
   }
 
-  subscribe(fn: Listener): () => void {
-    this.listeners.add(fn);
+  subscribe(fn: PlayListener): () => void {
+    this.playListeners.add(fn);
     return () => {
-      this.listeners.delete(fn);
+      this.playListeners.delete(fn);
+    };
+  }
+
+  onTrackChange(fn: TrackListener): () => void {
+    this.trackListeners.add(fn);
+    return () => {
+      this.trackListeners.delete(fn);
     };
   }
 
   private emit(): void {
-    this.listeners.forEach((fn) => fn(this.playing));
+    this.playListeners.forEach((fn) => fn(this.playing));
   }
 
   private ensureContext(): AudioContext | null {
@@ -78,35 +208,34 @@ class FocusMusicEngine {
         (window as unknown as { webkitAudioContext?: typeof AudioContext })
           .webkitAudioContext;
       if (!AC) return null;
+      const preset = this.preset;
       this.ctx = new AC();
       this.master = this.ctx.createGain();
       this.master.gain.value = this.volume * 0.6;
       this.master.connect(this.ctx.destination);
 
       this.padBus = this.ctx.createGain();
-      this.padBus.gain.value = 0.5;
-      const padFilter = this.ctx.createBiquadFilter();
-      padFilter.type = 'lowpass';
-      padFilter.frequency.value = 900;
-      padFilter.Q.value = 0.6;
-      // Slow breathing LFO on the filter for a "smooth" evolving feel.
+      this.padBus.gain.value = preset.padLevel;
+      this.padFilter = this.ctx.createBiquadFilter();
+      this.padFilter.type = 'lowpass';
+      this.padFilter.frequency.value = preset.padCutoff;
+      this.padFilter.Q.value = 0.6;
       const lfo = this.ctx.createOscillator();
       lfo.frequency.value = 0.07;
       const lfoGain = this.ctx.createGain();
       lfoGain.gain.value = 320;
       lfo.connect(lfoGain);
-      lfoGain.connect(padFilter.frequency);
+      lfoGain.connect(this.padFilter.frequency);
       lfo.start();
-      this.padBus.connect(padFilter);
-      padFilter.connect(this.master);
+      this.padBus.connect(this.padFilter);
+      this.padFilter.connect(this.master);
 
       this.pluckBus = this.ctx.createGain();
-      this.pluckBus.gain.value = 0.35;
+      this.pluckBus.gain.value = preset.pluckLevel;
       const pluckFilter = this.ctx.createBiquadFilter();
       pluckFilter.type = 'lowpass';
       pluckFilter.frequency.value = 2400;
       this.pluckBus.connect(pluckFilter);
-      // Simple feedback-delay "space" for the plucks.
       const delay = this.ctx.createDelay(1);
       delay.delayTime.value = 0.42;
       const feedback = this.ctx.createGain();
@@ -149,10 +278,43 @@ class FocusMusicEngine {
     } catch {
       /* ignore */
     }
-    this.scheduleChord();
-    this.chordTimer = window.setInterval(() => this.scheduleChord(), CHORD_MS);
-    this.schedulePluck();
+    this.applyPresetLive();
     this.emit();
+  }
+
+  /** (Re)start chord + pluck + noise schedulers for the current preset. */
+  private applyPresetLive(): void {
+    const preset = this.preset;
+    if (this.padBus && this.ctx) {
+      this.padBus.gain.setTargetAtTime(
+        preset.padLevel,
+        this.ctx.currentTime,
+        0.4
+      );
+    }
+    if (this.pluckBus && this.ctx) {
+      this.pluckBus.gain.setTargetAtTime(
+        preset.pluckLevel,
+        this.ctx.currentTime,
+        0.4
+      );
+    }
+    if (this.padFilter && this.ctx) {
+      this.padFilter.frequency.setTargetAtTime(
+        preset.padCutoff,
+        this.ctx.currentTime,
+        0.4
+      );
+    }
+    if (this.chordTimer) window.clearInterval(this.chordTimer);
+    if (this.pluckTimer) window.clearTimeout(this.pluckTimer);
+    this.scheduleChord();
+    this.chordTimer = window.setInterval(
+      () => this.scheduleChord(),
+      preset.chordMs
+    );
+    this.schedulePluck();
+    this.restartNoise();
   }
 
   pause(): void {
@@ -171,7 +333,7 @@ class FocusMusicEngine {
       window.clearTimeout(this.pluckTimer);
       this.pluckTimer = null;
     }
-    // Fade out gracefully, then suspend to save battery.
+    this.stopNoise(0.4);
     const ctx = this.ctx;
     const master = this.master;
     if (ctx && master) {
@@ -224,10 +386,11 @@ class FocusMusicEngine {
   private scheduleChord(): void {
     const ctx = this.ctx;
     if (!ctx || !this.padBus || !this.playing) return;
-    const chord = CHORDS[this.chordIndex % CHORDS.length];
+    const preset = this.preset;
+    const chord = preset.chords[this.chordIndex % preset.chords.length];
     this.chordIndex += 1;
     const t = ctx.currentTime;
-    const dur = CHORD_MS / 1000 + 2.5;
+    const dur = preset.chordMs / 1000 + 2.5;
     chord.forEach((freq, i) => {
       [-4, 3].forEach((cents) => {
         const osc = ctx.createOscillator();
@@ -237,7 +400,7 @@ class FocusMusicEngine {
         const g = ctx.createGain();
         g.gain.setValueAtTime(0.0001, t);
         g.gain.linearRampToValueAtTime(0.028, t + 2.2);
-        g.gain.setValueAtTime(0.028, t + dur - 2.5);
+        g.gain.setValueAtTime(0.028, t + Math.max(0.1, dur - 2.5));
         g.gain.linearRampToValueAtTime(0.0001, t + dur);
         osc.connect(g);
         g.connect(this.padBus!);
@@ -250,8 +413,10 @@ class FocusMusicEngine {
   private schedulePluck(): void {
     if (!this.playing) return;
     const ctx = this.ctx;
-    if (ctx && this.pluckBus && Math.random() < 0.85) {
-      const freq = PENTA[Math.floor(Math.random() * PENTA.length)];
+    const preset = this.preset;
+    if (ctx && this.pluckBus && Math.random() < preset.pluckDensity) {
+      const scale = preset.pluckScale;
+      const freq = scale[Math.floor(Math.random() * scale.length)];
       const t = ctx.currentTime;
       const osc = ctx.createOscillator();
       osc.type = 'sine';
@@ -264,7 +429,6 @@ class FocusMusicEngine {
       g.connect(this.pluckBus);
       osc.start(t);
       osc.stop(t + 1.8);
-      // Soft octave shimmer
       if (Math.random() < 0.4) {
         const osc2 = ctx.createOscillator();
         osc2.type = 'sine';
@@ -279,15 +443,64 @@ class FocusMusicEngine {
         osc2.stop(t + 1.4);
       }
     }
-    const next = 1400 + Math.random() * 3200;
+    const next =
+      preset.pluckGapMin +
+      Math.random() * (preset.pluckGapMax - preset.pluckGapMin);
     this.pluckTimer = window.setTimeout(() => this.schedulePluck(), next);
+  }
+
+  private restartNoise(): void {
+    this.stopNoise(0.3);
+    const ctx = this.ctx;
+    const preset = this.preset;
+    if (!ctx || !this.master || preset.noiseLevel <= 0 || !this.playing) return;
+    const len = ctx.sampleRate * 2;
+    const buffer = ctx.createBuffer(1, len, ctx.sampleRate);
+    const data = buffer.getChannelData(0);
+    for (let i = 0; i < len; i += 1) {
+      // Soft pinkish rain: average of random walk
+      data[i] = (Math.random() * 2 - 1) * 0.5;
+    }
+    const src = ctx.createBufferSource();
+    src.buffer = buffer;
+    src.loop = true;
+    const filter = ctx.createBiquadFilter();
+    filter.type = 'bandpass';
+    filter.frequency.value = 2800;
+    filter.Q.value = 0.4;
+    const gain = ctx.createGain();
+    gain.gain.value = 0.0001;
+    gain.gain.setTargetAtTime(preset.noiseLevel, ctx.currentTime, 1.2);
+    src.connect(filter);
+    filter.connect(gain);
+    gain.connect(this.master);
+    src.start();
+    this.noiseNodes = { src, gain };
+  }
+
+  private stopNoise(fadeSeconds: number): void {
+    const ctx = this.ctx;
+    const nodes = this.noiseNodes;
+    this.noiseNodes = null;
+    if (!ctx || !nodes) return;
+    try {
+      nodes.gain.gain.setTargetAtTime(0.0001, ctx.currentTime, fadeSeconds / 2);
+      window.setTimeout(() => {
+        try {
+          nodes.src.stop();
+        } catch {
+          /* already stopped */
+        }
+      }, fadeSeconds * 1000 + 200);
+    } catch {
+      /* ignore */
+    }
   }
 
   /** Small UI blip for correct/wrong/click feedback. */
   sfx(kind: 'correct' | 'wrong' | 'click' | 'finish'): void {
     const ctx = this.ensureContext();
     if (!ctx || !this.master || !this.playing) return;
-    // SFX respects music toggle; still play softly if ctx running.
     const t = ctx.currentTime;
     const notes: Record<string, number[]> = {
       correct: [659.25, 783.99, 1046.5],

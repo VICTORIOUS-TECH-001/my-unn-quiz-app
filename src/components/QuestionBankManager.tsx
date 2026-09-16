@@ -126,14 +126,23 @@ export const QuestionBankManager: React.FC<QuestionBankManagerProps> = ({
           `No new questions found. Check the format guide — each question needs numbering + options A–D + "Answer: X". (${totalSkipped} block${totalSkipped === 1 ? '' : 's'} skipped${totalDupes ? `, ${totalDupes} duplicate${totalDupes === 1 ? '' : 's'}` : ''})`,
           true
         );
+        rerender();
       } else {
-        flash(
-          `✅ Saved ${totalAdded} question${totalAdded === 1 ? '' : 's'} to ${course.code} bank (stored in Firebase).` +
-            (totalDupes ? ` ${totalDupes} duplicate${totalDupes === 1 ? '' : 's'} skipped.` : '') +
-            (totalSkipped ? ` ${totalSkipped} block${totalSkipped === 1 ? '' : 's'} skipped.` : '')
-        );
+        const summary =
+          `✅ Saved ${totalAdded} question${totalAdded === 1 ? '' : 's'} to ${course.code} bank` +
+          (totalDupes ? ` (${totalDupes} duplicate${totalDupes === 1 ? '' : 's'} skipped)` : '') +
+          (totalSkipped ? ` (${totalSkipped} block${totalSkipped === 1 ? '' : 's'} skipped)` : '');
+        flash(`${summary} — ☁️ pushing to Firebase database…`);
+        rerender();
+        try {
+          await cbtStorage.pushQuestionBanksToFirebase();
+          flash(`${summary}. ☁️ Live in Firebase database for all students.`);
+        } catch (pushError) {
+          console.error('Bank Firebase push failed:', pushError);
+          flash(`${summary}. ⚠️ Saved on this device — Firebase sync will retry automatically.`, true);
+        }
+        rerender();
       }
-      rerender();
     } catch (error) {
       console.error('Bank upload failed:', error);
       flash(
@@ -295,6 +304,26 @@ export const QuestionBankManager: React.FC<QuestionBankManagerProps> = ({
                 className="w-16 px-2 py-1 border border-slate-300 rounded-lg font-mono font-bold text-emerald-900 bg-white"
               />
             </div>
+          </div>
+
+          {/* Firebase live-sync status */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-[11px] font-semibold text-emerald-900 bg-emerald-50 border border-emerald-200 rounded-xl px-3 py-2">
+            <span className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+              ☁️ Firebase database connected — {bankQuestions.length} questions live for all concurrent students.
+            </span>
+            <button
+              onClick={() => {
+                flash('☁️ Syncing banks to Firebase database…');
+                cbtStorage
+                  .pushQuestionBanksToFirebase()
+                  .then(() => flash('☁️ All question banks synced to Firebase database.'))
+                  .catch(() => flash('⚠️ Sync failed — check internet / Firebase rules, then retry.', true));
+              }}
+              className="self-start sm:self-center px-3 py-1.5 rounded-lg bg-emerald-700 hover:bg-emerald-800 text-white text-[11px] font-bold shadow-xs"
+            >
+              Sync now
+            </button>
           </div>
 
           {/* Upload zone */}
