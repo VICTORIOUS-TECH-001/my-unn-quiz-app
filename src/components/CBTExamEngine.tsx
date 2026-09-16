@@ -312,7 +312,7 @@ export const CBTExamEngine: React.FC<CBTExamEngineProps> = ({
   return (
     <div className="min-h-screen bg-transparent flex flex-col arena-enter">
       {/* Official CBT Top Bar */}
-      <div className="bg-[#0b6537] text-white px-4 py-3 shadow-md border-b-4 border-[#22c55e] sticky top-0 z-30">
+      <div className="bg-[#0b6537] text-white px-4 py-3 shadow-md border-b-4 border-[#22c55e] sticky top-0 z-30 anim-slide-left">
         <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
           {/* Candidate & Course Identity */}
           <div className="flex items-center gap-3">
@@ -364,7 +364,7 @@ export const CBTExamEngine: React.FC<CBTExamEngineProps> = ({
         {/* Left 3 Columns: Active Question Card */}
         <div className="lg:col-span-3 flex flex-col space-y-4">
           {currentQ ? (
-            <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 sm:p-8 flex-1 flex flex-col justify-between">
+            <div key={currentQ.id} className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 sm:p-8 flex-1 flex flex-col justify-between question-slide">
               <div>
                 {/* Question Metadata Header */}
                 <div className="flex items-center justify-between pb-4 border-b border-slate-100">

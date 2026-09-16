@@ -373,7 +373,7 @@ export const QuestionBankManager: React.FC<QuestionBankManagerProps> = ({
               use text-based documents.
             </p>
             <div className="mt-3 flex flex-wrap justify-center gap-2">
-              <span className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl bg-emerald-700 text-white text-xs font-bold shadow">
+              <span className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl bg-emerald-700 text-white text-xs font-bold shadow anim-shine">
                 <Upload className="w-3.5 h-3.5" /> Choose files
               </span>
               <button

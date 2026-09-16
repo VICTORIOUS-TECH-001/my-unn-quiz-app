@@ -239,7 +239,7 @@ export const ResultView: React.FC<ResultViewProps> = ({
           </div>
 
           {/* Large Performance Showcase */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center stagger-rise">
             <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200">
               <span className="text-[11px] font-semibold uppercase text-emerald-800 block">
                 Total Score
@@ -265,7 +265,7 @@ export const ResultView: React.FC<ResultViewProps> = ({
               <span className="text-[11px] font-semibold uppercase text-[#0b6537] block">
                 Official Grade
               </span>
-              <span className="text-2xl sm:text-3xl font-black text-[#074625] font-serif mt-1 block">
+              <span className="text-2xl sm:text-3xl font-black text-[#074625] font-serif mt-1 block grade-glow">
                 {studentResult.grade}
               </span>
             </div>

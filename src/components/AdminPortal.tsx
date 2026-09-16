@@ -23,6 +23,11 @@ import {
   ShieldCheck,
   FileSpreadsheet,
   X,
+  Lock,
+  Unlock,
+  KeyRound,
+  Eye,
+  EyeOff,
   Upload,
 } from 'lucide-react';
 import {
@@ -41,6 +46,13 @@ import { UNNLogo } from './UNNLogo';
 import { extractQuestionsFromFile, extractQuestionsFromText } from '../services/questionImport';
 import { QuestionBankManager } from './QuestionBankManager';
 import { ClassListImporter } from './ClassListImporter';
+import {
+  changeAdminPin,
+  isAdminSessionUnlocked,
+  lockAdminSession,
+  unlockAdminSession,
+  verifyAdminPin,
+} from '../services/adminGate';
 
 interface AdminPortalProps {
   onBackToStudentPortal: () => void;
@@ -86,9 +98,65 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
   const [studentSearch, setStudentSearch] = useState('');
   const [resultSearch, setResultSearch] = useState('');
 
-  // Admin portal is open access — no password gate. It opens straight into controls.
+  // Admin gate: 4-digit PIN verified against Firebase (config/admin). Default 0420.
+  const [isUnlocked, setIsUnlocked] = useState<boolean>(() => isAdminSessionUnlocked());
+  const [pinInput, setPinInput] = useState('');
+  const [pinError, setPinError] = useState<string | null>(null);
+  const [showPin, setShowPin] = useState(false);
+  const [checkingPin, setCheckingPin] = useState(false);
+
+  const handleUnlock = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setPinError(null);
+    if (!pinInput.trim()) {
+      setPinError('Enter the 4-digit admin PIN.');
+      return;
+    }
+    setCheckingPin(true);
+    try {
+      const ok = await verifyAdminPin(pinInput);
+      if (ok) {
+        unlockAdminSession();
+        setIsUnlocked(true);
+        setPinInput('');
+      } else {
+        setPinError('Wrong PIN. Try again.');
+      }
+    } catch (error) {
+      console.error('Admin unlock failed:', error);
+      setPinError('Could not verify PIN. Check your internet connection and retry.');
+    } finally {
+      setCheckingPin(false);
+    }
+  };
+
+  const handleLockAdmin = () => {
+    lockAdminSession();
+    setIsUnlocked(false);
+    setPinInput('');
+    setPinError(null);
+  };
+
   const handleExitAdmin = () => {
+    handleLockAdmin();
     onBackToStudentPortal();
+  };
+
+  const handleChangePin = async () => {
+    const next = prompt('Enter a new admin PIN, 4–12 digits (saved in Firebase):', '');
+    if (!next) return;
+    const clean = next.trim();
+    if (!/^\d{4,12}$/.test(clean)) {
+      alert('PIN must be 4–12 digits.');
+      return;
+    }
+    try {
+      await changeAdminPin(clean);
+      alert('✅ Admin PIN updated in Firebase.');
+    } catch (error) {
+      console.error('PIN change failed:', error);
+      alert('Could not save the new PIN. Check Firebase connection/rules.');
+    }
   };
 
   // Modals & Form States
@@ -521,10 +589,96 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
       s.regNo.toLowerCase().includes(studentSearch.toLowerCase())
   );
 
+  // Firebase PIN gate
+  if (!isUnlocked) {
+    return (
+      <div className="min-h-[calc(100vh-140px)] flex flex-col items-center justify-center p-4 sm:p-6 bg-transparent arena-enter relative overflow-hidden">
+        <span className="float-shape text-4xl top-10 left-6 sm:left-16">🔐</span>
+        <span className="float-shape text-3xl bottom-16 right-8 sm:right-20" style={{ '--d': '1.4s' } as React.CSSProperties}>🛡️</span>
+        <div className="w-full max-w-md bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden anim-zoom-in">
+          <div className="bg-white p-6 sm:p-8 text-center border-b-[5px] border-[#0b6537]">
+            <div className="flex justify-center mb-3 anim-bounce-soft">
+              <UNNLogo size="lg" showText={true} subText="to restore the dignity of man" textColor="text-[#0b6537]" />
+            </div>
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-50 border border-emerald-300 text-emerald-900 rounded-full text-xs font-mono font-bold uppercase tracking-wider mb-2 anim-blink-soft">
+              <Lock className="w-3.5 h-3.5 text-emerald-700" />
+              <span>Admin Access Locked</span>
+            </div>
+            <h1 className="text-xl sm:text-2xl font-bold tracking-tight anim-text-shimmer-green">
+              Staff Administrator Login
+            </h1>
+            <p className="text-xs text-slate-500 mt-1">
+              Enter the 4-digit admin PIN to unlock controls. Verified with Firebase 🔥
+            </p>
+          </div>
+          <div className="p-6 sm:p-8 space-y-5">
+            {pinError && (
+              <div className="flex items-start gap-3 p-4 bg-red-50 border border-red-200 rounded-xl text-xs text-red-800 anim-pop">
+                <AlertCircle className="w-5 h-5 text-red-600 shrink-0 mt-0.5" />
+                <div>
+                  <p className="font-bold">Unlock Failed</p>
+                  <p className="mt-0.5">{pinError}</p>
+                </div>
+              </div>
+            )}
+            <form onSubmit={handleUnlock} className="space-y-5">
+              <div>
+                <label htmlFor="adminPinInput" className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2 text-center">
+                  🔑 Admin PIN
+                </label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                    <KeyRound className="w-4 h-4 text-[#0b6537]" />
+                  </div>
+                  <input
+                    id="adminPinInput"
+                    type={showPin ? 'text' : 'password'}
+                    value={pinInput}
+                    onChange={(e) => {
+                      setPinInput(e.target.value.replace(/\D/g, '').slice(0, 12));
+                      if (pinError) setPinError(null);
+                    }}
+                    placeholder="••••"
+                    autoFocus
+                    autoComplete="off"
+                    inputMode="numeric"
+                    className="w-full pl-10 pr-11 py-4 bg-slate-50 border-2 border-slate-300 rounded-xl text-2xl font-mono font-black tracking-[0.5em] text-center text-slate-900 placeholder:text-slate-300 focus:bg-white focus:border-[#0b6537] focus:ring-2 focus:ring-[#0b6537]/20 outline-none transition-all"
+                  />
+                  <button type="button" onClick={() => setShowPin(!showPin)} className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600" tabIndex={-1}>
+                    {showPin ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  </button>
+                </div>
+              </div>
+              <button
+                type="submit"
+                disabled={checkingPin}
+                className="w-full py-4 px-6 bg-[#0b6537] hover:bg-[#074625] active:scale-[0.99] text-white font-bold text-base rounded-xl transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2 disabled:opacity-60 anim-shine"
+              >
+                {checkingPin ? (
+                  <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                ) : (
+                  <Unlock className="w-5 h-5" />
+                )}
+                <span>{checkingPin ? 'Verifying with Firebase…' : 'Unlock Admin Portal'}</span>
+              </button>
+              <button
+                type="button"
+                onClick={onBackToStudentPortal}
+                className="w-full py-2.5 px-4 text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors"
+              >
+                &larr; Return to Candidate Portal
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 space-y-6">
       {/* Admin Title Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-[#0b6537] p-5 rounded-2xl text-white border-l-8 border-[#22c55e] shadow-md">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-[#0b6537] p-5 rounded-2xl text-white border-l-8 border-[#22c55e] shadow-md anim-rise anim-shine">
         <div>
           <div className="flex items-center gap-2">
             <span className="bg-[#22c55e] text-white text-[10px] font-mono font-bold px-2 py-0.5 rounded">
@@ -543,16 +697,24 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
         </div>
 
         <div className="flex items-center gap-2">
-          <span
-            className="flex items-center gap-1.5 px-3 py-2 bg-lime-300 text-emerald-950 font-bold text-xs rounded-xl border border-lime-200 shadow-xs anim-blink-soft"
-            title="Admin portal is open — no password required"
+          <button
+            onClick={handleChangePin}
+            className="px-3 py-2 bg-[#074625] hover:bg-[#063b20] text-emerald-200 font-semibold text-xs rounded-xl border border-emerald-600 transition-colors"
+            title="Change the admin PIN (saved in Firebase)"
           >
-            <span className="w-2 h-2 rounded-full bg-emerald-700 animate-pulse" />
-            <span>🔓 Open Access</span>
-          </span>
+            Change PIN
+          </button>
+          <button
+            onClick={handleLockAdmin}
+            className="flex items-center gap-1.5 px-3 py-2 bg-red-800 hover:bg-red-700 text-white font-semibold text-xs rounded-xl border border-red-700 transition-colors shadow-xs"
+            title="Lock Admin Portal"
+          >
+            <Lock className="w-3.5 h-3.5" />
+            <span>Lock Portal</span>
+          </button>
           <button
             onClick={handleExitAdmin}
-            className="px-4 py-2 bg-[#074625] hover:bg-[#063b20] text-emerald-200 font-semibold text-xs rounded-xl border border-emerald-600 transition-colors cursor-pointer"
+            className="px-4 py-2 bg-[#074625] hover:bg-[#063b20] text-emerald-200 font-semibold text-xs rounded-xl border border-emerald-600 transition-colors cursor-pointer anim-shine"
           >
             Switch to Candidate Portal
           </button>
@@ -675,7 +837,7 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
       {/* 1. OVERVIEW DASHBOARD */}
       {activeTab === 'dashboard' && (
         <div className="space-y-6">
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 stagger-rise">
             <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
               <span className="text-xs text-slate-500 font-semibold uppercase block">
                 Total Enrolled
@@ -732,7 +894,7 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
                 <Sparkles className="w-4 h-4 text-[#22c55e]" />
                 Quick Admin Actions
               </h3>
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-2 gap-2 stagger-rise">
                 <button
                   onClick={() => {
                     setEditingQuiz(null);
@@ -944,7 +1106,7 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
             {quizzes.map((q) => (
               <div
                 key={q.id}
-                className="p-5 bg-slate-50 rounded-2xl border border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-4"
+                className="p-5 bg-slate-50 rounded-2xl border border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-4 card-lift anim-rise"
               >
                 <div className="space-y-1">
                   <div className="flex items-center gap-2">

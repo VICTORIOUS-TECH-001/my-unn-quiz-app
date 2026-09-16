@@ -107,7 +107,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 space-y-6">
       {/* Student Identity Card */}
-      <div className="bg-[#0b6537] rounded-2xl p-5 sm:p-6 text-white shadow-xl border-l-8 border-[#22c55e]">
+      <div className="bg-[#0b6537] rounded-2xl p-5 sm:p-6 text-white shadow-xl border-l-8 border-[#22c55e] anim-rise anim-glow-pulse anim-shine">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-center gap-4">
             <div className="w-14 h-14 rounded-2xl bg-white/10 border border-white/20 flex items-center justify-center text-emerald-200 text-xl font-bold font-serif shadow-inner shrink-0 anim-pop anim-float">
@@ -126,7 +126,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                   {student.level} &bull; {student.class}
                 </span>
               </div>
-              <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-white mt-1">
+              <h1 className="text-xl sm:text-2xl font-bold tracking-tight mt-1 anim-headline">
                 {student.name}
               </h1>
               <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-emerald-100 font-mono mt-0.5">
@@ -175,7 +175,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
       </div>
 
       {/* Navigation Tabs - Highly accessible for Android / Mobile */}
-      <div className="flex border-b border-slate-200 overflow-x-auto no-scrollbar gap-2 sm:gap-4">
+      <div className="flex border-b border-slate-200 overflow-x-auto no-scrollbar gap-2 sm:gap-4 tabs-playful anim-rise" style={{ '--d': '0.1s' } as React.CSSProperties}>
         <button
           onClick={() => setActiveTab('quiz')}
           className={`pb-3 px-3 text-sm font-semibold flex items-center gap-2 border-b-2 whitespace-nowrap transition-colors ${
@@ -246,7 +246,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
           {/* Main Quiz Area (2 cols) */}
           <div className="lg:col-span-2 space-y-6">
             {activeQuiz ? (
-              <div className="bg-white rounded-2xl p-6 shadow-md border-2 border-[#0b6537] relative overflow-hidden">
+              <div className="bg-white rounded-2xl p-6 shadow-md border-2 border-[#0b6537] relative overflow-hidden anim-gradient-border anim-rise">
                 <div className="absolute top-0 right-0 bg-[#0b6537] text-white text-[11px] font-bold px-4 py-1 rounded-bl-xl uppercase tracking-wider flex items-center gap-1.5 shadow-sm">
                   <span className="w-2 h-2 rounded-full bg-emerald-300 animate-pulse"></span>
                   Quiz Available
@@ -262,7 +262,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                   {activeQuiz.title}
                 </h2>
 
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 my-5">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 my-5 stagger-rise">
                   <div className="bg-slate-50 p-3 rounded-xl border border-slate-200">
                     <span className="text-[10px] text-slate-500 uppercase font-semibold block">
                       Duration
@@ -305,7 +305,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                 </div>
 
                 {/* Instructions */}
-                <div className="bg-emerald-50/60 p-4 rounded-xl border border-emerald-200 text-xs text-emerald-900 space-y-1.5 mb-6">
+                <div className="bg-emerald-50/60 p-4 rounded-xl border border-emerald-200 text-xs text-emerald-900 space-y-1.5 mb-6 anim-rise" style={{ '--d': '0.25s' } as React.CSSProperties}>
                   <p className="font-bold flex items-center gap-1 text-emerald-950">
                     <ShieldCheck className="w-4 h-4 text-[#0b6537]" />
                     Important Examination Instructions:
@@ -397,9 +397,9 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
           </div>
 
           {/* Right Sidebar: Updates and Quick Actions */}
-          <div className="space-y-6">
+          <div className="space-y-6 stagger-rise">
             {/* Quick Result Summary Card */}
-            <div className="bg-white rounded-2xl p-5 shadow-sm border border-slate-200">
+            <div className="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 card-lift">
               <div className="flex items-center justify-between mb-3">
                 <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500 flex items-center gap-1.5">
                   <Award className="w-4 h-4 text-emerald-700" />

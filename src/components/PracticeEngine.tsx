@@ -209,7 +209,7 @@ export const PracticeEngine: React.FC<PracticeEngineProps> = ({
               a bank of <strong className="text-white">{bankSize}</strong> — plus shuffled options. No two practices are the same!
             </p>
 
-            <div className="mt-6 grid grid-cols-3 gap-3 max-w-md mx-auto">
+            <div className="mt-6 grid grid-cols-3 gap-3 max-w-md mx-auto stagger-rise">
               <div className="arena-stat">
                 <Target className="w-5 h-5 mx-auto text-lime-300" />
                 <div className="mt-1 text-xl font-black text-white">{Math.min(perAttempt, bankSize)}</div>
@@ -296,7 +296,7 @@ export const PracticeEngine: React.FC<PracticeEngineProps> = ({
           </div>
           <div className="relative">
             <div className="mx-auto w-20 h-20 rounded-full bg-gradient-to-br from-amber-300 to-orange-500 flex items-center justify-center shadow-2xl pop-in">
-              <Trophy className="w-10 h-10 text-white" />
+              <Trophy className="w-10 h-10 text-white anim-swing" />
             </div>
             <h1 className="mt-4 text-3xl font-black text-white">Run Complete! 🎉</h1>
             <p className="text-sm text-white/70 mt-1">
