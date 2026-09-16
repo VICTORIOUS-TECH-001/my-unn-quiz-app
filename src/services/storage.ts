@@ -30,6 +30,7 @@ import {
   subscribeToFirebaseCollection,
   syncStorageCollection,
 } from './firebase';
+import { parseWATDateTime } from './watTime';
 
 // Structured Storage Keys with unified namespace
 const STORAGE_KEYS = {
@@ -430,10 +431,10 @@ export class CBTStorageService {
       q.startTime = startTime;
       q.durationMinutes = durationMinutes;
       q.status = status;
-      const parsedDate = new Date(`${date}T${startTime}`);
-      if (!Number.isNaN(parsedDate.getTime())) {
-        q.scheduledDateTime = parsedDate.toISOString();
-        q.endDateTime = new Date(parsedDate.getTime() + durationMinutes * 60000).toISOString();
+      const parsed = parseWATDateTime(date, startTime);
+      if (parsed) {
+        q.scheduledDateTime = parsed;
+        q.endDateTime = new Date(new Date(parsed).getTime() + durationMinutes * 60000).toISOString();
       }
       this.updateQuiz(q);
     }

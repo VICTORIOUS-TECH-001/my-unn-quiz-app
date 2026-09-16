@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 import { Student, Quiz } from '../types';
 import { cbtStorage } from '../services/storage';
+import { formatWATDate, formatWATTime } from '../services/watTime';
 import { firebaseNow } from '../services/firebase';
 
 interface StudentLoginProps {
@@ -236,7 +237,7 @@ export const StudentLogin: React.FC<StudentLoginProps> = ({
                       {currentQuiz.status === 'active' ? '🟢 Exam Active Now' : '📅 Scheduled Exam'}
                     </span>
                     <span className="text-[11px] text-slate-500 font-medium">
-                      {currentQuiz.date} &bull; {currentQuiz.startTime}
+                      {formatWATDate(currentQuiz.scheduledDateTime, currentQuiz.date)} &bull; {formatWATTime(currentQuiz.scheduledDateTime, currentQuiz.startTime)} WAT
                     </span>
                   </div>
 
@@ -264,10 +265,7 @@ export const StudentLogin: React.FC<StudentLoginProps> = ({
                       </span>
                     </div>
                     {currentQuiz.status === 'active' && (
-                      <span className="inline-flex items-center gap-1 px-1.5 py-0.2 bg-[#22c55e] text-slate-950 text-[10px] font-black rounded-full">
-                        <span className="w-1.5 h-1.5 rounded-full bg-white animate-ping"></span>
-                        LIVE
-                      </span>
+                      <span className="live-badge">● LIVE</span>
                     )}
                   </div>
 

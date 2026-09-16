@@ -53,6 +53,13 @@ import {
   unlockAdminSession,
   verifyAdminPin,
 } from '../services/adminGate';
+import {
+  formatWATDate,
+  formatWATTime,
+  parseWATDateTime,
+  watDateString,
+} from '../services/watTime';
+import { WATClock } from './WATClock';
 
 interface AdminPortalProps {
   onBackToStudentPortal: () => void;
@@ -279,43 +286,17 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
       alert('Enter a quiz title before saving.');
       return;
     }
-    const parseClockTime = (value: string): [number, number] => {
-      const match = value.trim().match(/^(\d{1,2}):(\d{2})(?:\s*(AM|PM))?$/i);
-      if (!match) return [NaN, NaN];
-      let hours = Number(match[1]);
-      const minutes = Number(match[2]);
-      const meridiem = match[3]?.toUpperCase();
-      if (meridiem) {
-        if (hours < 1 || hours > 12 || minutes > 59) return [NaN, NaN];
-        if (meridiem === 'PM' && hours < 12) hours += 12;
-        if (meridiem === 'AM' && hours === 12) hours = 0;
-      } else if (hours > 23 || minutes > 59) {
-        return [NaN, NaN];
-      }
-      return [hours, minutes];
-    };
-    const scheduleDateTime = (() => {
-      const date = new Date(quizForm.date);
-      if (!Number.isNaN(date.getTime())) {
-        const [hours, minutes] = parseClockTime(quizForm.startTime);
-        if (Number.isNaN(hours) || Number.isNaN(minutes)) return new Date().toISOString();
-        date.setHours(hours || 0, minutes || 0, 0, 0);
-        return date.toISOString();
-      }
-      return new Date().toISOString();
-    })();
-    const endDateTime = (() => {
-      const date = new Date(quizForm.date);
-      if (!Number.isNaN(date.getTime())) {
-        const [hours, minutes] = parseClockTime(quizForm.endTime);
-        if (Number.isNaN(hours) || Number.isNaN(minutes)) {
-          return new Date(new Date(scheduleDateTime).getTime() + (Number(quizForm.durationMinutes) || 25) * 60000).toISOString();
-        }
-        date.setHours(hours || 0, minutes || 0, 0, 0);
-        return date.toISOString();
-      }
-      return new Date(new Date(scheduleDateTime).getTime() + (Number(quizForm.durationMinutes) || 25) * 60000).toISOString();
-    })();
+    // Universal WAT scheduling: the picked date/time is West African Time and is
+    // stored as a UTC instant, so it hits every user at the same moment.
+    const duration = Number(quizForm.durationMinutes) || 25;
+    const scheduleDateTime =
+      parseWATDateTime(quizForm.date, quizForm.startTime) || new Date().toISOString();
+    const explicitEnd = parseWATDateTime(quizForm.date, quizForm.endTime);
+    const endDateTime =
+      explicitEnd ||
+      new Date(new Date(scheduleDateTime).getTime() + duration * 60000).toISOString();
+    const canonicalDate = watDateString(scheduleDateTime) || quizForm.date;
+    const canonicalStart = formatWATTime(scheduleDateTime) || quizForm.startTime;
 
     if (editingQuiz) {
       cbtStorage.updateQuiz({
@@ -324,9 +305,9 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
         courseCode: course.code,
         courseTitle: course.title,
         title: quizForm.title,
-        durationMinutes: Number(quizForm.durationMinutes) || 25,
-        date: quizForm.date,
-        startTime: quizForm.startTime,
+        durationMinutes: duration,
+        date: canonicalDate,
+        startTime: canonicalStart,
         scheduledDateTime: scheduleDateTime,
         endDateTime,
         instructions: quizForm.instructions,
@@ -339,9 +320,9 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
         courseTitle: course.title,
         title: quizForm.title,
         totalQuestions: 0,
-        durationMinutes: Number(quizForm.durationMinutes) || 25,
-        date: quizForm.date,
-        startTime: quizForm.startTime,
+        durationMinutes: duration,
+        date: canonicalDate,
+        startTime: canonicalStart,
         scheduledDateTime: scheduleDateTime,
         endDateTime,
         status: 'scheduled',
@@ -887,6 +868,10 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
             </div>
           </div>
 
+          <div className="anim-rise" style={{ '--d': '0.15s' } as React.CSSProperties}>
+            <WATClock />
+          </div>
+
           {/* Quick Actions and Architecture Note */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs space-y-3">
@@ -1078,7 +1063,7 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
             <div>
               <h2 className="text-lg font-bold text-slate-900">Quiz & Examination Manager</h2>
               <p className="text-xs text-slate-500">
-                Create and configure quizzes. Set dates, start times, and durations.
+                Create and configure quizzes. All dates & times are West African Time (WAT) for every user. 🌍
               </p>
             </div>
             <button
@@ -1127,8 +1112,8 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
                   </div>
                   <h3 className="text-base font-bold text-slate-900">{q.title}</h3>
                   <p className="text-xs text-slate-500">
-                    Day: <span className="font-semibold text-slate-700">{q.date}</span> &bull; Time:{' '}
-                    <span className="font-semibold text-slate-700">{q.startTime}</span> &bull; Duration:{' '}
+                    Day: <span className="font-semibold text-slate-700">{formatWATDate(q.scheduledDateTime, q.date)}</span> &bull; Time:{' '}
+                    <span className="font-semibold text-slate-700">{formatWATTime(q.scheduledDateTime, q.startTime)} WAT</span> &bull; Duration:{' '}
                     <span className="font-semibold text-emerald-800">
                       {q.durationMinutes} Minutes
                     </span>{' '}
@@ -1439,10 +1424,10 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
 
                 <div className="text-xs space-y-1">
                   <p>
-                    <strong className="text-slate-600">Quiz Day:</strong> {quiz.date}
+                    <strong className="text-slate-600">Quiz Day (WAT):</strong> {formatWATDate(quiz.scheduledDateTime, quiz.date)}
                   </p>
                   <p>
-                    <strong className="text-slate-600">Start Time:</strong> {quiz.startTime}
+                    <strong className="text-slate-600">Start Time:</strong> {formatWATTime(quiz.scheduledDateTime, quiz.startTime)} WAT
                   </p>
                   <p>
                     <strong className="text-slate-600">Duration:</strong> {quiz.durationMinutes}{' '}
@@ -2005,7 +1990,7 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
               <div className="grid grid-cols-3 gap-3">
                 <div>
                   <label className="font-semibold text-slate-700 block mb-1">
-                    Day / Date
+                    Day / Date (WAT 🌍)
                   </label>
                   <input
                     type="date"
@@ -2019,7 +2004,7 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
 
                 <div>
                   <label className="font-semibold text-slate-700 block mb-1">
-                    Start Time
+                    Start Time (WAT 🌍)
                   </label>
                   <input
                     type="text"
@@ -2033,7 +2018,7 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
 
                 <div>
                   <label className="font-semibold text-slate-700 block mb-1">
-                    End Time
+                    End Time (WAT 🌍)
                   </label>
                   <input
                     type="time"

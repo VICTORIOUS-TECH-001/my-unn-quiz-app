@@ -289,8 +289,8 @@ export const QuestionBankManager: React.FC<QuestionBankManagerProps> = ({
                 student practice automatically pulls a fresh random set.
               </p>
             </div>
-            <div className="flex items-center gap-2 text-xs bg-slate-50 border border-slate-200 rounded-xl px-3 py-2">
-              <Shuffle className="w-4 h-4 text-emerald-700" />
+            <div className="flex items-center gap-2 text-xs bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 dice-btn">
+              <Shuffle className="w-4 h-4 text-emerald-700 dice-idle" />
               <span className="font-semibold text-slate-700">Questions per practice:</span>
               <input
                 type="number"

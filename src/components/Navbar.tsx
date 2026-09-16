@@ -9,6 +9,7 @@ import {
 } from 'lucide-react';
 import { Student } from '../types';
 import { firebaseNow } from '../services/firebase';
+import { formatWATClock, formatWATDate } from '../services/watTime';
 
 interface NavbarProps {
   currentStudent: Student | null;
@@ -27,18 +28,9 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   useEffect(() => {
     const updateTime = () => {
-      const now = new Date(firebaseNow());
-      const timeStr = now.toLocaleTimeString('en-GB', {
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-      });
-      const dateStr = now.toLocaleDateString('en-GB', {
-        weekday: 'short',
-        day: 'numeric',
-        month: 'short',
-      });
-      setWatTime(`${dateStr} • ${timeStr} WAT`);
+      const now = firebaseNow();
+      // Universal clock: always West African Time for every user.
+      setWatTime(`${formatWATDate(now)} • ${formatWATClock(now)} WAT`);
     };
 
     updateTime();

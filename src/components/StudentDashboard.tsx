@@ -24,6 +24,7 @@ import {
 } from 'lucide-react';
 import { Attempt, Course, NotificationItem, Quiz, Result, Student } from '../types';
 import { DEFAULT_PRACTICE_DRAW, cbtStorage } from '../services/storage';
+import { formatWATDate, formatWATTime } from '../services/watTime';
 
 interface StudentDashboardProps {
   student: Student;
@@ -256,6 +257,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                   <span>{activeQuiz.courseCode}</span>
                   <span>&bull;</span>
                   <span>{activeQuiz.courseTitle}</span>
+                  <span className="live-badge">● LIVE</span>
                 </div>
 
                 <h2 className="text-xl font-bold text-slate-900 mt-2">
@@ -289,7 +291,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                     </span>
                     <span className="text-base font-bold text-slate-800 flex items-center gap-1 mt-0.5">
                       <Calendar className="w-4 h-4 text-[#0b6537]" />
-                      {activeQuiz.date}
+                      {formatWATDate(activeQuiz.scheduledDateTime, activeQuiz.date)}
                     </span>
                   </div>
 
@@ -299,7 +301,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                     </span>
                     <span className="text-base font-bold text-slate-800 flex items-center gap-1 mt-0.5">
                       <Clock className="w-4 h-4 text-[#0b6537]" />
-                      {activeQuiz.startTime}
+                      {formatWATTime(activeQuiz.scheduledDateTime, activeQuiz.startTime)} WAT
                     </span>
                   </div>
                 </div>
@@ -494,7 +496,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
             <div className="arena-orb arena-orb-b" />
             <div className="relative flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div>
-                <h2 className="text-lg sm:text-xl font-black text-white flex items-center gap-2">
+                <h2 className="text-lg sm:text-xl font-black text-white flex items-center gap-2 neon-text">
                   <Gamepad2 className="w-6 h-6 text-lime-300" />
                   Practice Arena
                 </h2>
@@ -505,12 +507,16 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
               </div>
               <div className="flex items-center gap-2">
                 <span className="arena-chip">
-                  <Star className="w-3.5 h-3.5 text-amber-300" />
+                  <Star className="w-3.5 h-3.5 text-amber-300 star-twinkle" />
                   {cbtStorage.getStudentXp(student.regNo)} XP
                 </span>
                 <span className="arena-chip">
                   <Flame className="w-3.5 h-3.5 text-orange-400" />
                   {cbtStorage.getPracticeHistory(student.regNo).length} runs
+                </span>
+                <span className="arena-chip">
+                  <Trophy className="w-3.5 h-3.5 text-lime-300" />
+                  LVL {Math.floor(cbtStorage.getStudentXp(student.regNo) / 200) + 1}
                 </span>
               </div>
             </div>
@@ -650,11 +656,11 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                 <div className="grid grid-cols-2 gap-2 text-xs text-slate-700 bg-white p-3 rounded-xl border border-slate-200">
                   <div>
                     <span className="text-[10px] text-slate-400 block font-medium">DAY</span>
-                    <span className="font-semibold">{q.date}</span>
+                    <span className="font-semibold">{formatWATDate(q.scheduledDateTime, q.date)}</span>
                   </div>
                   <div>
                     <span className="text-[10px] text-slate-400 block font-medium">TIME</span>
-                    <span className="font-semibold">{q.startTime}</span>
+                    <span className="font-semibold">{formatWATTime(q.scheduledDateTime, q.startTime)} WAT</span>
                   </div>
                   <div>
                     <span className="text-[10px] text-slate-400 block font-medium">DURATION</span>

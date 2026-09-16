@@ -195,13 +195,24 @@ export const PracticeEngine: React.FC<PracticeEngineProps> = ({
         </button>
 
         <div className="arena-card rounded-3xl p-6 sm:p-10 text-center relative overflow-hidden">
+          <div className="arena-particles" aria-hidden="true">
+            <span style={{ left: '6%', animationDelay: '0s' }} />
+            <span style={{ left: '16%', animationDelay: '1.4s' }} />
+            <span style={{ left: '28%', animationDelay: '2.6s' }} />
+            <span style={{ left: '40%', animationDelay: '0.8s' }} />
+            <span style={{ left: '52%', animationDelay: '3.4s' }} />
+            <span style={{ left: '64%', animationDelay: '2s' }} />
+            <span style={{ left: '76%', animationDelay: '4.2s' }} />
+            <span style={{ left: '88%', animationDelay: '1s' }} />
+            <span style={{ left: '95%', animationDelay: '3s' }} />
+          </div>
           <div className="arena-orb arena-orb-a" />
           <div className="arena-orb arena-orb-b" />
           <div className="relative">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-[11px] font-bold text-lime-200 uppercase tracking-wider">
               <Zap className="w-3.5 h-3.5" /> Practice Arena
             </div>
-            <h1 className="mt-3 text-2xl sm:text-4xl font-black text-white tracking-tight">
+            <h1 className="mt-3 text-2xl sm:text-4xl font-black text-white tracking-tight neon-text">
               {course.code}: <span className="text-gradient-gold">{course.title}</span>
             </h1>
             <p className="mt-2 text-sm text-white/70 max-w-lg mx-auto">
@@ -224,6 +235,16 @@ export const PracticeEngine: React.FC<PracticeEngineProps> = ({
                 <Trophy className="w-5 h-5 mx-auto text-emerald-300" />
                 <div className="mt-1 text-xl font-black text-white">{history.length}</div>
                 <div className="text-[10px] uppercase tracking-wider text-white/60">Runs</div>
+              </div>
+            </div>
+
+            <div className="mt-5 max-w-md mx-auto anim-rise" style={{ '--d': '0.2s' } as React.CSSProperties}>
+              <div className="flex justify-between text-[10px] font-bold text-white/70 mb-1">
+                <span>⭐ LEVEL {Math.floor(totalXp / 200) + 1}</span>
+                <span>{totalXp % 200} / 200 XP to next level</span>
+              </div>
+              <div className="level-bar">
+                <div className="level-bar-fill" style={{ width: `${(totalXp % 200) / 2}%` }} />
               </div>
             </div>
 
@@ -289,6 +310,17 @@ export const PracticeEngine: React.FC<PracticeEngineProps> = ({
     return (
       <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 arena-enter">
         <div className="arena-card rounded-3xl p-6 sm:p-10 text-center relative overflow-hidden">
+          <div className="arena-particles" aria-hidden="true">
+            <span style={{ left: '6%', animationDelay: '0s' }} />
+            <span style={{ left: '16%', animationDelay: '1.4s' }} />
+            <span style={{ left: '28%', animationDelay: '2.6s' }} />
+            <span style={{ left: '40%', animationDelay: '0.8s' }} />
+            <span style={{ left: '52%', animationDelay: '3.4s' }} />
+            <span style={{ left: '64%', animationDelay: '2s' }} />
+            <span style={{ left: '76%', animationDelay: '4.2s' }} />
+            <span style={{ left: '88%', animationDelay: '1s' }} />
+            <span style={{ left: '95%', animationDelay: '3s' }} />
+          </div>
           <div className="confetti" aria-hidden="true">
             {Array.from({ length: 24 }).map((_, i) => (
               <span key={i} style={{ left: `${(i * 41) % 100}%`, animationDelay: `${(i % 12) * 0.25}s` }} />
@@ -298,7 +330,7 @@ export const PracticeEngine: React.FC<PracticeEngineProps> = ({
             <div className="mx-auto w-20 h-20 rounded-full bg-gradient-to-br from-amber-300 to-orange-500 flex items-center justify-center shadow-2xl pop-in">
               <Trophy className="w-10 h-10 text-white anim-swing" />
             </div>
-            <h1 className="mt-4 text-3xl font-black text-white">Run Complete! 🎉</h1>
+            <h1 className="mt-4 text-3xl font-black text-white neon-text">Run Complete! 🎉</h1>
             <p className="text-sm text-white/70 mt-1">
               {course.code} • {total} questions in {formatElapsed(elapsed)}
             </p>
@@ -409,13 +441,24 @@ export const PracticeEngine: React.FC<PracticeEngineProps> = ({
             <Flame className="w-3.5 h-3.5 text-orange-400" /> {streak}
           </span>
           <span className="arena-chip">
-            <Zap className="w-3.5 h-3.5 text-amber-300" /> {xp} XP
+            <Zap className="w-3.5 h-3.5 text-amber-300 star-twinkle" /> <span key={xp} className="xp-pop">{xp} XP</span>
           </span>
           <span className="arena-chip font-mono">
             <Clock className="w-3.5 h-3.5 text-sky-300" /> {formatElapsed(elapsed)}
           </span>
         </div>
       </div>
+
+      {streak >= 2 && (
+        <div className="mt-2 arena-hud rounded-xl px-3 py-2 flex items-center gap-2 anim-pop">
+          <span className="text-[10px] font-black text-orange-300 uppercase tracking-wider whitespace-nowrap">
+            🔥 Combo x{streak}
+          </span>
+          <div className="combo-meter flex-1">
+            <div className="combo-fill" style={{ width: `${Math.min(100, streak * 12)}%` }} />
+          </div>
+        </div>
+      )}
 
       {cheer && (
         <div className="cheer-pop">{cheer}</div>

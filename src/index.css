@@ -904,6 +904,173 @@ button:active:not(:disabled) {
   animation: heartbeat 2s ease-in-out infinite;
 }
 
+/* ============ GAMING FEATURES PACK 👾 ============ */
+@keyframes rankShine {
+  0% { background-position: -150% 0; }
+  100% { background-position: 150% 0; }
+}
+@keyframes xpRise {
+  0% { transform: translateY(0) scale(1); opacity: 1; }
+  100% { transform: translateY(-26px) scale(1.25); opacity: 0; }
+}
+@keyframes livePulse {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.6); }
+  50% { transform: scale(1.06); box-shadow: 0 0 0 7px rgba(239, 68, 68, 0); }
+}
+@keyframes diceRock {
+  0%, 100% { transform: rotate(-10deg); }
+  50% { transform: rotate(10deg); }
+}
+@keyframes diceRoll {
+  0% { transform: rotate(0) scale(1); }
+  50% { transform: rotate(360deg) scale(1.3); }
+  100% { transform: rotate(720deg) scale(1); }
+}
+@keyframes particleFloat {
+  0% { transform: translateY(0) scale(1); opacity: 0; }
+  15% { opacity: 0.9; }
+  100% { transform: translateY(-190px) scale(0.4); opacity: 0; }
+}
+@keyframes comboFill {
+  from { width: 0; }
+}
+@keyframes neonFlicker {
+  0%, 100% { opacity: 1; }
+  92% { opacity: 1; }
+  93% { opacity: 0.6; }
+  94% { opacity: 1; }
+  96% { opacity: 0.75; }
+  97% { opacity: 1; }
+}
+@keyframes starTwinkle {
+  0%, 100% { transform: scale(1) rotate(0deg); opacity: 1; }
+  50% { transform: scale(1.35) rotate(20deg); opacity: 0.7; }
+}
+
+/* Pulsing LIVE badge */
+.live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  background: linear-gradient(135deg, #ef4444, #b91c1c);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  padding: 0.2rem 0.6rem;
+  border-radius: 9999px;
+  animation: livePulse 1.6s ease-in-out infinite;
+}
+
+/* Rank badges with metallic shine */
+.rank-badge-1, .rank-badge-2, .rank-badge-3 {
+  background-size: 220% auto !important;
+  animation: rankShine 2.8s linear infinite;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+}
+.rank-badge-1 {
+  background-image: linear-gradient(110deg, #fde68a 30%, #fffbeb 45%, #f59e0b 55%, #fde68a 70%) !important;
+  color: #78350f !important;
+  border: 1px solid #f59e0b !important;
+}
+.rank-badge-2 {
+  background-image: linear-gradient(110deg, #e2e8f0 30%, #ffffff 45%, #94a3b8 55%, #e2e8f0 70%) !important;
+  color: #1e293b !important;
+  border: 1px solid #94a3b8 !important;
+}
+.rank-badge-3 {
+  background-image: linear-gradient(110deg, #fed7aa 30%, #fff7ed 45%, #c2703d 55%, #fed7aa 70%) !important;
+  color: #7c2d12 !important;
+  border: 1px solid #c2703d !important;
+}
+.leader-row-top {
+  background: linear-gradient(90deg, rgba(250, 204, 21, 0.14), rgba(74, 222, 128, 0.12)) !important;
+  animation: gradientPan 5s ease infinite;
+  background-size: 200% 100%;
+}
+
+/* XP pop: retrigger by key={xp} */
+.xp-pop {
+  display: inline-block;
+  animation: popInSoft 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.star-twinkle {
+  animation: starTwinkle 1.8s ease-in-out infinite;
+  transform-origin: center;
+}
+
+/* Level bar */
+.level-bar {
+  height: 0.55rem;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  overflow: hidden;
+}
+.level-bar-fill {
+  height: 100%;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, #facc15, #fb923c, #f472b6, #facc15);
+  background-size: 200% 100%;
+  animation: shimmer 2.2s linear infinite;
+  box-shadow: 0 0 12px rgba(251, 146, 60, 0.8);
+  transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Combo meter */
+.combo-meter {
+  height: 0.5rem;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+  border: 1px solid rgba(251, 146, 60, 0.35);
+}
+.combo-fill {
+  height: 100%;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, #fb923c, #ef4444, #facc15);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s linear infinite, comboFill 0.4s ease both;
+  box-shadow: 0 0 14px rgba(239, 68, 68, 0.8);
+  transition: width 0.3s ease;
+}
+
+/* Floating arena particles */
+.arena-particles {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.arena-particles span {
+  position: absolute;
+  bottom: 6%;
+  border-radius: 9999px;
+  animation: particleFloat 5s ease-in infinite;
+}
+.arena-particles span:nth-child(3n) { background: #4ade80; width: 7px; height: 7px; }
+.arena-particles span:nth-child(3n+1) { background: #facc15; width: 5px; height: 5px; }
+.arena-particles span:nth-child(3n+2) { background: #67e8f9; width: 6px; height: 6px; }
+
+/* Neon arcade heading */
+.neon-text {
+  color: #ecfdf5;
+  text-shadow:
+    0 0 8px rgba(74, 222, 128, 0.9),
+    0 0 26px rgba(74, 222, 128, 0.55),
+    0 0 60px rgba(34, 197, 94, 0.4);
+  animation: neonFlicker 4s linear infinite;
+}
+
+/* Dice buttons */
+.dice-idle {
+  display: inline-block;
+  animation: diceRock 2.4s ease-in-out infinite;
+}
+.dice-btn:hover .dice-idle {
+  animation: diceRoll 0.7s ease;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
