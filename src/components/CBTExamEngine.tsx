@@ -310,9 +310,9 @@ export const CBTExamEngine: React.FC<CBTExamEngineProps> = ({
   const isCritical = timeRemaining <= 60; // <= 1 min
 
   return (
-    <div className="min-h-screen bg-slate-100 flex flex-col">
+    <div className="min-h-screen bg-transparent flex flex-col arena-enter">
       {/* Official CBT Top Bar */}
-      <div className="bg-[#0b6537] text-white px-4 py-3 shadow-md border-b-4 border-[#22c55e] sticky top-0 z-30">
+      <div className="bg-[#0b6537] text-white px-4 py-3 shadow-md border-b-4 border-[#22c55e] sticky top-0 z-30 anim-slide-left">
         <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
           {/* Candidate & Course Identity */}
           <div className="flex items-center gap-3">
@@ -350,7 +350,7 @@ export const CBTExamEngine: React.FC<CBTExamEngineProps> = ({
               id="submitCbtExamBtn"
               onClick={() => setShowConfirmModal(true)}
               disabled={isSubmitting}
-              className="px-4 py-2 bg-[#22c55e] hover:bg-[#16a34a] text-white font-bold text-xs rounded-xl shadow-md transition-all flex items-center gap-1.5 shrink-0 cursor-pointer"
+              className="px-4 py-2 bg-[#22c55e] hover:bg-[#16a34a] text-white font-bold text-xs rounded-xl shadow-md transition-all flex items-center gap-1.5 shrink-0 cursor-pointer anim-shine"
             >
               <Send className="w-3.5 h-3.5" />
               <span>Submit Exam</span>
@@ -364,7 +364,7 @@ export const CBTExamEngine: React.FC<CBTExamEngineProps> = ({
         {/* Left 3 Columns: Active Question Card */}
         <div className="lg:col-span-3 flex flex-col space-y-4">
           {currentQ ? (
-            <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 sm:p-8 flex-1 flex flex-col justify-between">
+            <div key={currentQ.id} className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 sm:p-8 flex-1 flex flex-col justify-between question-slide">
               <div>
                 {/* Question Metadata Header */}
                 <div className="flex items-center justify-between pb-4 border-b border-slate-100">
@@ -408,7 +408,7 @@ export const CBTExamEngine: React.FC<CBTExamEngineProps> = ({
                       <div
                         key={optKey}
                         onClick={() => handleSelectOption(optKey)}
-                        className={`p-4 rounded-xl border-2 cursor-pointer transition-all flex items-start gap-3.5 ${
+                        className={`exam-option p-4 rounded-xl border-2 cursor-pointer transition-all flex items-start gap-3.5 ${
                           isSelected
                             ? 'bg-[#0b6537]/10 border-[#0b6537] shadow-sm'
                             : 'bg-white hover:bg-slate-50 border-slate-200'

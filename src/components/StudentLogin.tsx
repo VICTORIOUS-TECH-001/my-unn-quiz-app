@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 import { Student, Quiz } from '../types';
 import { cbtStorage } from '../services/storage';
+import { formatWATDate, formatWATTime } from '../services/watTime';
 import { firebaseNow } from '../services/firebase';
 
 interface StudentLoginProps {
@@ -149,12 +150,30 @@ export const StudentLogin: React.FC<StudentLoginProps> = ({
   };
 
   return (
-    <div className="min-h-[calc(100vh-140px)] py-6 px-4 sm:px-6 flex flex-col justify-center bg-slate-50">
-      <div className="max-w-4xl mx-auto w-full">
+    <div className="min-h-[calc(100vh-140px)] py-6 px-4 sm:px-6 flex flex-col justify-center bg-transparent arena-enter relative overflow-hidden">
+      {/* Floating study emojis */}
+      <span className="float-shape text-4xl top-8 left-4 sm:left-10" style={{ '--d': '0s' } as React.CSSProperties}>🎓</span>
+      <span className="float-shape text-3xl top-24 right-6 sm:right-14" style={{ '--d': '1.2s' } as React.CSSProperties}>📚</span>
+      <span className="float-shape text-3xl bottom-24 left-8 sm:left-20" style={{ '--d': '2s' } as React.CSSProperties}>⚡</span>
+      <span className="float-shape text-4xl bottom-10 right-8 sm:right-20" style={{ '--d': '0.6s' } as React.CSSProperties}>🎯</span>
+      <div className="max-w-4xl mx-auto w-full relative">
+        {/* Announcement ticker */}
+        <div className="ticker-bar rounded-full px-4 py-1.5 mb-4 text-[11px] font-bold text-lime-200 anim-rise">
+          <div className="anim-ticker-track gap-10 whitespace-nowrap">
+            {[0, 1].map((copy) => (
+              <span key={copy} className="flex gap-10 pr-10">
+                <span>🎮 Practice Arena is OPEN — fresh 70 questions every run</span>
+                <span>🎧 Focus music keeps you concentrated</span>
+                <span>📚 Question banks now live for every course</span>
+                <span>🏆 Earn XP & build streaks as you study</span>
+              </span>
+            ))}
+          </div>
+        </div>
         {/* Main 2-Column Responsive Layout */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-5 items-start">
           {/* Column 1: Upcoming Quiz Showcase & Live Countdown Timer */}
-          <div className="md:col-span-7 bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden flex flex-col">
+          <div className="md:col-span-7 bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden flex flex-col anim-rise card-lift" style={{ '--d': '0.1s' } as React.CSSProperties}>
             {/* Header with Official UNN Crest */}
             <div className="bg-[#0b6537] px-4 py-3 sm:px-5 sm:py-3.5 text-white border-b-2 border-[#22c55e]">
               <div className="flex items-center justify-between gap-3">
@@ -183,7 +202,7 @@ export const StudentLogin: React.FC<StudentLoginProps> = ({
                     <button
                       key={q.id}
                       onClick={() => setSelectedQuizId(q.id)}
-                      className={`px-2 py-0.5 rounded text-[11px] font-bold transition-all whitespace-nowrap cursor-pointer ${
+                      className={`px-2 py-0.5 rounded text-[11px] font-bold transition-all whitespace-nowrap cursor-pointer hover-grow ${
                         isSel
                           ? 'bg-[#0b6537] text-white shadow-xs'
                           : 'bg-white text-slate-700 hover:bg-emerald-100/80 border border-slate-200'
@@ -218,7 +237,7 @@ export const StudentLogin: React.FC<StudentLoginProps> = ({
                       {currentQuiz.status === 'active' ? '🟢 Exam Active Now' : '📅 Scheduled Exam'}
                     </span>
                     <span className="text-[11px] text-slate-500 font-medium">
-                      {currentQuiz.date} &bull; {currentQuiz.startTime}
+                      {formatWATDate(currentQuiz.scheduledDateTime, currentQuiz.date)} &bull; {formatWATTime(currentQuiz.scheduledDateTime, currentQuiz.startTime)} WAT
                     </span>
                   </div>
 
@@ -246,10 +265,7 @@ export const StudentLogin: React.FC<StudentLoginProps> = ({
                       </span>
                     </div>
                     {currentQuiz.status === 'active' && (
-                      <span className="inline-flex items-center gap-1 px-1.5 py-0.2 bg-[#22c55e] text-slate-950 text-[10px] font-black rounded-full">
-                        <span className="w-1.5 h-1.5 rounded-full bg-white animate-ping"></span>
-                        LIVE
-                      </span>
+                      <span className="live-badge">● LIVE</span>
                     )}
                   </div>
 
@@ -273,7 +289,7 @@ export const StudentLogin: React.FC<StudentLoginProps> = ({
                       </p>
                     </div>
                   ) : (
-                    <div className="grid grid-cols-4 gap-2 text-center">
+                    <div className="grid grid-cols-4 gap-2 text-center stagger-rise">
                       <div className="bg-[#0b6537] p-2 rounded-lg border border-emerald-700/60 shadow-xs">
                         <div className="text-xl sm:text-2xl font-black font-mono tracking-tight text-white">
                           {String(countdown.days).padStart(2, '0')}
@@ -311,7 +327,7 @@ export const StudentLogin: React.FC<StudentLoginProps> = ({
                 </div>
 
                 {/* Exam Key Metrics - Compact div and small font */}
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-0.5">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-0.5 stagger-rise">
                   <div className="p-2 bg-slate-50 rounded-lg border border-slate-200 text-center">
                     <span className="text-[9px] font-bold text-slate-500 uppercase tracking-wider block">
                       Questions
@@ -350,10 +366,10 @@ export const StudentLogin: React.FC<StudentLoginProps> = ({
           </div>
 
           {/* Column 2: Candidate Login Form - Compact, Smart, No Demo Buttons */}
-          <div className="md:col-span-5 bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden flex flex-col">
+          <div className="md:col-span-5 bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden flex flex-col anim-rise card-lift" style={{ '--d': '0.22s' } as React.CSSProperties}>
             {/* Login Card Header */}
             <div className="p-4 text-center border-b-2 border-[#0b6537] bg-white">
-              <div className="flex justify-center mb-2">
+              <div className="flex justify-center mb-2 anim-bounce-soft">
                 <UNNLogo
                   size="md"
                   showText={false}
@@ -412,7 +428,7 @@ export const StudentLogin: React.FC<StudentLoginProps> = ({
                   type="submit"
                   id="studentLoginSubmitBtn"
                   disabled={isLoading || isQuizOver}
-                  className="w-full py-2.5 px-4 bg-[#0b6537] hover:bg-[#074625] active:scale-[0.99] text-white font-bold text-sm rounded-lg transition-all shadow-sm hover:shadow flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60"
+                  className="w-full py-2.5 px-4 bg-[#0b6537] hover:bg-[#074625] active:scale-[0.99] text-white font-bold text-sm rounded-lg transition-all shadow-sm hover:shadow flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60 anim-shine"
                 >
                   {isQuizOver ? (
                     <span>Quiz Over</span>

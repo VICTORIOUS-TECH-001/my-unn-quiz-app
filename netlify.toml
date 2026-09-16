@@ -1,0 +1,34 @@
+# Netlify hosting for the UNN Quiz / CBT portal (Vite + React SPA).
+#
+# IMPORTANT — Firebase env vars are NOT in this repo. After connecting the
+# site, add them in Netlify Dashboard → Site settings → Environment variables
+# (same keys as .env.example):
+#   VITE_FIREBASE_API_KEY, VITE_FIREBASE_AUTH_DOMAIN, VITE_FIREBASE_PROJECT_ID,
+#   VITE_FIREBASE_STORAGE_BUCKET, VITE_FIREBASE_MESSAGING_SENDER_ID,
+#   VITE_FIREBASE_APP_ID, VITE_FIREBASE_MEASUREMENT_ID
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+  NPM_FLAGS = "--no-audit --no-fund"
+
+# SPA fallback: serve index.html for all routes
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Long-cache hashed build assets
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Never cache the entry HTML (so new deploys go live immediately)
+[[headers]]
+  for = "/index.html"
+  [headers.values]
+    Cache-Control = "no-cache"

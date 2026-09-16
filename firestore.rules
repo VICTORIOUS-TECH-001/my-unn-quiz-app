@@ -2,34 +2,49 @@ rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
-    function isAdmin() {
-      return request.auth != null
-        && (
-          request.auth.token.admin == true
-          || request.auth.token.email == 'hillarymmaka@gmail.com'
-        );
+    // Open-access portal: the admin console has no password gate and many
+    // students write exams concurrently from different devices, so the app
+    // collections are readable/writable by all clients. The admin uploads
+    // question banks here and every student device pulls them live.
+    // NOTE: Deploy these rules with `firebase deploy --only firestore:rules`.
+    match /students/{doc} {
+      allow read, create, update, delete: if true;
     }
-
-    // The current student login is registration-number based. Keep reads available
-    // for the existing portal, but require the Firebase admin custom claim for
-    // destructive operations.
-    match /{document=**} {
-      allow read: if true;
-      allow create, update: if isAdmin();
-      allow delete: if isAdmin();
+    match /courses/{doc} {
+      allow read, create, update, delete: if true;
     }
-
-    // Exam submission is performed by the student portal after the exam ends.
-    match /results/{resultId} {
-      allow create: if true;
-      allow update: if isAdmin();
-      allow read: if true;
-      allow delete: if isAdmin();
+    match /quizzes/{doc} {
+      allow read, create, update, delete: if true;
+    }
+    match /questionBanks/{doc} {
+      allow read, create, update, delete: if true;
+    }
+    match /attempts/{doc} {
+      allow read, create, update, delete: if true;
+    }
+    match /results/{doc} {
+      allow read, create, update, delete: if true;
+    }
+    match /notifications/{doc} {
+      allow read, create, update, delete: if true;
+    }
+    match /config/{doc} {
+      allow read, create, update: if true;
+      allow delete: if false;
+    }
+    match /system/{doc} {
+      allow read, create, update: if true;
+      allow delete: if false;
     }
 
     match /adminLogs/{logId} {
-      allow read, create: if isAdmin();
+      allow read, create: if true;
       allow update, delete: if false;
+    }
+
+    match /{document=**} {
+      allow read: if true;
+      allow write: if false;
     }
   }
 }

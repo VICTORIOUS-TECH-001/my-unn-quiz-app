@@ -9,6 +9,7 @@ import {
 } from 'lucide-react';
 import { Student } from '../types';
 import { firebaseNow } from '../services/firebase';
+import { formatWATClock, formatWATDate } from '../services/watTime';
 
 interface NavbarProps {
   currentStudent: Student | null;
@@ -27,18 +28,9 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   useEffect(() => {
     const updateTime = () => {
-      const now = new Date(firebaseNow());
-      const timeStr = now.toLocaleTimeString('en-GB', {
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-      });
-      const dateStr = now.toLocaleDateString('en-GB', {
-        weekday: 'short',
-        day: 'numeric',
-        month: 'short',
-      });
-      setWatTime(`${dateStr} • ${timeStr} WAT`);
+      const now = firebaseNow();
+      // Universal clock: always West African Time for every user.
+      setWatTime(`${formatWATDate(now)} • ${formatWATClock(now)} WAT`);
     };
 
     updateTime();
@@ -53,7 +45,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-2.5 flex items-center justify-between gap-4">
           {/* Official Logo Banner */}
           <div
-            className="cursor-pointer"
+            className="cursor-pointer hover-grow"
             onClick={() => {
               if (currentView === 'admin') onNavigate('admin');
               else if (currentStudent) onNavigate('dashboard');
@@ -88,7 +80,7 @@ export const Navbar: React.FC<NavbarProps> = ({
       </div>
 
       {/* 2. Official UNN Solid Green Bar with UNN Light Green Accent Stripe */}
-      <div className="bg-[#0b6537] text-white px-4 sm:px-6 py-2 border-b-4 border-[#22c55e]">
+      <div className="bg-[#0b6537] text-white px-4 sm:px-6 py-2 border-b-4 border-[#22c55e] anim-shine">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-3">
           {/* Navigation Links */}
           <div className="flex items-center gap-2">
@@ -181,9 +173,9 @@ export const Navbar: React.FC<NavbarProps> = ({
             ) : (
               <button
                 onClick={() => onNavigate('admin')}
-                className="flex items-center gap-1.5 text-xs bg-[#074625] hover:bg-[#063b20] text-emerald-200 border border-emerald-700 px-3 py-1 rounded-lg transition-colors font-semibold"
+                className="flex items-center gap-1.5 text-xs bg-[#074625] hover:bg-[#063b20] text-emerald-200 border border-emerald-700 px-3 py-1 rounded-lg transition-colors font-semibold anim-bounce-soft"
               >
-                <ShieldCheck className="w-3.5 h-3.5 text-[#22c55e]" />
+                <ShieldCheck className="w-3.5 h-3.5 text-[#22c55e] anim-wiggle" />
                 Staff Login
               </button>
             )}

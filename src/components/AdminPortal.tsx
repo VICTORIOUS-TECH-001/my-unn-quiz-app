@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   BookOpen,
   Calendar,
@@ -43,9 +43,23 @@ import {
 } from '../types';
 import { cbtStorage } from '../services/storage';
 import { UNNLogo } from './UNNLogo';
-import { authenticateAdmin, firebaseAuth, logoutAdmin } from '../services/firebase';
-import { onAuthStateChanged } from 'firebase/auth';
 import { extractQuestionsFromFile, extractQuestionsFromText } from '../services/questionImport';
+import { QuestionBankManager } from './QuestionBankManager';
+import { ClassListImporter } from './ClassListImporter';
+import {
+  changeAdminPin,
+  isAdminSessionUnlocked,
+  lockAdminSession,
+  unlockAdminSession,
+  verifyAdminPin,
+} from '../services/adminGate';
+import {
+  formatWATDate,
+  formatWATTime,
+  parseWATDateTime,
+  watDateString,
+} from '../services/watTime';
+import { WATClock } from './WATClock';
 
 interface AdminPortalProps {
   onBackToStudentPortal: () => void;
@@ -59,6 +73,7 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
   const [activeTab, setActiveTab] = useState<
     | 'dashboard'
     | 'courses'
+    | 'bank'
     | 'quizzes'
     | 'questions'
     | 'schedule'
@@ -90,68 +105,65 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
   const [studentSearch, setStudentSearch] = useState('');
   const [resultSearch, setResultSearch] = useState('');
 
-  const [isUnlocked, setIsUnlocked] = useState<boolean>(() => {
-    try {
-      return Boolean(firebaseAuth.currentUser);
-    } catch {
-      return false;
-    }
-  });
-  const [passwordInput, setPasswordInput] = useState('');
-  const [adminEmail, setAdminEmail] = useState('hillarymmaka@gmail.com');
-  const [passwordError, setPasswordError] = useState<string | null>(null);
-  const [showPassword, setShowPassword] = useState(false);
-
-  useEffect(() => {
-    return onAuthStateChanged(firebaseAuth, (user) => {
-      setIsUnlocked(Boolean(user));
-    });
-  }, []);
+  // Admin gate: 4-digit PIN verified against Firebase (config/admin). Default 0420.
+  const [isUnlocked, setIsUnlocked] = useState<boolean>(() => isAdminSessionUnlocked());
+  const [pinInput, setPinInput] = useState('');
+  const [pinError, setPinError] = useState<string | null>(null);
+  const [showPin, setShowPin] = useState(false);
+  const [checkingPin, setCheckingPin] = useState(false);
 
   const handleUnlock = async (e: React.FormEvent) => {
     e.preventDefault();
-    setPasswordError(null);
+    setPinError(null);
+    if (!pinInput.trim()) {
+      setPinError('Enter the 4-digit admin PIN.');
+      return;
+    }
+    setCheckingPin(true);
     try {
-      if (!adminEmail.trim() || !passwordInput) {
-        setPasswordError('Enter both the Firebase email and password.');
-        return;
-      }
-      await authenticateAdmin(adminEmail, passwordInput);
-      setIsUnlocked(true);
-      setPasswordInput('');
-    } catch (error) {
-      console.error('Firebase administrator authentication failed:', error);
-      const code = error instanceof Error && 'code' in error ? String(error.code) : '';
-      if (
-        code.includes('auth/invalid-credential') ||
-        code.includes('auth/invalid-login-credentials') ||
-        code.includes('auth/wrong-password')
-      ) {
-        setPasswordError('Firebase rejected the email or password. Check the account in Firebase Authentication.');
-      } else if (code.includes('auth/user-not-found')) {
-        setPasswordError('This email is not registered in Firebase Authentication.');
-      } else if (code.includes('auth/too-many-requests')) {
-        setPasswordError('Too many failed attempts. Wait and try again.');
-      } else if (code.includes('auth/operation-not-allowed')) {
-        setPasswordError('Email/password sign-in is disabled in Firebase Authentication.');
-      } else if (code.includes('auth/network-request-failed')) {
-        setPasswordError('Firebase could not be reached. Check the internet connection and Firebase project configuration.');
+      const ok = await verifyAdminPin(pinInput);
+      if (ok) {
+        unlockAdminSession();
+        setIsUnlocked(true);
+        setPinInput('');
       } else {
-        setPasswordError(`Firebase sign-in failed (${code || 'unknown error'}). Check Firebase Authentication.`);
+        setPinError('Wrong PIN. Try again.');
       }
+    } catch (error) {
+      console.error('Admin unlock failed:', error);
+      setPinError('Could not verify PIN. Check your internet connection and retry.');
+    } finally {
+      setCheckingPin(false);
     }
   };
 
-  const handleLockAdmin = async () => {
+  const handleLockAdmin = () => {
+    lockAdminSession();
     setIsUnlocked(false);
-    await logoutAdmin();
-    setPasswordInput('');
-    setPasswordError(null);
+    setPinInput('');
+    setPinError(null);
   };
 
-  const handleExitAdmin = async () => {
-    await handleLockAdmin();
+  const handleExitAdmin = () => {
+    handleLockAdmin();
     onBackToStudentPortal();
+  };
+
+  const handleChangePin = async () => {
+    const next = prompt('Enter a new admin PIN, 4–12 digits (saved in Firebase):', '');
+    if (!next) return;
+    const clean = next.trim();
+    if (!/^\d{4,12}$/.test(clean)) {
+      alert('PIN must be 4–12 digits.');
+      return;
+    }
+    try {
+      await changeAdminPin(clean);
+      alert('✅ Admin PIN updated in Firebase.');
+    } catch (error) {
+      console.error('PIN change failed:', error);
+      alert('Could not save the new PIN. Check Firebase connection/rules.');
+    }
   };
 
   // Modals & Form States
@@ -195,6 +207,7 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
   const [classListStatus, setClassListStatus] = useState<string | null>(null);
 
   const [showStudentModal, setShowStudentModal] = useState(false);
+  const [showClassListImporter, setShowClassListImporter] = useState(false);
   const [studentForm, setStudentForm] = useState({
     name: '',
     regNo: '',
@@ -273,43 +286,17 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
       alert('Enter a quiz title before saving.');
       return;
     }
-    const parseClockTime = (value: string): [number, number] => {
-      const match = value.trim().match(/^(\d{1,2}):(\d{2})(?:\s*(AM|PM))?$/i);
-      if (!match) return [NaN, NaN];
-      let hours = Number(match[1]);
-      const minutes = Number(match[2]);
-      const meridiem = match[3]?.toUpperCase();
-      if (meridiem) {
-        if (hours < 1 || hours > 12 || minutes > 59) return [NaN, NaN];
-        if (meridiem === 'PM' && hours < 12) hours += 12;
-        if (meridiem === 'AM' && hours === 12) hours = 0;
-      } else if (hours > 23 || minutes > 59) {
-        return [NaN, NaN];
-      }
-      return [hours, minutes];
-    };
-    const scheduleDateTime = (() => {
-      const date = new Date(quizForm.date);
-      if (!Number.isNaN(date.getTime())) {
-        const [hours, minutes] = parseClockTime(quizForm.startTime);
-        if (Number.isNaN(hours) || Number.isNaN(minutes)) return new Date().toISOString();
-        date.setHours(hours || 0, minutes || 0, 0, 0);
-        return date.toISOString();
-      }
-      return new Date().toISOString();
-    })();
-    const endDateTime = (() => {
-      const date = new Date(quizForm.date);
-      if (!Number.isNaN(date.getTime())) {
-        const [hours, minutes] = parseClockTime(quizForm.endTime);
-        if (Number.isNaN(hours) || Number.isNaN(minutes)) {
-          return new Date(new Date(scheduleDateTime).getTime() + (Number(quizForm.durationMinutes) || 25) * 60000).toISOString();
-        }
-        date.setHours(hours || 0, minutes || 0, 0, 0);
-        return date.toISOString();
-      }
-      return new Date(new Date(scheduleDateTime).getTime() + (Number(quizForm.durationMinutes) || 25) * 60000).toISOString();
-    })();
+    // Universal WAT scheduling: the picked date/time is West African Time and is
+    // stored as a UTC instant, so it hits every user at the same moment.
+    const duration = Number(quizForm.durationMinutes) || 25;
+    const scheduleDateTime =
+      parseWATDateTime(quizForm.date, quizForm.startTime) || new Date().toISOString();
+    const explicitEnd = parseWATDateTime(quizForm.date, quizForm.endTime);
+    const endDateTime =
+      explicitEnd ||
+      new Date(new Date(scheduleDateTime).getTime() + duration * 60000).toISOString();
+    const canonicalDate = watDateString(scheduleDateTime) || quizForm.date;
+    const canonicalStart = formatWATTime(scheduleDateTime) || quizForm.startTime;
 
     if (editingQuiz) {
       cbtStorage.updateQuiz({
@@ -318,9 +305,9 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
         courseCode: course.code,
         courseTitle: course.title,
         title: quizForm.title,
-        durationMinutes: Number(quizForm.durationMinutes) || 25,
-        date: quizForm.date,
-        startTime: quizForm.startTime,
+        durationMinutes: duration,
+        date: canonicalDate,
+        startTime: canonicalStart,
         scheduledDateTime: scheduleDateTime,
         endDateTime,
         instructions: quizForm.instructions,
@@ -333,9 +320,9 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
         courseTitle: course.title,
         title: quizForm.title,
         totalQuestions: 0,
-        durationMinutes: Number(quizForm.durationMinutes) || 25,
-        date: quizForm.date,
-        startTime: quizForm.startTime,
+        durationMinutes: duration,
+        date: canonicalDate,
+        startTime: canonicalStart,
         scheduledDateTime: scheduleDateTime,
         endDateTime,
         status: 'scheduled',
@@ -583,110 +570,82 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
       s.regNo.toLowerCase().includes(studentSearch.toLowerCase())
   );
 
-  // Security Gate: Firebase Authentication
+  // Firebase PIN gate
   if (!isUnlocked) {
     return (
-      <div className="min-h-[calc(100vh-140px)] flex flex-col items-center justify-center p-4 sm:p-6 bg-slate-50">
-        <div className="w-full max-w-md bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden">
-          {/* Official University Header */}
+      <div className="min-h-[calc(100vh-140px)] flex flex-col items-center justify-center p-4 sm:p-6 bg-transparent arena-enter relative overflow-hidden">
+        <span className="float-shape text-4xl top-10 left-6 sm:left-16">🔐</span>
+        <span className="float-shape text-3xl bottom-16 right-8 sm:right-20" style={{ '--d': '1.4s' } as React.CSSProperties}>🛡️</span>
+        <div className="w-full max-w-md bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden anim-zoom-in">
           <div className="bg-white p-6 sm:p-8 text-center border-b-[5px] border-[#0b6537]">
-            <div className="flex justify-center mb-3">
+            <div className="flex justify-center mb-3 anim-bounce-soft">
               <UNNLogo size="lg" showText={true} subText="to restore the dignity of man" textColor="text-[#0b6537]" />
             </div>
-            <div className="mt-2">
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-50 border border-emerald-300 text-emerald-900 rounded-full text-xs font-mono font-bold uppercase tracking-wider mb-2">
-                <Lock className="w-3.5 h-3.5 text-emerald-700" />
-                <span>Admin Access Restricted</span>
-              </div>
-              <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[#0b6537]">
-                Staff Administrator Login
-              </h1>
-              <p className="text-xs text-slate-500 mt-1">
-                Enter the administrator security password to access quiz controls, question bank, and results.
-              </p>
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-50 border border-emerald-300 text-emerald-900 rounded-full text-xs font-mono font-bold uppercase tracking-wider mb-2 anim-blink-soft">
+              <Lock className="w-3.5 h-3.5 text-emerald-700" />
+              <span>Admin Access Locked</span>
             </div>
+            <h1 className="text-xl sm:text-2xl font-bold tracking-tight anim-text-shimmer-green">
+              Staff Administrator Login
+            </h1>
+            <p className="text-xs text-slate-500 mt-1">
+              Enter the 4-digit admin PIN to unlock controls. Verified with Firebase 🔥
+            </p>
           </div>
-
-          {/* Form */}
-          <div className="p-6 sm:p-8 space-y-6">
-            {passwordError && (
-              <div className="flex items-start gap-3 p-4 bg-red-50 border border-red-200 rounded-xl text-xs text-red-800">
+          <div className="p-6 sm:p-8 space-y-5">
+            {pinError && (
+              <div className="flex items-start gap-3 p-4 bg-red-50 border border-red-200 rounded-xl text-xs text-red-800 anim-pop">
                 <AlertCircle className="w-5 h-5 text-red-600 shrink-0 mt-0.5" />
                 <div>
-                  <p className="font-bold">Authentication Failed</p>
-                  <p className="mt-0.5">{passwordError}</p>
+                  <p className="font-bold">Unlock Failed</p>
+                  <p className="mt-0.5">{pinError}</p>
                 </div>
               </div>
             )}
-
             <form onSubmit={handleUnlock} className="space-y-5">
               <div>
-                <label
-                  htmlFor="adminEmailInput"
-                  className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2"
-                >
-                  Admin Email
-                </label>
-                <input
-                  id="adminEmailInput"
-                  type="email"
-                  value={adminEmail}
-                  onChange={(e) => setAdminEmail(e.target.value)}
-                  autoComplete="username"
-                  className="w-full px-3.5 py-3 bg-slate-50 border-2 border-slate-300 rounded-xl text-sm text-slate-900 focus:bg-white focus:border-[#0b6537] focus:ring-2 focus:ring-[#0b6537]/20 outline-none transition-all"
-                />
-              </div>
-              <div>
-                <label
-                  htmlFor="adminPasswordInput"
-                  className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2"
-                >
-                  Admin Password
+                <label htmlFor="adminPinInput" className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2 text-center">
+                  🔑 Admin PIN
                 </label>
                 <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                  <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
                     <KeyRound className="w-4 h-4 text-[#0b6537]" />
                   </div>
                   <input
-                    id="adminPasswordInput"
-                    type={showPassword ? 'text' : 'password'}
-                    value={passwordInput}
+                    id="adminPinInput"
+                    type={showPin ? 'text' : 'password'}
+                    value={pinInput}
                     onChange={(e) => {
-                      setPasswordInput(e.target.value);
-                      if (passwordError) setPasswordError(null);
+                      setPinInput(e.target.value.replace(/\D/g, '').slice(0, 12));
+                      if (pinError) setPinError(null);
                     }}
-                    placeholder="Enter Firebase Auth password"
+                    placeholder="••••"
                     autoFocus
-                    autoComplete="current-password"
-                    className="w-full pl-10 pr-11 py-3.5 bg-slate-50 border-2 border-slate-300 rounded-xl text-base font-mono font-medium text-slate-900 placeholder:text-slate-400 focus:bg-white focus:border-[#0b6537] focus:ring-2 focus:ring-[#0b6537]/20 outline-none transition-all"
+                    autoComplete="off"
+                    inputMode="numeric"
+                    className="w-full pl-10 pr-11 py-4 bg-slate-50 border-2 border-slate-300 rounded-xl text-2xl font-mono font-black tracking-[0.5em] text-center text-slate-900 placeholder:text-slate-300 focus:bg-white focus:border-[#0b6537] focus:ring-2 focus:ring-[#0b6537]/20 outline-none transition-all"
                   />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600 cursor-pointer"
-                    tabIndex={-1}
-                  >
-                    {showPassword ? (
-                      <EyeOff className="w-4 h-4" />
-                    ) : (
-                      <Eye className="w-4 h-4" />
-                    )}
+                  <button type="button" onClick={() => setShowPin(!showPin)} className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600" tabIndex={-1}>
+                    {showPin ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                   </button>
                 </div>
               </div>
-
               <button
                 type="submit"
-                className="w-full py-4 px-6 bg-[#0b6537] hover:bg-[#074625] active:scale-[0.99] text-white font-bold text-base rounded-xl transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2 cursor-pointer"
+                disabled={checkingPin}
+                className="w-full py-4 px-6 bg-[#0b6537] hover:bg-[#074625] active:scale-[0.99] text-white font-bold text-base rounded-xl transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2 disabled:opacity-60 anim-shine"
               >
-                <Unlock className="w-5 h-5" />
-                <span>Unlock Admin Portal</span>
+                {checkingPin ? (
+                  <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                ) : (
+                  <Unlock className="w-5 h-5" />
+                )}
+                <span>{checkingPin ? 'Verifying with Firebase…' : 'Unlock Admin Portal'}</span>
               </button>
-
               <button
                 type="button"
-                onClick={handleExitAdmin}
-                className="w-full py-2.5 px-4 text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors cursor-pointer"
+                onClick={onBackToStudentPortal}
+                className="w-full py-2.5 px-4 text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors"
               >
                 &larr; Return to Candidate Portal
               </button>
@@ -700,7 +659,7 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 space-y-6">
       {/* Admin Title Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-[#0b6537] p-5 rounded-2xl text-white border-l-8 border-[#22c55e] shadow-md">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-[#0b6537] p-5 rounded-2xl text-white border-l-8 border-[#22c55e] shadow-md anim-rise anim-shine">
         <div>
           <div className="flex items-center gap-2">
             <span className="bg-[#22c55e] text-white text-[10px] font-mono font-bold px-2 py-0.5 rounded">
@@ -720,8 +679,15 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
 
         <div className="flex items-center gap-2">
           <button
+            onClick={handleChangePin}
+            className="px-3 py-2 bg-[#074625] hover:bg-[#063b20] text-emerald-200 font-semibold text-xs rounded-xl border border-emerald-600 transition-colors"
+            title="Change the admin PIN (saved in Firebase)"
+          >
+            Change PIN
+          </button>
+          <button
             onClick={handleLockAdmin}
-            className="flex items-center gap-1.5 px-3 py-2 bg-red-800 hover:bg-red-700 text-white font-semibold text-xs rounded-xl border border-red-700 transition-colors shadow-xs cursor-pointer"
+            className="flex items-center gap-1.5 px-3 py-2 bg-red-800 hover:bg-red-700 text-white font-semibold text-xs rounded-xl border border-red-700 transition-colors shadow-xs"
             title="Lock Admin Portal"
           >
             <Lock className="w-3.5 h-3.5" />
@@ -729,7 +695,7 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
           </button>
           <button
             onClick={handleExitAdmin}
-            className="px-4 py-2 bg-[#074625] hover:bg-[#063b20] text-emerald-200 font-semibold text-xs rounded-xl border border-emerald-600 transition-colors cursor-pointer"
+            className="px-4 py-2 bg-[#074625] hover:bg-[#063b20] text-emerald-200 font-semibold text-xs rounded-xl border border-emerald-600 transition-colors cursor-pointer anim-shine"
           >
             Switch to Candidate Portal
           </button>
@@ -737,7 +703,7 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
       </div>
 
       {/* Admin Tab Bar */}
-      <div className="flex border-b border-slate-200 overflow-x-auto no-scrollbar gap-2 sm:gap-3">
+      <div className="flex border-b border-slate-200 overflow-x-auto no-scrollbar gap-2 sm:gap-3 tabs-playful anim-rise" style={{ '--d': '0.1s' } as React.CSSProperties}>
         <button
           onClick={() => setActiveTab('dashboard')}
           className={`pb-3 px-3 text-xs sm:text-sm font-semibold whitespace-nowrap border-b-2 transition-colors ${
@@ -758,6 +724,17 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
           }`}
         >
           Courses ({courses.length})
+        </button>
+
+        <button
+          onClick={() => setActiveTab('bank')}
+          className={`pb-3 px-3 text-xs sm:text-sm font-semibold whitespace-nowrap border-b-2 transition-colors ${
+            activeTab === 'bank'
+              ? 'border-emerald-800 text-emerald-900'
+              : 'border-transparent text-slate-500 hover:text-slate-700'
+          }`}
+        >
+          📚 Question Bank
         </button>
 
         <button
@@ -841,7 +818,7 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
       {/* 1. OVERVIEW DASHBOARD */}
       {activeTab === 'dashboard' && (
         <div className="space-y-6">
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 stagger-rise">
             <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
               <span className="text-xs text-slate-500 font-semibold uppercase block">
                 Total Enrolled
@@ -891,6 +868,10 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
             </div>
           </div>
 
+          <div className="anim-rise" style={{ '--d': '0.15s' } as React.CSSProperties}>
+            <WATClock />
+          </div>
+
           {/* Quick Actions and Architecture Note */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs space-y-3">
@@ -898,7 +879,7 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
                 <Sparkles className="w-4 h-4 text-[#22c55e]" />
                 Quick Admin Actions
               </h3>
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-2 gap-2 stagger-rise">
                 <button
                   onClick={() => {
                     setEditingQuiz(null);
@@ -919,6 +900,14 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
                 >
                   <span>+ Add Course</span>
                   <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
+                </button>
+
+                <button
+                  onClick={() => setActiveTab('bank')}
+                  className="p-3 bg-gradient-to-br from-emerald-50 to-lime-50 hover:from-emerald-100 hover:to-lime-100 rounded-xl border border-emerald-300 text-left text-xs font-semibold text-emerald-900 transition-colors flex items-center justify-between"
+                >
+                  <span>📚 Upload to Question Bank</span>
+                  <ChevronRight className="w-3.5 h-3.5 text-emerald-500" />
                 </button>
 
                 <button
@@ -1016,7 +1005,7 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
             {courses.map((course) => (
               <div
                 key={course.id}
-                className="p-5 bg-slate-50 rounded-2xl border border-slate-200 space-y-3 flex flex-col justify-between"
+                className="p-5 bg-slate-50 rounded-2xl border border-slate-200 space-y-3 flex flex-col justify-between card-lift anim-rise"
               >
                 <div>
                   <div className="flex justify-between items-start">
@@ -1062,6 +1051,11 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
         </div>
       )}
 
+      {/* QUESTION BANK (per-course, Firebase-backed) */}
+      {activeTab === 'bank' && (
+        <QuestionBankManager courses={courses} onChanged={refreshData} />
+      )}
+
       {/* 3. QUIZZES MANAGEMENT */}
       {activeTab === 'quizzes' && (
         <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 space-y-4">
@@ -1069,7 +1063,7 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
             <div>
               <h2 className="text-lg font-bold text-slate-900">Quiz & Examination Manager</h2>
               <p className="text-xs text-slate-500">
-                Create and configure quizzes. Set dates, start times, and durations.
+                Create and configure quizzes. All dates & times are West African Time (WAT) for every user. 🌍
               </p>
             </div>
             <button
@@ -1097,7 +1091,7 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
             {quizzes.map((q) => (
               <div
                 key={q.id}
-                className="p-5 bg-slate-50 rounded-2xl border border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-4"
+                className="p-5 bg-slate-50 rounded-2xl border border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-4 card-lift anim-rise"
               >
                 <div className="space-y-1">
                   <div className="flex items-center gap-2">
@@ -1118,8 +1112,8 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
                   </div>
                   <h3 className="text-base font-bold text-slate-900">{q.title}</h3>
                   <p className="text-xs text-slate-500">
-                    Day: <span className="font-semibold text-slate-700">{q.date}</span> &bull; Time:{' '}
-                    <span className="font-semibold text-slate-700">{q.startTime}</span> &bull; Duration:{' '}
+                    Day: <span className="font-semibold text-slate-700">{formatWATDate(q.scheduledDateTime, q.date)}</span> &bull; Time:{' '}
+                    <span className="font-semibold text-slate-700">{formatWATTime(q.scheduledDateTime, q.startTime)} WAT</span> &bull; Duration:{' '}
                     <span className="font-semibold text-emerald-800">
                       {q.durationMinutes} Minutes
                     </span>{' '}
@@ -1156,6 +1150,38 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
                     className="px-3 py-1.5 bg-white border border-slate-300 hover:bg-slate-100 text-slate-700 rounded-xl text-xs font-semibold"
                   >
                     Questions ({q.questions.length})
+                  </button>
+
+                  <button
+                    onClick={() => {
+                      const bankCount = cbtStorage.getBankQuestionCount(q.courseId);
+                      if (bankCount === 0) {
+                        alert(`No questions in the ${q.courseCode} bank yet. Upload some in the Question Bank tab first.`);
+                        return;
+                      }
+                      const pull = Number(
+                        prompt(
+                          `Pull how many random questions from the ${q.courseCode} bank (${bankCount} available)?`,
+                          '70'
+                        )
+                      );
+                      if (!pull || pull <= 0) return;
+                      if (
+                        q.questions.length > 0 &&
+                        !confirm(
+                          `Replace the current ${q.questions.length} quiz questions with ${pull} fresh random ones from the bank?`
+                        )
+                      ) {
+                        return;
+                      }
+                      const filled = cbtStorage.fillQuizFromBank(q.id, pull);
+                      alert(`✅ Pulled ${filled} random questions from the ${q.courseCode} bank into "${q.title}".`);
+                      refreshData();
+                    }}
+                    className="px-3 py-1.5 bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-700 hover:to-green-700 text-white rounded-xl text-xs font-bold shadow-xs"
+                    title="Pull random questions from this course's question bank"
+                  >
+                    🎲 Fill from Bank
                   </button>
 
                   <button
@@ -1398,10 +1424,10 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
 
                 <div className="text-xs space-y-1">
                   <p>
-                    <strong className="text-slate-600">Quiz Day:</strong> {quiz.date}
+                    <strong className="text-slate-600">Quiz Day (WAT):</strong> {formatWATDate(quiz.scheduledDateTime, quiz.date)}
                   </p>
                   <p>
-                    <strong className="text-slate-600">Start Time:</strong> {quiz.startTime}
+                    <strong className="text-slate-600">Start Time:</strong> {formatWATTime(quiz.scheduledDateTime, quiz.startTime)} WAT
                   </p>
                   <p>
                     <strong className="text-slate-600">Duration:</strong> {quiz.durationMinutes}{' '}
@@ -1592,6 +1618,14 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
             </div>
 
             <div className="flex flex-wrap gap-2">
+              <button
+                onClick={() => setShowClassListImporter(true)}
+                className="px-4 py-2 bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-700 hover:to-green-700 text-white rounded-xl text-xs font-bold flex items-center gap-1.5 shadow anim-shine"
+                title="Upload the official class list PDF — every student gets a dashboard"
+              >
+                <FileSpreadsheet className="w-4 h-4" />
+                <span>📄 Import Class List (PDF)</span>
+              </button>
               <button
                 onClick={async () => {
                   try {
@@ -1956,7 +1990,7 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
               <div className="grid grid-cols-3 gap-3">
                 <div>
                   <label className="font-semibold text-slate-700 block mb-1">
-                    Day / Date
+                    Day / Date (WAT 🌍)
                   </label>
                   <input
                     type="date"
@@ -1970,7 +2004,7 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
 
                 <div>
                   <label className="font-semibold text-slate-700 block mb-1">
-                    Start Time
+                    Start Time (WAT 🌍)
                   </label>
                   <input
                     type="text"
@@ -1984,7 +2018,7 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
 
                 <div>
                   <label className="font-semibold text-slate-700 block mb-1">
-                    End Time
+                    End Time (WAT 🌍)
                   </label>
                   <input
                     type="time"
@@ -2315,6 +2349,15 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
           </div>
         </div>
       )}
+
+      {/* MODAL: IMPORT OFFICIAL CLASS LIST */}
+      {showClassListImporter && (
+        <ClassListImporter
+          onClose={() => setShowClassListImporter(false)}
+          onImported={refreshData}
+        />
+      )}
     </div>
   );
 };
+

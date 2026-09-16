@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import { Quiz, Result, Student } from '../types';
 import { cbtStorage } from '../services/storage';
+import { formatWATDateTime, formatWATTime } from '../services/watTime';
 import { UNNLogo } from './UNNLogo';
 
 interface ResultViewProps {
@@ -70,7 +71,7 @@ export const ResultView: React.FC<ResultViewProps> = ({
   const getRankBadge = (rank: number) => {
     if (rank === 1) {
       return (
-        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-black bg-emerald-100 text-emerald-900 border border-emerald-300">
+        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-black bg-emerald-100 text-emerald-900 border border-emerald-300 rank-badge-1">
           <Trophy className="w-3.5 h-3.5 text-[#0b6537]" />
           1st
         </span>
@@ -78,7 +79,7 @@ export const ResultView: React.FC<ResultViewProps> = ({
     }
     if (rank === 2) {
       return (
-        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-black bg-slate-200 text-slate-800 border border-slate-300">
+        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-black bg-slate-200 text-slate-800 border border-slate-300 rank-badge-2">
           <Medal className="w-3.5 h-3.5 text-slate-600" />
           2nd
         </span>
@@ -86,7 +87,7 @@ export const ResultView: React.FC<ResultViewProps> = ({
     }
     if (rank === 3) {
       return (
-        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-black bg-stone-100 text-stone-800 border border-stone-300">
+        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-black bg-stone-100 text-stone-800 border border-stone-300 rank-badge-3">
           <Medal className="w-3.5 h-3.5 text-stone-600" />
           3rd
         </span>
@@ -146,7 +147,7 @@ export const ResultView: React.FC<ResultViewProps> = ({
           <button
             id="printResultsBtn"
             onClick={handlePrint}
-            className="flex items-center gap-1.5 px-4 py-2 bg-[#0b6537] hover:bg-[#074625] text-white rounded-xl text-xs font-bold shadow transition-all"
+            className="flex items-center gap-1.5 px-4 py-2 bg-[#0b6537] hover:bg-[#074625] text-white rounded-xl text-xs font-bold shadow transition-all anim-shine"
             title="Print Official UNN Examination Result"
           >
             <Printer className="w-4 h-4" />
@@ -225,13 +226,7 @@ export const ResultView: React.FC<ResultViewProps> = ({
                   Date & Submission Mode
                 </span>
                 <span className="text-slate-700">
-                  {new Date(studentResult.submittedAt).toLocaleDateString('en-GB', {
-                    day: 'numeric',
-                    month: 'long',
-                    year: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit',
-                  })}{' '}
+                  {formatWATDateTime(studentResult.submittedAt)}{' '}
                   ({studentResult.submissionType === 'early' ? 'Early Hand-in' : 'Timer Finalized'})
                 </span>
               </div>
@@ -239,7 +234,7 @@ export const ResultView: React.FC<ResultViewProps> = ({
           </div>
 
           {/* Large Performance Showcase */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center stagger-rise">
             <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200">
               <span className="text-[11px] font-semibold uppercase text-emerald-800 block">
                 Total Score
@@ -265,7 +260,7 @@ export const ResultView: React.FC<ResultViewProps> = ({
               <span className="text-[11px] font-semibold uppercase text-[#0b6537] block">
                 Official Grade
               </span>
-              <span className="text-2xl sm:text-3xl font-black text-[#074625] font-serif mt-1 block">
+              <span className="text-2xl sm:text-3xl font-black text-[#074625] font-serif mt-1 block grade-glow">
                 {studentResult.grade}
               </span>
             </div>
@@ -407,7 +402,7 @@ export const ResultView: React.FC<ResultViewProps> = ({
                   return (
                     <tr
                       key={res.id}
-                      className={`hover:bg-slate-50 transition-colors ${
+                      className={`hover:bg-slate-50 transition-colors ${(res.rank || 99) <= 3 ? 'leader-row-top' : ''} ${
                         isCurrentUser ? 'bg-emerald-50/90 font-semibold' : ''
                       }`}
                     >
@@ -449,10 +444,7 @@ export const ResultView: React.FC<ResultViewProps> = ({
                         </span>
                       </td>
                       <td className="p-3 text-right text-[11px] text-slate-400 font-mono">
-                        {new Date(res.submittedAt).toLocaleTimeString('en-GB', {
-                          hour: '2-digit',
-                          minute: '2-digit',
-                        })}
+                        {formatWATTime(res.submittedAt)} WAT
                       </td>
                     </tr>
                   );

@@ -47,6 +47,7 @@ const collectionForKey: Record<string, string> = {
   unn_cbt_results_v1: 'results',
   unn_cbt_notifications_v1: 'notifications',
   unn_cbt_config_v1: 'config',
+  unn_cbt_questionbanks_v1: 'questionBanks',
 };
 
 function documentId(value: unknown): string {

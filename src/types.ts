@@ -37,6 +37,33 @@ export interface Question {
 
 export type QuizStatus = 'scheduled' | 'active' | 'completed' | 'cancelled';
 
+export interface QuestionBank {
+  id: string;
+  courseId: string;
+  courseCode: string;
+  courseTitle: string;
+  questions: Question[];
+  updatedAt: string;
+  /** How many questions each practice/quiz attempt draws from the bank */
+  questionsPerAttempt: number;
+}
+
+export interface PracticeHistoryEntry {
+  id: string;
+  courseId: string;
+  courseCode: string;
+  courseTitle: string;
+  studentRegNo: string;
+  totalQuestions: number;
+  correctAnswers: number;
+  percentage: number;
+  grade: string;
+  xpEarned: number;
+  bestStreak: number;
+  completedAt: string;
+  durationSeconds: number;
+}
+
 export interface Quiz {
   id: string;
   courseId: string;
