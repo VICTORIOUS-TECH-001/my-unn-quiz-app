@@ -31,6 +31,12 @@ import {
   syncStorageCollection,
 } from './firebase';
 import { parseWATDateTime } from './watTime';
+import {
+  bumpQuestionsVersion,
+  deleteExamControl,
+  publishExamControl,
+  scheduleExamLive,
+} from './liveSync';
 
 // Structured Storage Keys with unified namespace
 const STORAGE_KEYS = {
@@ -406,6 +412,7 @@ export class CBTStorageService {
     setLocalItem(STORAGE_KEYS.QUIZZES, quizzes);
     this.deleteResultsByQuiz(id);
     void deleteFirebaseDocument('quizzes', id);
+    void deleteExamControl(id);
     void logAdminAction('delete', 'quiz', id).catch((error) =>
       console.error('Firebase quiz audit logging failed:', error)
     );
@@ -437,6 +444,28 @@ export class CBTStorageService {
         q.endDateTime = new Date(new Date(parsed).getTime() + durationMinutes * 60000).toISOString();
       }
       this.updateQuiz(q);
+      // JAMB-style live mirror: schedule/status edits reach every device in ~1s.
+      // Fire-and-forget here - admin buttons await the same push to surface errors.
+      try {
+        const fresh = this.getQuizById(quizId);
+        if (fresh && fresh.status !== 'active') {
+          if (fresh.status === 'scheduled') {
+            void scheduleExamLive(fresh).catch((error) =>
+              console.error('Live schedule push failed:', error)
+            );
+          } else {
+            // completed / cancelled: force auto-submit on every open exam now.
+            void publishExamControl(quizId, {
+              status: fresh.status,
+              forceSubmit: true,
+              forceSubmitAt: Date.now(),
+              windowEndMs: Date.now(),
+            }).catch((error) => console.error('Live end push failed:', error));
+          }
+        }
+      } catch (error) {
+        console.error('Live mirror failed:', error);
+      }
     }
   }
 
@@ -452,6 +481,9 @@ export class CBTStorageService {
       quiz.questions.push(question);
       quiz.totalQuestions = quiz.questions.length;
       this.updateQuiz(quiz);
+      void bumpQuestionsVersion(quizId).catch((error) =>
+        console.error('Live questions-version push failed:', error)
+      );
     }
   }
 
@@ -462,6 +494,9 @@ export class CBTStorageService {
       if (idx !== -1) {
         quiz.questions[idx] = question;
         this.updateQuiz(quiz);
+        void bumpQuestionsVersion(quizId).catch((error) =>
+          console.error('Live questions-version push failed:', error)
+        );
       }
     }
   }
@@ -472,6 +507,9 @@ export class CBTStorageService {
       quiz.questions = quiz.questions.filter((q) => q.id !== questionId);
       quiz.totalQuestions = quiz.questions.length;
       this.updateQuiz(quiz);
+      void bumpQuestionsVersion(quizId).catch((error) =>
+        console.error('Live questions-version push failed:', error)
+      );
     }
   }
 
@@ -610,6 +648,9 @@ export class CBTStorageService {
     quiz.questions = pulled;
     quiz.totalQuestions = pulled.length;
     this.updateQuiz(quiz);
+    void bumpQuestionsVersion(quizId).catch((error) =>
+      console.error('Live questions-version push failed:', error)
+    );
     return pulled.length;
   }
 

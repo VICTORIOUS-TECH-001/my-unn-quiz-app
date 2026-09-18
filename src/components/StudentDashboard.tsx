@@ -25,6 +25,7 @@ import {
 import { Attempt, Course, NotificationItem, Quiz, Result, Student } from '../types';
 import { DEFAULT_PRACTICE_DRAW, cbtStorage } from '../services/storage';
 import { formatWATDate, formatWATTime } from '../services/watTime';
+import { LiveWindowBar } from './LiveWindowBar';
 
 interface StudentDashboardProps {
   student: Student;
@@ -246,6 +247,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Main Quiz Area (2 cols) */}
           <div className="lg:col-span-2 space-y-6">
+            <LiveWindowBar quiz={activeQuiz} />
             {activeQuiz ? (
               <div className="bg-white rounded-2xl p-6 shadow-md border-2 border-[#0b6537] relative overflow-hidden anim-gradient-border anim-rise">
                 <div className="absolute top-0 right-0 bg-[#0b6537] text-white text-[11px] font-bold px-4 py-1 rounded-bl-xl uppercase tracking-wider flex items-center gap-1.5 shadow-sm">
@@ -358,6 +360,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                   Please consult the official examination timetable below.
                 </p>
 
+                {firstUpcoming && <LiveWindowBar quiz={firstUpcoming} />}
                 {firstUpcoming && (
                   <div className="mt-6 text-left max-w-md mx-auto p-5 bg-emerald-50 border border-emerald-300 rounded-2xl shadow-xs">
                     <div className="flex items-center gap-2 text-xs font-bold text-emerald-900 uppercase tracking-wider mb-2">
@@ -671,6 +674,8 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                     <span className="font-semibold">{q.questions.length} Multiple Choice</span>
                   </div>
                 </div>
+
+                <LiveWindowBar quiz={q} />
 
                 <p className="text-[11px] text-slate-500 italic">
                   Quiz activates automatically at the designated start time.

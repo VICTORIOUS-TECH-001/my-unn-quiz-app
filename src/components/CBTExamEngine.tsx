@@ -17,6 +17,8 @@ import { Attempt, OptionKey, Question, Quiz, Result, Student } from '../types';
 import { cbtStorage } from '../services/storage';
 import { UNNLogo } from './UNNLogo';
 import { firebaseNow } from '../services/firebase';
+import { ExamControl, subscribeExamControl } from '../services/liveSync';
+import { formatWATTime } from '../services/watTime';
 
 interface CBTExamEngineProps {
   quiz: Quiz;
@@ -42,12 +44,17 @@ export const CBTExamEngine: React.FC<CBTExamEngineProps> = ({
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [showConfirmModal, setShowConfirmModal] = useState<boolean>(false);
   const [autoSubmitFired, setAutoSubmitFired] = useState<boolean>(false);
+  const [liveControl, setLiveControl] = useState<ExamControl | null>(null);
+  const [adminNotice, setAdminNotice] = useState<string | null>(null);
   const [filterMode, setFilterMode] = useState<'all' | 'answered' | 'unanswered' | 'flagged'>('all');
 
   // Anti-cheating & recovery refs
   const timerRef = useRef<number | null>(null);
   const isSubmittingRef = useRef<boolean>(false);
   isSubmittingRef.current = isSubmitting;
+  const liveControlRef = useRef<ExamControl | null>(null);
+  const mountQuestionsVersion = useRef<number>(-1);
+  const liveSubmitRef = useRef<(t: 'early' | 'auto_timer') => void>(() => {});
 
   // Load existing attempt or create new attempt on mount
   useEffect(() => {
@@ -114,7 +121,23 @@ export const CBTExamEngine: React.FC<CBTExamEngineProps> = ({
   useEffect(() => {
     timerRef.current = window.setInterval(() => {
       setTimeRemaining((prev) => {
-        if (prev <= 1) {
+        // Shared-window clamp: nobody outlives the admin's live window.
+        const ctrl = liveControlRef.current;
+        let effective = prev;
+        if (ctrl && ctrl.status === 'active' && ctrl.windowEndMs > 0) {
+          const windowLeft = Math.max(0, Math.ceil((ctrl.windowEndMs - firebaseNow()) / 1000));
+          if (windowLeft <= 0) {
+            if (timerRef.current) clearInterval(timerRef.current);
+            if (!isSubmittingRef.current) {
+              setAutoSubmitFired(true);
+              setAdminNotice('The shared exam window closed - your paper was auto-submitted.');
+              handleSubmitExam('auto_timer');
+            }
+            return 0;
+          }
+          effective = Math.min(prev, windowLeft);
+        }
+        if (effective <= 1) {
           if (timerRef.current) clearInterval(timerRef.current);
           if (!isSubmittingRef.current) {
             setAutoSubmitFired(true);
@@ -123,7 +146,7 @@ export const CBTExamEngine: React.FC<CBTExamEngineProps> = ({
           return 0;
         }
 
-        const next = prev - 1;
+        const next = effective - 1;
         // Persist time periodically to localStorage
         const attempt = cbtStorage.getAttempt(quiz.id, student.regNo);
         if (attempt && !attempt.isSubmitted) {
@@ -138,6 +161,42 @@ export const CBTExamEngine: React.FC<CBTExamEngineProps> = ({
       if (timerRef.current) clearInterval(timerRef.current);
     };
   }, [quiz.id, student.regNo]);
+
+  // JAMB-style live control: admin launch/extend/end/questions hit this exam instantly.
+  useEffect(() => {
+    const off = subscribeExamControl(quiz.id, (ctrl) => {
+      liveControlRef.current = ctrl;
+      setLiveControl(ctrl);
+      if (!ctrl) return;
+      if (mountQuestionsVersion.current === -1) {
+        mountQuestionsVersion.current = ctrl.questionsVersion || 0;
+      } else if ((ctrl.questionsVersion || 0) > mountQuestionsVersion.current) {
+        setAdminNotice(
+          'Admin updated the questions - tap RELOAD to get the latest (your answers are saved).'
+        );
+      }
+      if (ctrl.forceSubmit || ctrl.status === 'completed') {
+        if (!isSubmittingRef.current) {
+          if (timerRef.current) clearInterval(timerRef.current);
+          setAutoSubmitFired(true);
+          setAdminNotice('Admin ended the exam for everyone - auto-submitting your paper...');
+          liveSubmitRef.current('auto_timer');
+        }
+      } else if (ctrl.status === 'active' && ctrl.windowEndMs > 0) {
+        // Clamp late joiners to the shared clock immediately.
+        const windowLeft = Math.max(0, Math.ceil((ctrl.windowEndMs - firebaseNow()) / 1000));
+        setTimeRemaining((prev) => Math.min(prev, windowLeft));
+        if ((ctrl.extraMinutes || 0) > 0) {
+          setAdminNotice((prev) =>
+            prev && prev.includes('RELOAD')
+              ? prev
+              : 'Admin added +' + ctrl.extraMinutes + ' min - the shared clock was extended.'
+          );
+        }
+      }
+    });
+    return off;
+  }, [quiz.id]);
 
   // Save current answers whenever they change
   const handleSelectOption = (option: OptionKey) => {
@@ -280,6 +339,11 @@ export const CBTExamEngine: React.FC<CBTExamEngineProps> = ({
     }, 400);
   };
 
+  // Stable handle so the live-control listener can force-submit at any moment.
+  useEffect(() => {
+    liveSubmitRef.current = handleSubmitExam;
+  });
+
   // Format timer MM:SS
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
@@ -311,6 +375,42 @@ export const CBTExamEngine: React.FC<CBTExamEngineProps> = ({
 
   return (
     <div className="min-h-screen bg-transparent flex flex-col arena-enter">
+{/* Live admin notices pushed from the Control Room / schedule changes */}
+      {adminNotice && (
+        <div className="bg-amber-300 text-amber-950 px-4 py-2.5 shadow-md border-b-2 border-amber-500 sticky top-0 z-40 anim-pop">
+          <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
+            <p className="text-xs font-bold">{adminNotice}</p>
+            {adminNotice.includes('RELOAD') && (
+              <button
+                onClick={() => window.location.reload()}
+                className="px-3 py-1.5 rounded-lg bg-amber-950 text-amber-100 text-xs font-black hover:bg-black"
+              >
+                RELOAD QUESTIONS
+              </button>
+            )}
+          </div>
+        </div>
+      )}
+      {/* Shared live window: the SAME clock every candidate sees */}
+      {liveControl && liveControl.status === 'active' && liveControl.windowEndMs > 0 && (
+        <div className="bg-emerald-950 text-white px-4 py-1.5 border-b border-emerald-400/40">
+          <div className="max-w-7xl mx-auto flex items-center justify-between gap-2 text-[11px] font-mono">
+            <span className="flex items-center gap-1.5 font-bold text-lime-200">
+              <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
+              SHARED WINDOW - same clock for everyone
+            </span>
+            <span className="text-emerald-100">
+              Closes {formatWATTime(liveControl.windowEndMs)} WAT
+              {liveControl.extraMinutes > 0 && (
+                <span className="ml-2 font-bold text-amber-300">
+                  +{liveControl.extraMinutes} MIN ADDED
+                </span>
+              )}
+            </span>
+          </div>
+        </div>
+      )}
+
       {/* Official CBT Top Bar */}
       <div className="bg-[#0b6537] text-white px-4 py-3 shadow-md border-b-4 border-[#22c55e] sticky top-0 z-30 anim-slide-left">
         <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
