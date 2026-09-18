@@ -29,6 +29,7 @@ import {
   Eye,
   EyeOff,
   Upload,
+  Radio,
 } from 'lucide-react';
 import {
   Course,
@@ -60,6 +61,13 @@ import {
   watDateString,
 } from '../services/watTime';
 import { WATClock } from './WATClock';
+import { ControlRoom } from './ControlRoom';
+import {
+  broadcastLive,
+  endExamLive,
+  launchExamLive,
+  scheduleExamLive,
+} from '../services/liveSync';
 
 interface AdminPortalProps {
   onBackToStudentPortal: () => void;
@@ -81,11 +89,13 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
     | 'students'
     | 'notifications'
     | 'grading'
+    | 'control'
   >('dashboard');
 
   // Core Data
   const [courses, setCourses] = useState<Course[]>(cbtStorage.getCourses());
   const [quizzes, setQuizzes] = useState<Quiz[]>(cbtStorage.getQuizzes());
+  const [syncNote, setSyncNote] = useState<string | null>(null);
   const [students, setStudents] = useState<Student[]>(cbtStorage.getStudents());
   const [notifications, setNotifications] = useState<NotificationItem[]>(
     cbtStorage.getNotifications()
@@ -312,6 +322,13 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
         endDateTime,
         instructions: quizForm.instructions,
       });
+      // Live push: schedule edits hit every device within ~1s.
+      const savedEdit = cbtStorage.getQuizById(editingQuiz.id);
+      if (savedEdit) {
+        void scheduleExamLive(savedEdit)
+          .then(() => setSyncNote('OK: ' + savedEdit.courseCode + ' schedule updated on every device.'))
+          .catch(() => setSyncNote('FAIL: live push failed - check internet + Firestore rules, then retry.'));
+      }
     } else {
       const newQuiz: Quiz = {
         id: `quiz_${Date.now()}`,
@@ -332,6 +349,9 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
       };
       cbtStorage.addQuiz(newQuiz);
       setSelectedQuizForQuestions(newQuiz.id);
+      void scheduleExamLive(newQuiz)
+        .then(() => setSyncNote('OK: ' + newQuiz.courseCode + ' scheduled on every device.'))
+        .catch(() => setSyncNote('FAIL: live push failed - check internet + Firestore rules, then retry.'));
     }
     setShowQuizModal(false);
     setEditingQuiz(null);
@@ -377,9 +397,32 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
     }
   };
 
-  const handleToggleQuizStatus = (quiz: Quiz, newStatus: QuizStatus) => {
+  const handleToggleQuizStatus = async (quiz: Quiz, newStatus: QuizStatus) => {
     cbtStorage.scheduleQuiz(quiz.id, quiz.date, quiz.startTime, quiz.durationMinutes, newStatus);
     refreshData();
+    // JAMB-style: await the live push so failures are visible to the admin.
+    setSyncNote('Pushing to all devices...');
+    try {
+      if (newStatus === 'active') {
+        const fresh = cbtStorage.getQuizById(quiz.id) || quiz;
+        await launchExamLive({ ...fresh, status: 'active' });
+        await broadcastLive(
+          'EXAM IS LIVE: ' + fresh.courseCode + ' - enter now, one shared clock for everyone.',
+          fresh.courseCode,
+          'live'
+        );
+        setSyncNote('OK: ' + fresh.courseCode + ' is LIVE on every device.');
+      } else if (newStatus === 'scheduled') {
+        await scheduleExamLive({ ...quiz, status: 'scheduled' });
+        setSyncNote('OK: ' + quiz.courseCode + ' closed on every device.');
+      } else {
+        await endExamLive(quiz);
+        setSyncNote('OK: ' + quiz.courseCode + ' ended - all open exams auto-submitted.');
+      }
+    } catch (error) {
+      console.error('Live push failed:', error);
+      setSyncNote('FAIL: live push failed - check internet + Firestore rules, then retry.');
+    }
   };
 
   // ================= QUESTION ACTIONS =================
@@ -738,6 +781,18 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
         </button>
 
         <button
+          onClick={() => setActiveTab('control')}
+          className={`pb-3 px-3 text-xs sm:text-sm font-semibold whitespace-nowrap border-b-2 transition-colors flex items-center gap-1.5 ${
+            activeTab === 'control'
+              ? 'border-red-600 text-red-700'
+              : 'border-transparent text-slate-500 hover:text-slate-700'
+          }`}
+        >
+          <Radio className="w-4 h-4" />
+          Control Room
+        </button>
+
+        <button
           onClick={() => setActiveTab('quizzes')}
           className={`pb-3 px-3 text-xs sm:text-sm font-semibold whitespace-nowrap border-b-2 transition-colors ${
             activeTab === 'quizzes'
@@ -816,6 +871,27 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
       </div>
 
       {/* 1. OVERVIEW DASHBOARD */}
+{syncNote && (
+        <div
+          className={`flex items-start gap-2.5 p-3.5 rounded-xl text-xs border mb-4 anim-pop ${
+            syncNote.startsWith('FAIL:')
+              ? 'bg-red-50 border-red-200 text-red-800'
+              : 'bg-emerald-50 border-emerald-200 text-emerald-900'
+          }`}
+        >
+          {syncNote.startsWith('FAIL:') ? (
+            <AlertCircle className="w-4 h-4 shrink-0 mt-0.5 text-red-600" />
+          ) : (
+            <CheckCircle2 className="w-4 h-4 shrink-0 mt-0.5 text-emerald-700" />
+          )}
+          <span className="font-semibold">{syncNote}</span>
+        </div>
+      )}
+
+      {activeTab === 'control' && (
+        <ControlRoom quizzes={quizzes} onChanged={refreshData} />
+      )}
+
       {activeTab === 'dashboard' && (
         <div className="space-y-6">
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 stagger-rise">

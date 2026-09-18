@@ -42,6 +42,19 @@ service cloud.firestore {
       allow update, delete: if false;
     }
 
+    // JAMB-style live control plane (batch 4): admin actions stream here and
+    // every student device listens. Deploy with `firebase deploy --only firestore:rules`.
+    match /examControl/{doc} {
+      allow read, create, update, delete: if true;
+    }
+    match /liveAnnouncements/{doc} {
+      allow read, create, update: if true;
+      allow delete: if false;
+    }
+    match /presence/{doc} {
+      allow read, create, update, delete: if true;
+    }
+
     match /{document=**} {
       allow read: if true;
       allow write: if false;

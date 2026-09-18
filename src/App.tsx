@@ -11,6 +11,8 @@ import { PastResults } from './components/PastResults';
 import { AdminPortal } from './components/AdminPortal';
 import { PracticeEngine } from './components/PracticeEngine';
 import { MusicToggle } from './components/MusicToggle';
+import { LiveToasts } from './components/LiveToasts';
+import { startPresence } from './services/liveSync';
 
 type AppView = 'login' | 'dashboard' | 'exam' | 'practice' | 'results' | 'past-results' | 'admin';
 
@@ -38,6 +40,26 @@ export default function App() {
       setCurrentView('dashboard');
     }
   }, []);
+
+  // Live presence heartbeat: the admin Control Room sees who is online and where.
+  const studentRegNo = currentStudent?.regNo;
+  const studentName = currentStudent?.name;
+  const examQuizId = currentView === 'exam' ? activeQuiz?.id : undefined;
+  useEffect(() => {
+    if (!currentStudent) return;
+    const screen =
+      currentView === 'exam'
+        ? 'exam'
+        : currentView === 'practice'
+        ? 'practice'
+        : currentView === 'results'
+        ? 'results'
+        : currentView === 'dashboard'
+        ? 'dashboard'
+        : 'login';
+    return startPresence(currentStudent.regNo, currentStudent.name, screen, examQuizId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [studentRegNo, studentName, currentView, examQuizId]);
 
   if (!isDataReady) {
     return (
@@ -130,6 +152,7 @@ export default function App() {
 
   return (
     <div className="app-shell min-h-screen flex flex-col font-sans text-slate-800 antialiased selection:bg-emerald-800 selection:text-white">
+      <LiveToasts />
       {/* Animated ambient background */}
       <div className="ambient-bg" aria-hidden="true">
         <span className="ambient-blob blob-1" />
